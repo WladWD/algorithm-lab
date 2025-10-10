@@ -1,19 +1,17 @@
-#include "dijkstra.h"
-#include "generator.h"
+#include "algorithms/graphs/dijkstra/dijkstra.h"
+#include "algorithms/graphs/dijkstra/generator.h"
 #include <benchmark/benchmark.h>
 
-static void BM_Dijkstra_Dense(benchmark::State& state) {
-    // Fixed-size worst case (deterministic)
-    //const int V = static_cast<int>(state.range(0));
-    //const int E = V * (V - 1) / 4; // e.g., quarter dense; tune as needed
-    //auto g = make_worstcase_graph(V, E, /*seed=*/12345);
+using namespace algorithms::graphs::dijkstra;
 
-    for (auto _ : state) {
-        auto dist = algorithms::graphs::run();//dijkstra(g, /*source=*/0);
-        benchmark::DoNotOptimize(dist);
-    }
-    state.SetItemsProcessed(static_cast<int64_t>(state.iterations()));
+static void BM_Dijkstra(benchmark::State& st) {
+  int V = (int)st.range(0);
+  int E = V * (V - 1) / 8;
+  auto g = make_worstcase_graph(V, E, 12345);
+  for (auto _ : st) {
+    auto d = dijkstra(g, 0);
+    benchmark::DoNotOptimize(d);
+  }
 }
-
-BENCHMARK(BM_Dijkstra_Dense)->Arg(1'000)->Unit(benchmark::kMillisecond);
+BENCHMARK(BM_Dijkstra)->Arg(2000);
 BENCHMARK_MAIN();

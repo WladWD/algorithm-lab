@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 3.23)
-project(algo-benchmarks CXX)
+cmake_minimum_required(VERSION 3.30)
+project(algo-benchmarks LANGUAGES CXX)
 
 # ---- Options ----
 option(ALGO_ENABLE_TESTS "Build tests" ON)

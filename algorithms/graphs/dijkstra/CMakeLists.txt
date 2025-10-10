@@ -1,15 +1,16 @@
 # ---- Dijkstra module (library + test + bench) ----
-add_library(algo_graphs_dijkstra
+add_library(algo_graphs_dijkstra STATIC
         dijkstra.cpp
         generator.cpp
 )
+
 target_include_directories(algo_graphs_dijkstra
         PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}          # so you can include "algo/graphs/dijkstra/dijkstra.h"
+        include
 )
-# If you’d rather use "include/" as public headers root, move headers there and adjust paths.
 
 add_library(algo::graphs::dijkstra ALIAS algo_graphs_dijkstra)
+target_compile_features(algo_graphs_dijkstra PUBLIC cxx_std_23)
 
 # ---- Tests ----
 if (ALGO_ENABLE_TESTS)
