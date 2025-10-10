@@ -1,0 +1,21 @@
+name: Sanitizers
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  asan-ubsan:
+    runs-on: macos-14   # or ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: brew install ninja || true
+      - name: Configure (sanitizers preset)
+        run: cmake --preset sanitizers
+      - name: Build
+        run: cmake --build --preset sanitizers -j
+      - name: Run tests (sanitizers)
+        run: ctest --preset sanitizers --output-on-failure
+        env:
+          ASAN_OPTIONS: detect_leaks=1:halt_on_error=1
+          UBSAN_OPTIONS: print_stacktrace=1

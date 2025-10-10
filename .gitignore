@@ -44,3 +44,7 @@
 
 out
 cmake-build-debug
+
+/out/
+/cmake-build-*/
+results/

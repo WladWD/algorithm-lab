@@ -1,0 +1,64 @@
+name: Benchmarks
+
+on:
+  workflow_dispatch:
+  # schedule:
+  #   - cron: "0 6 * * *"   # optional nightly
+
+jobs:
+  bench:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build jq
+      - name: Configure
+        run: cmake --preset release
+      - name: Build benches
+        run: cmake --build --preset release --target bench_graphs_dijkstra -j
+      - name: Run benchmarks
+        run: |
+          mkdir -p results/machine-github/graphs/dijkstra
+          ./out/build/release/bench_graphs_dijkstra \
+            --benchmark_min_time=2.0 \
+            --benchmark_repetitions=10 \
+            --benchmark_format=json > results/machine-github/graphs/dijkstra/bench.json
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: bench-results-${{ github.sha }}
+          path: results/
+
+  # 👉 Add these jobs directly below in the SAME FILE
+  publish-pages:
+    needs: bench
+    runs-on: ubuntu-24.04
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: bench-results-${{ github.sha }}
+          path: public
+      - name: Create index page
+        run: |
+          echo "<h1>Benchmark Results</h1><p>Commit: ${GITHUB_SHA}</p>" > public/index.html
+          echo "<pre>$(ls -R public)</pre>" >> public/index.html
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+  deploy-pages:
+    needs: publish-pages
+    runs-on: ubuntu-24.04
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
