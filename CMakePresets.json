@@ -1,0 +1,42 @@
+{
+  "version": 6,
+  "configurePresets": [
+    {
+      "name": "dev",
+      "generator": "Ninja",
+      "binaryDir": "out/build/dev",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+        "ALGO_ENABLE_TESTS": "ON",
+        "ALGO_ENABLE_BENCH": "ON"
+      }
+    },
+    {
+      "name": "sanitizers",
+      "inherits": "dev",
+      "binaryDir": "out/build/sanitizers",
+      "cacheVariables": {
+        "ALGO_ENABLE_SANITIZERS": "ON",
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "release",
+      "generator": "Ninja",
+      "binaryDir": "out/build/release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "ALGO_ENABLE_TESTS": "OFF",
+        "ALGO_ENABLE_BENCH": "ON",
+        "ALGO_ENABLE_LTO": "ON"
+      }
+    }
+  ],
+  "buildPresets": [
+    { "name": "dev", "configurePreset": "dev" },
+    { "name": "release", "configurePreset": "release" }
+  ],
+  "testPresets": [
+    { "name": "dev", "configurePreset": "dev", "output": { "outputOnFailure": true } }
+  ]
+}
