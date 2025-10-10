@@ -4,6 +4,7 @@
 #include <limits>
 #include <queue>
 #include <utility>
+#include <cstdint>
 
 namespace algorithms::graphs::dijkstra {
 struct Edge {
