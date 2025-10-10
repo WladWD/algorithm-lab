@@ -132,17 +132,6 @@ cmake --build --preset sanitizers -j
 ctest  --preset sanitizers
 ```
 
-**Manual**
-```bash
-cmake -S . -B out/build/san -G Ninja   -DCMAKE_BUILD_TYPE=Debug   -DALGO_ENABLE_SANITIZERS=ON
-cmake --build out/build/san -j
-```
-
-**Run with stricter options (optional)**
-```bash
-ASAN_OPTIONS=detect_leaks=1:halt_on_error=1 UBSAN_OPTIONS=print_stacktrace=1 ./out/build/san/test_graphs_dijkstra
-```
-
 Notes:
 - macOS supports **ASan** and **UBSan**. **TSan** isn’t supported on macOS; use Linux if you need data-race detection.
 - Sanitizers slow programs down; don’t use them for final benchmark numbers.
