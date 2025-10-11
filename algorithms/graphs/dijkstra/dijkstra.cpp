@@ -6,7 +6,7 @@ std::vector<int> dijkstra(const Graph& g, int s) {
     const int INF = std::numeric_limits<int>::max()/4;
     std::vector<int> dist(g.size(), INF);
     using P = std::pair<int,int>;
-    std::priority_queue<P, std::vector<P>, std::greater<P>> pq;
+    std::priority_queue<P, std::vector<P>, std::greater<>> pq;
     dist[s] = 0; pq.emplace(0, s);
     while (!pq.empty()) {
         auto [d,u] = pq.top(); pq.pop();
