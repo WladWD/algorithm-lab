@@ -24,7 +24,7 @@ jobs:
             brew update
             brew install ninja clang-format || true
           fi
-      
+
       - name: clang-format version
         run: clang-format --version
 
