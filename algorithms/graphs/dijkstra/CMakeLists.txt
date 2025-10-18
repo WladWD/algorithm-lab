@@ -1,5 +1,6 @@
 # ---- Dijkstra module  ----
-add_library(algo_graphs_dijkstra STATIC src)
+file(GLOB SRC src/*.cpp)
+add_library(algo_graphs_dijkstra STATIC ${SRC})
 target_include_directories(algo_graphs_dijkstra PUBLIC include)
 
 add_library(algo::graphs::dijkstra ALIAS algo_graphs_dijkstra)
