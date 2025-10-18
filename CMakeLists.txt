@@ -19,6 +19,39 @@ else()
     add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
+# ---- CLANG_FORMAT ----
+find_program(CLANG_FORMAT_EXE NAMES clang-format clang-format-18 clang-format-17)
+
+if(CLANG_FORMAT_EXE)
+    # Gather all source files (adjust extensions as needed)
+    file(GLOB_RECURSE ALL_SOURCE_FILES
+            CONFIGURE_DEPENDS
+            ${CMAKE_SOURCE_DIR}/src/*.[ch]pp
+            ${CMAKE_SOURCE_DIR}/include/*.[ch]pp
+            ${CMAKE_SOURCE_DIR}/apps/*.[ch]pp
+            ${CMAKE_SOURCE_DIR}/tests/*.[ch]pp
+    )
+
+    add_custom_target(format
+            COMMAND ${CLANG_FORMAT_EXE}
+            -i
+            -style=file
+            ${ALL_SOURCE_FILES}
+            COMMENT "Formatting all source files with clang-format"
+    )
+
+    add_custom_target(format-check
+            COMMAND ${CLANG_FORMAT_EXE}
+            --dry-run
+            --Werror
+            -style=file
+            ${ALL_SOURCE_FILES}
+            COMMENT "Checking code format (fails if formatting differs)"
+    )
+else()
+    message(WARNING "clang-format not found! Format targets will be skipped.")
+endif()
+
 # ---- Dependencies (FetchContent) ----
 include(FetchContent)
 

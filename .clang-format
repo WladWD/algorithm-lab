@@ -1,0 +1,16 @@
+# .clang-format
+BasedOnStyle: LLVM
+IndentWidth: 4
+ContinuationIndentWidth: 4
+DerivePointerAlignment: false
+PointerAlignment: Left
+ColumnLimit: 100
+AllowShortFunctionsOnASingleLine: Inline
+SortIncludes: true
+ReflowComments: false
+UseTab: Never
+SpacesInParentheses: false
+AlignConsecutiveAssignments: true
+AlignConsecutiveDeclarations: true
+IncludeBlocks: Regroup
+Language: Cpp
