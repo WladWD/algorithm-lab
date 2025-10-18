@@ -19,11 +19,14 @@ jobs:
         run: |
           if [[ "$RUNNER_OS" == "Linux" ]]; then
             sudo apt-get update
-            sudo apt-get install -y ninja-build
+            sudo apt-get install -y ninja-build clang-format
           else
             brew update
-            brew install ninja || true
+            brew install ninja clang-format || true
           fi
+      
+      - name: clang-format version
+        run: clang-format --version
 
       - name: Configure (preset=dev)
         run: cmake --preset dev
