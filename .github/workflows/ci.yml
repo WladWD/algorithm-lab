@@ -35,4 +35,4 @@ jobs:
         run: ctest --preset dev --output-on-failure
 
       - name: Check formatting
-        run: cmake --build build --target format-check
+        run: cmake --build --preset dev --target format-check
