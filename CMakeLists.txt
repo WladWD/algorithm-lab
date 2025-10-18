@@ -67,3 +67,11 @@ endif()
 
 # ---- Modules ----
 add_subdirectory(algorithms/graphs/dijkstra)
+
+if (ALGO_ENABLE_TESTS)
+    add_subdirectory(tests)
+endif()
+
+if (ALGO_ENABLE_BENCH)
+    add_subdirectory(benchmarks)
+endif()
