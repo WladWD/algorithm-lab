@@ -1,160 +1,83 @@
-# BUILD.md
+# Build (CMake) — Algorithm Lab
 
-> How to build, test, benchmark, profile, and enable sanitizers for this project.
+This document contains step-by-step build instructions, CMake presets, and formatting tips for the repository.
 
-## 0) Prerequisites
+Prerequisites
+- CMake 3.19+ with presets support
+- Ninja (recommended by the provided presets)
+- A C++20-capable toolchain (clang or GCC)
+- clang-format (for formatting)
 
-**macOS**
-```bash
-xcode-select --install          # Xcode command line tools
-brew install cmake ninja        # recommended generator
-```
+CMake presets (provided)
+- `dev` — RelWithDebInfo, tests and benchmarks enabled
+  - binary dir: `out/build/dev`
+- `sanitizers` — inherits `dev`, enables sanitizers and Debug build
+  - binary dir: `out/build/sanitizers`
+- `release` — Release build, LTO enabled, tests disabled
+  - binary dir: `out/build/release`
 
-**Linux (Ubuntu/Debian)**
-```bash
-sudo apt-get update
-sudo apt-get install -y build-essential cmake ninja-build
-```
+Configure & build (common workflows)
 
-> CLion works out of the box with this setup (CMake + Ninja).
-
----
-
-## 1) Configure & Build (with CMake Presets)
-
-This repo uses `CMakePresets.json`, so you don’t need to remember flags.
-
-### Dev (tests + benchmarks, `RelWithDebInfo`)
+# Configure and build (default dev preset)
 ```bash
 cmake --preset dev
-cmake --build  --preset dev -j
+cmake --build --preset dev -j
 ```
 
-### Release (benches only, optimized/LTO if configured)
+# Build release
 ```bash
 cmake --preset release
-cmake --build  --preset release -j
+cmake --build --preset release -j
 ```
 
-### Sanitizers (Debug + Address/Undefined)
+# Build sanitizers (Address/UBSan/Leak)
 ```bash
 cmake --preset sanitizers
-cmake --build  --preset sanitizers -j
+cmake --build --preset sanitizers -j
 ```
 
-Each preset has its own build directory under `out/build/...`, so they don’t conflict.
+Running tests
 
----
+The presets include a `testPresets` entry. To run all tests (dev preset):
 
-## 2) Run Tests (GoogleTest)
-
-Run all tests:
 ```bash
 ctest --preset dev --output-on-failure
 ```
 
-Run a single test binary:
+You can also run individual test binaries under `out/build/<preset>/...` directly.
+
+Formatting (clang-format)
+
+We recommend using a repository-level `.clang-format` file to keep a consistent style. Use the following commands:
+
+# Install (macOS)
 ```bash
-./out/build/dev/algorithms/graphs/dijkstra/test_graphs_dijkstra
+brew install clang-format
 ```
 
-Filter by test name:
+# Format the entire repository (macOS / zsh)
 ```bash
-./out/build/dev/algorithms/graphs/dijkstra/test_graphs_dijkstra --gtest_filter=Dijkstra.*
+find . -type f \( -iname "*.cpp" -o -iname "*.cc" -o -iname "*.cxx" -o -iname "*.c" -o -iname "*.h" -o -iname "*.hpp" -o -iname "*.hxx" \) \
+  -not -path "./build/*" -not -path "./out/*" -not -path "./.git/*" -print0 \
+  | xargs -0 clang-format -i -style=file
 ```
 
----
-
-## 3) Run Benchmarks (Google Benchmark)
-
-Default run:
+# Format only changes vs a base branch (fast)
 ```bash
-./out/build/dev/algorithms/graphs/dijkstra/bench_graphs_dijkstra
+git-clang-format origin/main..HEAD
 ```
 
-Stable, repeated run (recommended):
+# Format staged files (before commit)
 ```bash
-./out/build/dev/algorithms/graphs/dijkstra/bench_graphs_dijkstra   --benchmark_min_time=2.0   --benchmark_repetitions=10
+git-clang-format --staged
 ```
 
-Export JSON (for history/CI):
-```bash
-./out/build/dev/algorithms/graphs/dijkstra/bench_graphs_dijkstra --benchmark_format=json > results_dijkstra.json
-```
+Optional: pre-commit hook
 
-**macOS tips for cleaner numbers**
-- Close heavy apps; plug into AC power.
-- Keep the machine cool (avoid thermal throttling).
-- Prefer the median of several repetitions.
+Create `.git/hooks/pre-commit` with the provided snippet in `README.md` to format staged C/C++ files automatically (make it executable).
 
-**Linux pinning example**
-```bash
-taskset -c 2-5 ./out/build/dev/algorithms/graphs/dijkstra/bench_graphs_dijkstra   --benchmark_min_time=2.0 --benchmark_repetitions=10   --benchmark_format=json > results_dijkstra.json
-```
+Notes
+- Binary output directories are under `out/build/<preset>` per `CMakePresets.json`.
+- If you need compile commands for tools like clangd, enable/export `compile_commands.json` by configuring with a preset and copying `out/build/<preset>/compile_commands.json` to the repo root or pointing your editor to the build dir.
+- If you modify presets, update the `CMakePresets.json` accordingly.
 
----
-
-## 4) Profiling
-
-### macOS (Instruments / from CLion)
-- Open **Instruments → Time Profiler** and target the benchmark binary:
-  ```text
-  ./out/build/dev/algorithms/graphs/dijkstra/bench_graphs_dijkstra --benchmark_min_time=2.0
-  ```
-- Or in CLion: **Run → Profile ‘bench_graphs_dijkstra’**.
-
-### Linux (perf + FlameGraph)
-```bash
-perf record -F 999 -g -- ./out/build/release/bench_graphs_dijkstra --benchmark_min_time=2.0
-perf script | ./FlameGraph/stackcollapse-perf.pl | ./FlameGraph/flamegraph.pl > flame.svg
-```
-
-Suggested results layout:
-```
-results/
-  machine-<host>/
-    graphs/dijkstra/
-      bench.json
-      meta.json     # commit, CPU model, flags, etc.
-      profile/      # flame.svg, perf.data, etc.
-```
-
----
-
-## 5) Sanitizers (ASan/UBSan)
-
-Sanitizers are opt-in via CMake:
-
-**Enable via preset**
-```bash
-cmake --preset sanitizers
-cmake --build --preset sanitizers -j
-ctest  --preset sanitizers
-```
-
-Notes:
-- macOS supports **ASan** and **UBSan**. **TSan** isn’t supported on macOS; use Linux if you need data-race detection.
-- Sanitizers slow programs down; don’t use them for final benchmark numbers.
-
----
-
-## 6) CLion Integration
-
-- CLion automatically detects **CMake targets**:
-  - Tests → run via the built-in **Google Test** runner.
-  - Benchmarks → add a “CMake Application” config for `bench_graphs_dijkstra`.
-- To profile → **Run | Profile ‘bench_graphs_dijkstra’**.
-- To enable sanitizers →
-  Preferences → *Build, Execution, Deployment → Dynamic Analysis Tools → Sanitizers*.
-
----
-
-## 7) Troubleshooting
-
-- **“Ninja not found”** → `brew install ninja` or use `"generator": "Unix Makefiles"` in presets.
-- **Include path errors** → confirm `target_include_directories(... PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)`.
-- **Undefined references** → ensure tests/benches link with both `algo_graphs_dijkstra` and GTest/Benchmark libs.
-
----
-
-Enjoy clean builds, measurable benchmarks, and safe memory checks!

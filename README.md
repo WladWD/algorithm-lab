@@ -133,15 +133,12 @@ Each category can be implemented with:
 
 ---
 
-## ⚙️ Build and Run
+## ⚙️ Build, Debug & Profiling (shortcuts)
 
-```bash
-# Configure and build (with tests and benchmarks)
-cmake --preset dev
-cmake --build --preset dev -j
+Detailed build, debugging, formatting, and profiling instructions were moved to the `docs/` folder. See:
 
-# Run all tests
-ctest --preset dev --output-on-failure
+- [Build instructions (CMake, build presets, formatting)](./docs/build.md)
+- [Debug guide (sanitizers, running under a debugger)](./docs/debug.md)
+- [Profiling & Google Benchmark (how to run benchmarks and profile)](./docs/profiling.md)
 
-# Run a specific benchmark
-./out/build/dev/algorithms/graphs/dijkstra/bench_graphs_dijkstra --benchmark_min_time=2.0
+Use those docs for step-by-step commands and examples.
