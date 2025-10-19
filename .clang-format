@@ -10,7 +10,8 @@ SortIncludes: true
 ReflowComments: false
 UseTab: Never
 SpacesInParentheses: false
-AlignConsecutiveAssignments: true
-AlignConsecutiveDeclarations: true
+AlignConsecutiveAssignments: false
+AlignConsecutiveDeclarations: false
+AlignConsecutiveMacros: false
 IncludeBlocks: Regroup
 Language: Cpp
