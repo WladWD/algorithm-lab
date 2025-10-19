@@ -2,7 +2,7 @@
 
 namespace algorithms::graphs::dijkstra {
 std::vector<int> dijkstra(const Graph& g, int s) {
-    //todo: reimpl
+    // todo: reimpl
     const int        INF = std::numeric_limits<int>::max() / 4;
     std::vector<int> dist(g.size(), INF);
     using P = std::pair<int, int>;
