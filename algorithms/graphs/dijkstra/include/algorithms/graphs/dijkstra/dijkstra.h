@@ -11,7 +11,7 @@ struct Edge {
     static constexpr int32_t Invalid = std::numeric_limits<int32_t>::max();
 
     int32_t to = Invalid;
-    int32_t w  = 0;
+    int32_t w = 0;
 };
 
 // Adjacency list representation
