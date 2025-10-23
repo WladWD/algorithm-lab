@@ -15,5 +15,4 @@ V => number of vertices, E => number of edges
 
 ## Interface
 ```cpp
-// impl.hpp
-std::vector<int> dijkstra(const Graph& g, int source);
+std::vector<int32_t> dijkstra(const Graph& g, int32_t s);

@@ -2,8 +2,6 @@
 
 #include <cstdint>
 #include <limits>
-#include <queue>
-#include <utility>
 #include <vector>
 
 namespace algorithms::graphs::dijkstra {
@@ -17,5 +15,7 @@ struct Edge {
 // Adjacency list representation
 using Graph = std::vector<std::vector<Edge>>;
 
-std::vector<int32_t> dijkstra(const Graph& g, int s);
+std::vector<int32_t> dijkstra_queue(const Graph& g, int32_t s);
+std::vector<int32_t> dijkstra_set(const Graph& g, int32_t s);
+std::vector<int32_t> dijkstra(const Graph& g, int32_t s);
 } // namespace algorithms::graphs::dijkstra
