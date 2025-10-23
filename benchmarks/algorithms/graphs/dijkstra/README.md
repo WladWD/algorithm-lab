@@ -5,7 +5,7 @@ This document records expected benchmark results for the Dijkstra implementation
 IMPORTANT: microbenchmark numbers are machine- and build-dependent. The results below come from a recent local run (RelWithDebInfo / dev preset) and are shown here as an example of expected relative behavior — absolute values will vary by CPU, OS, and compiler flags.
 
 ## Reported benchmark summary (reference run)
-
+```
 ----------------------------------------------------------------------------------
 Benchmark                                        Time             CPU   Iterations
 ----------------------------------------------------------------------------------
@@ -16,7 +16,7 @@ BM_DijkstraDijkstra_Dense/100000             30795 ns        30791 ns        202
 BM_DijkstraDijkstra_Queue_Dense/100000   107639069 ns    107624333 ns            6
 BM_DijkstraDijkstra_Set_Dense/100000        255772 ns       255704 ns         2731
 ----------------------------------------------------------------------------------
-
+```
 The benchmarks above correspond to three different implementations exercised on two input regimes (sparse and dense). For clarity, the mapping of benchmark names to implementations used in this suite is:
 
 - `Dijkstra_Sparse` — the N^2 regular (naive) implementation of Dijkstra (scans for minimum in O(N) per extraction).
