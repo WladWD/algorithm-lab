@@ -72,8 +72,8 @@ if(CLANG_FORMAT_EXE)
     # Gather all source files (adjust extensions as needed)
     file(GLOB_RECURSE ALL_SOURCE_FILES
             CONFIGURE_DEPENDS
-            algorithms/*.[ch]pp
-            algorithms/*.h
+            src/*.[ch]pp
+            src/*.h
             benchmarks/*.[ch]pp
             tests/*.[ch]pp
     )
@@ -99,7 +99,7 @@ else()
 endif()
 
 # ---- Modules ----
-add_subdirectory(algorithms/graphs/dijkstra)
+add_subdirectory(src)
 
 if (ALGO_ENABLE_TESTS)
     add_subdirectory(tests)
