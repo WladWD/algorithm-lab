@@ -1,4 +1,3 @@
-# ---- Dijkstra module  ----
 file(GLOB SRC src/*.cpp)
 add_library(data_structures_lock_free_stack STATIC ${SRC})
 target_include_directories(data_structures_lock_free_stack PUBLIC include)

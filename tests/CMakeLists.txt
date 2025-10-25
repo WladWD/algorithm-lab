@@ -1,5 +1,10 @@
-option(ALGO_ENABLE_ALGORITHMS_GRAPHS_DIJKSTRA_TEST "Build Dijkstra algorithm tests" ON)
+option(ALGO_ENABLE_ALGORITHMS_TESTS "Build algorithms tests" ON)
+option(ALGO_ENABLE_DATA_STRUCTURES_TESTS "Build data structures tests" ON)
 
 if (ALGO_ENABLE_ALGORITHMS_GRAPHS_DIJKSTRA_TEST)
     add_subdirectory(algorithms/graphs/dijkstra)
+endif()
+
+if (ALGO_ENABLE_DATA_STRUCTURES_TESTS)
+    add_subdirectory(data_structures/lock_free/stack)
 endif()

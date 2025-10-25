@@ -1,1 +1,2 @@
 add_subdirectory(algorithms/graphs/dijkstra)
+add_subdirectory(data_structures/lock_free/stack)
