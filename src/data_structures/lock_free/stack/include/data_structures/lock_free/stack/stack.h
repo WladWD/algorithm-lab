@@ -9,13 +9,14 @@
 #include <vector>
 
 namespace data_structures::lock_free::stack {
-// Treiber-style lock-free stack.
+// Treiber-style lock-free stack. https://en.wikipedia.org/wiki/Treiber_stack
 // NOTE: This implementation intentionally does NOT provide a safe
 // memory-reclamation scheme (hazard pointers / epoch reclamation).
 // That means nodes removed by concurrent pop() are not reclaimed
 // in a thread-safe manner by default. Use `clear()` only when you
 // can guarantee no concurrent operations (single-threaded teardown),
 // or integrate a proper reclamation scheme for production use.
+// https://en.wikipedia.org/wiki/ABA_problem
 template <typename T> class LockFreeStack {
   private:
     struct Node {
