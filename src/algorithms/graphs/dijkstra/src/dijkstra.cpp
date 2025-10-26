@@ -18,7 +18,7 @@ std::vector<int32_t> dijkstra_queue(const Graph& g, int32_t s) {
     pq.emplace(0, s);
 
     while (!pq.empty()) {
-        const auto& [d, u] = pq.top();
+        const auto [d, u] = pq.top();
         pq.pop();
 
         if (d > dist[u]) {
@@ -45,7 +45,7 @@ std::vector<int32_t> dijkstra_set(const Graph& g, int32_t s) {
     q.emplace(0, s);
 
     while (!q.empty()) {
-        const auto& [d, u] = *q.begin();
+        const auto [d, u] = *q.begin();
         q.erase(q.begin());
 
         for (const auto& [to, w] : g[u]) {

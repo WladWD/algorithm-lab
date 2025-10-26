@@ -20,4 +20,12 @@ TEST(Dijkstra, Demo) {
     auto d = dijkstra(g, 0);
     EXPECT_EQ(d[0], 0);
     EXPECT_EQ(d[3], 3);
+
+    auto d_set = dijkstra_set(g, 0);
+    EXPECT_EQ(d_set[0], 0);
+    EXPECT_EQ(d_set[3], 3);
+
+    auto d_queue = dijkstra_queue(g, 0);
+    EXPECT_EQ(d_queue[0], 0);
+    EXPECT_EQ(d_queue[3], 3);
 }
