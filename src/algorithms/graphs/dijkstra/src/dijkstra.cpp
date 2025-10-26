@@ -64,6 +64,8 @@ std::vector<int32_t> dijkstra(const Graph& g, int32_t s) {
     std::vector<int32_t> dist(g.size(), INF);
     std::vector<bool> u(g.size(), false);
 
+    dist[s] = 0;
+
     for (size_t i = 0; i < g.size(); ++i) {
         int32_t v = -1;
         for (size_t j = 0; j < g.size(); ++j) {
