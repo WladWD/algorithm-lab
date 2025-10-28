@@ -97,17 +97,17 @@ Each category can be implemented with:
 
 ### 7. Lock-Free and Concurrent Data Structures 
 
-| Structure | Description / Use |
-|------------|------------------|
-| **Lock-Free Stack** | Based on atomic CAS; Treiber’s stack |
-| **Lock-Free Queue** | Michael & Scott queue (single-producer/single-consumer or MPMC) |
-| **Ring Buffer (Circular Queue)** | Fixed-capacity, cache-friendly, used in trading systems |
-| **Lock-Free Hash Map** | Open addressing + atomic updates |
-| **Hazard Pointers / Epoch Reclamation** | Safe memory reclamation without global locks |
-| **Wait-Free Counter / Atomic Variables** | Atomic fetch-add / relaxed memory semantics |
-| **Barrier / Latch Implementations** | Thread coordination primitives |
-| **SPSC / MPSC Queues** | Single- / Multi- producer-consumer queues for data passing |
-| **Spinlocks / Backoff Strategies** | For fallback mechanisms under contention |
+| Structure | Description / Use                                                           |
+|------------|-----------------------------------------------------------------------------|
+| **Lock-Free Stack** | [Based on atomic CAS; Treiber’s stack](src/data_structures/lock_free/stack) |
+| **Lock-Free Queue** | Michael & Scott queue (single-producer/single-consumer or MPMC)             |
+| **Ring Buffer (Circular Queue)** | Fixed-capacity, cache-friendly, used in trading systems                     |
+| **Lock-Free Hash Map** | Open addressing + atomic updates                                            |
+| **Hazard Pointers / Epoch Reclamation** | Safe memory reclamation without global locks                                |
+| **Wait-Free Counter / Atomic Variables** | Atomic fetch-add / relaxed memory semantics                                 |
+| **Barrier / Latch Implementations** | Thread coordination primitives                                              |
+| **SPSC / MPSC Queues** | Single- / Multi- producer-consumer queues for data passing                  |
+| **Spinlocks / Backoff Strategies** | For fallback mechanisms under contention                                    |
 
 *Benchmark goals:* microsecond-level latency, millions of ops/sec, lock contention scaling.
 
