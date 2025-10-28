@@ -3,7 +3,7 @@
 #include <stack>
 
 namespace algorithms::graphs::bipartite_check {
-ColorResult bipartite_bfs(const AdjList& g) {
+OptionalColorResult bipartite_bfs(const AdjList& g) {
     int32_t n = (int32_t)g.size();
     ColorResult color(n, -1);
     std::queue<int32_t> q;
@@ -30,7 +30,7 @@ ColorResult bipartite_bfs(const AdjList& g) {
     return color;
 }
 
-ColorResult bipartite_dfs(const AdjList& g) {
+OptionalColorResult bipartite_dfs(const AdjList& g) {
     int32_t n = (int32_t)g.size();
     ColorResult color(n, -1);
     std::stack<int> st;
