@@ -25,15 +25,15 @@ Each category can be implemented with:
 
 ### 1. Graph Algorithms
 
-| Subcategory | Algorithms                                                                                                                                                                      |
-|--------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Shortest Path** | [Dijkstra](src/algorithms/graphs/dijkstra), Bellman-Ford, Floyd–Warshall, A*, Johnson’s Algorithm                                                                               |
-| **Minimum Spanning Tree** | Kruskal, Prim                                                                                                                                                                   |
-| **Traversal** | BFS, DFS (iterative & recursive), Topological Sort                                                                                                                              |
-| **Connectivity & Cuts** | Union-Find (DSU), Tarjan’s Bridge & Articulation Points, Kosaraju / SCC                                                                                                         |
-| **Flow Algorithms** | Edmonds–Karp, Dinic, Push–Relabel                                                                                                                                               |
-| **Bipartite & Matching** | Bipartite Check (BFS/DFS coloring), Maximum Matching (Kuhn, Hopcroft–Karp), Minimum Vertex Cover / König's theorem, Bipartite Coloring, Weighted Bipartite Matching (Hungarian) |
-| **Misc** | Topological Order Validation, DAG Longest Path                                                                                                                                  |
+| Subcategory | Algorithms                                                                                                                                                                                                              |
+|--------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Shortest Path** | [Dijkstra](src/algorithms/graphs/dijkstra), Bellman-Ford, Floyd–Warshall, A*, Johnson’s Algorithm                                                                                                                       |
+| **Minimum Spanning Tree** | Kruskal, Prim                                                                                                                                                                                                           |
+| **Traversal** | BFS, DFS (iterative & recursive), Topological Sort                                                                                                                                                                      |
+| **Connectivity & Cuts** | Union-Find (DSU), Tarjan’s Bridge & Articulation Points, Kosaraju / SCC                                                                                                                                                 |
+| **Flow Algorithms** | Edmonds–Karp, Dinic, Push–Relabel                                                                                                                                                                                       |
+| **Bipartite & Matching** | [Bipartite Check (BFS/DFS coloring)](src/algorithms/graps/bipartite_check), Maximum Matching (Kuhn, Hopcroft–Karp), Minimum Vertex Cover / König's theorem, Bipartite Coloring, Weighted Bipartite Matching (Hungarian) |
+| **Misc** | Topological Order Validation, DAG Longest Path                                                                                                                                                                          |
 
 ---
 
