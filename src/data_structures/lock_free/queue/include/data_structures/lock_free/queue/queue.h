@@ -3,6 +3,7 @@
 #include <atomic>
 #include <mutex>
 #include <optional>
+#include <queue>
 #include <utility>
 #include <vector>
 
@@ -155,6 +156,40 @@ template <typename T> class LockFreeQueue {
         Node* sentinel = new Node();
         head_.store(sentinel, std::memory_order_relaxed);
         tail_.store(sentinel, std::memory_order_relaxed);
+    }
+};
+
+template <typename T> class LockBasedQueue {
+  private:
+    std::queue<T> queue_;
+    mutable std::mutex mtx_;
+
+  public:
+    LockBasedQueue() = default;
+    ~LockBasedQueue() = default;
+
+    LockBasedQueue(const LockBasedQueue&) = delete;
+    LockBasedQueue& operator=(const LockBasedQueue&) = delete;
+
+    void push(T&& value) {
+        std::lock_guard<std::mutex> guard(mtx_);
+        queue_.push(std::move(value));
+    }
+
+    void push(const T& value) {
+        std::lock_guard<std::mutex> guard(mtx_);
+        queue_.push(value);
+    }
+
+    std::optional<T> pop() {
+        std::lock_guard guard(mtx_);
+        if (queue_.empty()) {
+            return std::nullopt;
+        }
+
+        T value = std::move(queue_.front());
+        queue_.pop();
+        return std::move(value);
     }
 };
 } // namespace data_structures::lock_free::queue
