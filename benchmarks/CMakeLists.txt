@@ -7,4 +7,5 @@ endif()
 
 if (ALGO_ENABLE_DATA_STRUCTURES_BENCH)
     add_subdirectory(data_structures/lock_free/stack)
+    add_subdirectory(data_structures/lock_free/queue)
 endif()
