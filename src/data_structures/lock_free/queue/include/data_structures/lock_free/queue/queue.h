@@ -27,17 +27,11 @@ template <typename T> class LockFreeQueue {
     std::atomic<Node*> tail_{nullptr};
 
     static inline std::mutex registry_mtx_{};
-    static inline std::vector<std::vector<Node*>*> registry_{};
+    static inline std::vector<Node*> registry_{};
 
     static void retire_node(Node* n) {
-        thread_local std::vector<Node*> local_retired;
-        thread_local bool registered = ([]() {
-            std::lock_guard<std::mutex> g(registry_mtx_);
-            registry_.push_back(&local_retired);
-            return true;
-        })();
-        (void)registered;
-        local_retired.push_back(n);
+        std::lock_guard<std::mutex> g(registry_mtx_);
+        registry_.push_back(n);
     }
 
   public:
@@ -145,13 +139,10 @@ template <typename T> class LockFreeQueue {
         }
 
         std::lock_guard<std::mutex> g(registry_mtx_);
-        for (auto vec_ptr : registry_) {
-            if (vec_ptr) {
-                for (Node* n : *vec_ptr)
-                    delete n;
-                vec_ptr->clear();
-            }
+        for (auto n : registry_) {
+            delete n;
         }
+        registry_.clear();
 
         Node* sentinel = new Node();
         head_.store(sentinel, std::memory_order_relaxed);
