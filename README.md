@@ -113,13 +113,13 @@ Each category can be implemented with:
 
 ### 8. Custom Allocators
 
-| Allocator | Description / Suggested path                                                                                                 |
-|---|------------------------------------------------------------------------------------------------------------------------------|
-| System allocator | Default `malloc`/`new`. Baseline for correctness and simple tests.                                                           |
-| Simple mutex-backed pool | Shared pool protected by a mutex (easy to implement, good for correctness tests).                                            |
-| Per-thread freelist / pool | Per-thread caches/freelists for fixed-size objects; low overhead and simple to implement.                                    |
-| Arena / region allocator | Allocate from a contiguous region and free in bulk; straightforward and fast to implement.                                   |
-| Slab / fixed-size allocator | Preallocated slabs for identical-size objects; implementable with arrays + free list.  |
+| Allocator | Description / Suggested path                                                                                                |
+|---|-----------------------------------------------------------------------------------------------------------------------------|
+| System allocator | Default `malloc`/`new`. Baseline for correctness and simple tests.                                                          |
+| Simple mutex-backed pool | Shared pool protected by a mutex.                                            |
+| Per-thread freelist / pool | Per-thread caches/freelists for fixed-size objects.                                   |
+| Arena / region allocator | Allocate from a contiguous region and free in bulk.                                  |
+| Slab / fixed-size allocator | Preallocated slabs for identical-size objects. |
 
 ---
 
