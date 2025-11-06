@@ -109,11 +109,21 @@ Each category can be implemented with:
 | **SPSC / MPSC Queues** | Single- / Multi- producer-consumer queues for data passing                                             |
 | **Spinlocks / Backoff Strategies** | For fallback mechanisms under contention                                                               |
 
-*Benchmark goals:* microsecond-level latency, millions of ops/sec, lock contention scaling.
+---
+
+### 8. Custom Allocators
+
+| Allocator | Description / Suggested path                                                                                                 |
+|---|------------------------------------------------------------------------------------------------------------------------------|
+| System allocator | Default `malloc`/`new`. Baseline for correctness and simple tests.                                                           |
+| Simple mutex-backed pool | Shared pool protected by a mutex (easy to implement, good for correctness tests).                                            |
+| Per-thread freelist / pool | Per-thread caches/freelists for fixed-size objects; low overhead and simple to implement.                                    |
+| Arena / region allocator | Allocate from a contiguous region and free in bulk; straightforward and fast to implement.                                   |
+| Slab / fixed-size allocator | Preallocated slabs for identical-size objects; implementable with arrays + free list.  |
 
 ---
 
-### 8. Parallel and System-Level Algorithms
+### 9. Parallel and System-Level Algorithms
 
 | Category | Examples |
 |-----------|-----------|
@@ -124,15 +134,13 @@ Each category can be implemented with:
 
 ---
 
-### 9. Machine Learning Basics (optional / future)
+### 10. Machine Learning Basics (optional / future)
 | Topic | Example Algorithms |
 |--------|-------------------|
 | **Supervised** | Linear Regression, Logistic Regression, KNN |
 | **Optimization** | Gradient Descent (batch / stochastic / momentum), Adam |
 | **Unsupervised** | K-Means, PCA |
 | **Probabilistic** | Naive Bayes, Hidden Markov Models |
-
----
 
 ## ⚙️ Build, Debug & Profiling (shortcuts)
 
