@@ -1,7 +1,5 @@
 # Proof of Garner's algorithm
 
-This document gives a clear, reader-friendly proof of correctness for Garner's algorithm in the standard (pairwise-coprime moduli) setting. It is split into sections so it renders well on GitHub.
-
 ## 1. Overview
 
 Garner's algorithm reconstructs an integer `x` from its residues
