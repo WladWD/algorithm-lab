@@ -33,7 +33,7 @@ This section collects fundamental algebraic and number-theory algorithms commonl
 | Extended Euclid | Find x, y such that ax + by = gcd(a,b). Used for modular inverses and Diophantine equations. |
 | Modular inverse | Compute a^{-1} mod m (via extgcd or powmod when m is prime). |
 | Fast modular exponentiation (powmod) | Binary exponentiation modulo m. |
-| Chinese Remainder Theorem (CRT) | Solve x ≡ a_i (mod m_i) for pairwise-coprime moduli (construction & verification). |
+| [Chinese Remainder Theorem (CRT)](src/algebra/crt/README.md) | Solve x ≡ a_i (mod m_i) for pairwise-coprime moduli. |
 | Garner's algorithm | CRT variant useful for mixed/non-coprime moduli conversion and reconstruction. |
 | Sieve of Eratosthenes | Generate primes up to N efficiently. |
 | Miller–Rabin primality | Probabilistic primality test (deterministic bases for 64-bit). |
