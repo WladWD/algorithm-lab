@@ -23,7 +23,27 @@ Each category can be implemented with:
 
 ---
 
-### 1. Graph Algorithms
+### 1. Algebra & Number Theory
+
+This section collects fundamental algebraic and number-theory algorithms commonly used across competitive programming, cryptography, and algorithmic libraries. Each entry includes a short description.
+
+| Algorithm | Description |
+|---|---|
+| Euclidean algorithm (GCD) | Iterative/recursive gcd(a, b). |
+| Extended Euclid | Find x, y such that ax + by = gcd(a,b). Used for modular inverses and Diophantine equations. |
+| Modular inverse | Compute a^{-1} mod m (via extgcd or powmod when m is prime). |
+| Fast modular exponentiation (powmod) | Binary exponentiation modulo m. |
+| Chinese Remainder Theorem (CRT) | Solve x ≡ a_i (mod m_i) for pairwise-coprime moduli (construction & verification). |
+| Garner's algorithm | CRT variant useful for mixed/non-coprime moduli conversion and reconstruction. |
+| Sieve of Eratosthenes | Generate primes up to N efficiently. |
+| Miller–Rabin primality | Probabilistic primality test (deterministic bases for 64-bit). |
+| Pollard's Rho | Practical integer factorization for 64-bit numbers. |
+| Discrete logarithm (BSGS) | Baby-step giant-step for solving a^x ≡ b (mod p). |
+| Number-Theoretic Transform (NTT) | FFT analog in finite fields for fast convolution. |
+
+---
+
+### 2. Graph Algorithms
 
 | Subcategory | Algorithms                                                                                                                                                                                                               |
 |--------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -37,7 +57,7 @@ Each category can be implemented with:
 
 ---
 
-### 2. Sorting and Searching
+### 3. Sorting and Searching
 
 | Type | Algorithms |
 |------|-------------|
@@ -48,7 +68,7 @@ Each category can be implemented with:
 
 ---
 
-### 3. Data Structures
+### 4. Data Structures
 
 | Category | Implementations |
 |-----------|----------------|
@@ -61,7 +81,7 @@ Each category can be implemented with:
 
 ---
 
-### 4. Dynamic Programming & Optimization
+### 5. Dynamic Programming & Optimization
 
 | Type | Examples |
 |------|-----------|
@@ -72,7 +92,7 @@ Each category can be implemented with:
 
 ---
 
-### 5. Mathematical Algorithms
+### 6. Mathematical Algorithms
 
 | Topic | Examples |
 |--------|-----------|
@@ -84,7 +104,7 @@ Each category can be implemented with:
 
 ---
 
-### 6. String Algorithms
+### 7. String Algorithms
 
 | Category | Algorithms |
 |-----------|-------------|
@@ -95,7 +115,7 @@ Each category can be implemented with:
 
 ---
 
-### 7. Lock-Free and Concurrent Data Structures 
+### 8. Lock-Free and Concurrent Data Structures 
 
 | Structure | Description / Use                                                                                      |
 |------------|--------------------------------------------------------------------------------------------------------|
@@ -111,7 +131,7 @@ Each category can be implemented with:
 
 ---
 
-### 8. Custom Allocators
+### 9. Custom Allocators
 
 | Allocator | Description / Suggested path                                                                                                |
 |---|-----------------------------------------------------------------------------------------------------------------------------|
@@ -123,7 +143,7 @@ Each category can be implemented with:
 
 ---
 
-### 9. Parallel and System-Level Algorithms
+### 10. Parallel and System-Level Algorithms
 
 | Category | Examples |
 |-----------|-----------|
@@ -134,7 +154,7 @@ Each category can be implemented with:
 
 ---
 
-### 10. Machine Learning Basics (optional / future)
+### 11. Machine Learning Basics (optional / future)
 | Topic | Example Algorithms |
 |--------|-------------------|
 | **Supervised** | Linear Regression, Logistic Regression, KNN |
