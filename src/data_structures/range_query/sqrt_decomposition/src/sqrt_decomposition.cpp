@@ -1,12 +1,12 @@
 #include <data_structures/range_query/sqrt_decomposition/sqrt_decomposition.h>
 
 namespace ds::range_query::sqrt_decomposition {
-SqrtDecomposition::SqrtDecomposition(const std::vector<int64_t>& arr = {}) {
+SqrtDecomposition::SqrtDecomposition(const std::vector<int64_t>& arr) {
     A = arr;
     N = static_cast<int64_t>(A.size());
     B = std::max((int64_t)1ll, static_cast<int64_t>(std::sqrt(static_cast<double>(N))));
     blockCount = (N + B - 1) / B;
-    blockSum.assign(std::max(1, blockCount), 0);
+    blockSum.assign(std::max((int64_t)1, blockCount), 0);
     for (int i = 0; i < N; ++i) {
         blockSum[i / B] += A[i];
     }
@@ -21,7 +21,7 @@ void SqrtDecomposition::update(int idx, int64_t val) {
     A[idx] = val;
 }
 
-i64 SqrtDecomposition::query(int64_t l, int64_t r) const {
+int64_t SqrtDecomposition::query(int64_t l, int64_t r) const {
     if (N == 0)
         return 0;
     if (l < 0)
