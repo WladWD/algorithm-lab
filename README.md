@@ -78,7 +78,7 @@ This section collects fundamental algebraic and number-theory algorithms commonl
 | **Heaps / Priority Queues** | Binary Heap, Fibonacci Heap, Pairing Heap |
 | **Union-Find / DSU** | Path compression + union by rank |
 | **Spatial Structures** | KD-Tree, Quadtree, R-Tree (optional, for advanced geometry) |
-| **Range Query Techniques** | Sqrt (block) decomposition, [Mo's algorithm (offline queries)](src/data_structures/range_query/mo), RMQ (sparse table) |
+| **Range Query Techniques** | [Sqrt (block) decomposition](src/data_structures/range_query/sqrt_decomposition), [Mo's algorithm (offline queries)](src/data_structures/range_query/mo), RMQ (sparse table) |
 
 ---
 
