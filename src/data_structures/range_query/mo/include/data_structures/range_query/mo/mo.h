@@ -1,10 +1,10 @@
 #pragma once
 
-#include <vector>
 #include <algorithm>
 #include <cmath>
 #include <cstdint>
 #include <iostream>
+#include <vector>
 
 namespace ds::range_query::mo {
 struct Query {

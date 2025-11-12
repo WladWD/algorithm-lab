@@ -4,7 +4,8 @@ namespace ds::range_query::mo {
 std::vector<int> mo_solve_distinct(std::vector<int> A, std::vector<Query> queries) {
     const size_t N = A.size();
     const size_t Q = queries.size();
-    if (Q == 0) return {};
+    if (Q == 0)
+        return {};
 
     // Coordinate-compress values in A to small non-negative integers [0..M-1]
     std::vector<int> vals = A;
@@ -19,11 +20,13 @@ std::vector<int> mo_solve_distinct(std::vector<int> A, std::vector<Query> querie
     int B = std::max<int>(1, static_cast<int>(std::sqrt((double)N)));
 
     // Sort queries by block(l) and r; use odd-even trick for better locality.
-    std::sort(queries.begin(), queries.end(), [B](const Query &x, const Query &y) {
+    std::sort(queries.begin(), queries.end(), [B](const Query& x, const Query& y) {
         int bx = x.l / B, by = y.l / B;
-        if (bx != by) return bx < by;
-        if (bx & 1) return x.r > y.r; // odd block -> descending r
-        return x.r < y.r;             // even block -> ascending r
+        if (bx != by)
+            return bx < by;
+        if (bx & 1)
+            return x.r > y.r; // odd block -> descending r
+        return x.r < y.r;     // even block -> ascending r
     });
 
     // Frequency array and current distinct count
@@ -32,21 +35,27 @@ std::vector<int> mo_solve_distinct(std::vector<int> A, std::vector<Query> querie
 
     auto add = [&](int pos) {
         int v = A[pos];
-        if (++freq[v] == 1) ++distinct;
+        if (++freq[v] == 1)
+            ++distinct;
     };
     auto remove = [&](int pos) {
         int v = A[pos];
-        if (--freq[v] == 0) --distinct;
+        if (--freq[v] == 0)
+            --distinct;
     };
 
     std::vector<int> ans(Q);
     int curL = 0, curR = -1; // empty window
 
-    for (const auto &q : queries) {
-        while (curL > q.l) add(--curL);
-        while (curR < q.r) add(++curR);
-        while (curL < q.l) remove(curL++);
-        while (curR > q.r) remove(curR--);
+    for (const auto& q : queries) {
+        while (curL > q.l)
+            add(--curL);
+        while (curR < q.r)
+            add(++curR);
+        while (curL < q.l)
+            remove(curL++);
+        while (curR > q.r)
+            remove(curR--);
         ans[q.idx] = distinct;
     }
 

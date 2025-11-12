@@ -38,4 +38,20 @@ cmake --preset sanitizers
 cmake --build --preset sanitizers -j
 ```
 
+# Run clang-format
+Format in-place:
+```bash
+# configure (ensures the format target is available)
+cmake --preset dev
+
+# run the format target to apply formatting to all tracked source files
+cmake --build --preset dev --target format
+```
+
+Check formatting (dry-run, fails if anything is unformatted):
+```bash
+cmake --preset dev
+cmake --build --preset dev --target format-check
+```
+
 The build artifacts are placed under `out/build/<preset>/`, e.g., `out/build/dev/algorithms/` for algorithm binaries.

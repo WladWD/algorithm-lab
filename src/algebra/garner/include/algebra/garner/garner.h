@@ -1,10 +1,10 @@
 #pragma once
 
-#include <vector>
 #include <cstdint>
-#include <tuple>
 #include <stdexcept>
+#include <tuple>
 #include <type_traits>
+#include <vector>
 
 namespace algebra::garner {
 // Extended GCD: returns (g, x, y) with a*x + b*y = g = gcd(a,b)
