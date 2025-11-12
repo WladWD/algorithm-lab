@@ -34,7 +34,7 @@ This section collects fundamental algebraic and number-theory algorithms commonl
 | Modular inverse | Compute a^{-1} mod m (via extgcd or powmod when m is prime). |
 | Fast modular exponentiation (powmod) | Binary exponentiation modulo m. |
 | [Chinese Remainder Theorem (CRT)](src/algebra/crt/README.md) | Solve x ≡ a_i (mod m_i) for pairwise-coprime moduli. |
-| Garner's algorithm | CRT variant useful for mixed/non-coprime moduli conversion and reconstruction. |
+| [Garner's algorithm](src/algebra/garner/src/garner.cpp) | CRT variant useful for mixed/non-coprime moduli conversion and reconstruction. |
 | Sieve of Eratosthenes | Generate primes up to N efficiently. |
 | Miller–Rabin primality | Probabilistic primality test (deterministic bases for 64-bit). |
 | Pollard's Rho | Practical integer factorization for 64-bit numbers. |
