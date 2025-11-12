@@ -1,0 +1,3 @@
+add_executable(test_data_structures_range_query_mo mo/test_mo.cpp)
+target_link_libraries(test_data_structures_range_query_mo PRIVATE data_structures::range_query::mo GTest::gtest_main)
+add_test(NAME data_structures.range_query.mo COMMAND test_data_structures_range_query_mo)
