@@ -1,5 +1,6 @@
-#include <gtest/gtest.h>
 #include "algebra/gcdext/gcdext.h"
+
+#include <gtest/gtest.h>
 #include <tuple>
 
 using namespace algebra::gcdext;
@@ -25,4 +26,3 @@ TEST(GcdExtTest, DiophantineSolution) {
 }
 
 // No main: using GTest main provided by GTest::gtest_main
-

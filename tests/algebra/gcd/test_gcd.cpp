@@ -1,5 +1,6 @@
-#include <gtest/gtest.h>
 #include "algebra/gcd/gcd.h"
+
+#include <gtest/gtest.h>
 #include <tuple>
 
 using namespace algebra::gcd;
@@ -13,4 +14,3 @@ TEST(GcdExtTest, GcdBasics) {
 }
 
 // No main: using GTest main provided by GTest::gtest_main
-
