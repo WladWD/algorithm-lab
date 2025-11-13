@@ -27,19 +27,19 @@ Each category can be implemented with:
 
 This section collects fundamental algebraic and number-theory algorithms commonly used across competitive programming, cryptography, and algorithmic libraries. Each entry includes a short description.
 
-| Algorithm                                                    | Description |
-|--------------------------------------------------------------|---|
-| [Euclidean algorithm (GCD)](src/algebra/gcd)                 | Iterative/recursive gcd(a, b). |
-| [Extended Euclid](src/algebra/gcdext)                        | Find x, y such that ax + by = gcd(a,b). Used for modular inverses and Diophantine equations. |
-| Modular inverse                                              | Compute a^{-1} mod m (via extgcd or powmod when m is prime). |
-| Fast modular exponentiation (powmod)                         | Binary exponentiation modulo m. |
-| [Chinese Remainder Theorem (CRT)](src/algebra/crt/README.md) | Solve x ≡ a_i (mod m_i) for pairwise-coprime moduli. |
-| [Garner's algorithm](src/algebra/garner/src/garner.cpp)      | CRT variant useful for mixed/non-coprime moduli conversion and reconstruction. |
-| Sieve of Eratosthenes                                        | Generate primes up to N efficiently. |
-| Miller–Rabin primality                                       | Probabilistic primality test (deterministic bases for 64-bit). |
-| Pollard's Rho                                                | Practical integer factorization for 64-bit numbers. |
-| Discrete logarithm (BSGS)                                    | Baby-step giant-step for solving a^x ≡ b (mod p). |
-| Number-Theoretic Transform (NTT)                             | FFT analog in finite fields for fast convolution. |
+| Algorithm                                      | Description |
+|------------------------------------------------|---|
+| [Euclidean algorithm (GCD)](src/algebra/gcd)   | Iterative/recursive gcd(a, b). |
+| [Extended Euclid](src/algebra/gcdext)          | Find x, y such that ax + by = gcd(a,b). Used for modular inverses and Diophantine equations. |
+| Modular inverse                                | Compute a^{-1} mod m (via extgcd or powmod when m is prime). |
+| [Fast modular exponentiation (powmod)](src/algebra/powmod)  | Binary exponentiation modulo m. |
+| [Chinese Remainder Theorem (CRT)](src/algebra/crt/) | Solve x ≡ a_i (mod m_i) for pairwise-coprime moduli. |
+| [Garner's algorithm](src/algebra/garner/)      | CRT variant useful for mixed/non-coprime moduli conversion and reconstruction. |
+| Sieve of Eratosthenes                          | Generate primes up to N efficiently. |
+| Miller–Rabin primality                         | Probabilistic primality test (deterministic bases for 64-bit). |
+| Pollard's Rho                                  | Practical integer factorization for 64-bit numbers. |
+| Discrete logarithm (BSGS)                      | Baby-step giant-step for solving a^x ≡ b (mod p). |
+| Number-Theoretic Transform (NTT)               | FFT analog in finite fields for fast convolution. |
 
 ---
 
