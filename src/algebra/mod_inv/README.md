@@ -132,3 +132,68 @@ Both approaches perform a small number of modular multiplications; use 128-bit i
 - Decide how to signal non-existence: return `std::optional`, `-1`, throw, or document precondition `gcd(a,m)==1`.
 - Be careful with negative inputs; normalize to `[0, m-1]` when returning the inverse.
 - Watch overflow in modular multiplication; prefer `__int128` or modular multiplication helpers for 64-bit moduli.
+
+## Computing all modular inverses in O(n)
+
+It is often useful to compute the modular inverses for all integers in a range (typically `1..n` or `1..mod-1`) in linear time. A well-known formula allows computing all inverses in O(n) time using a simple recurrence — this is most commonly used with a prime modulus `p`.
+
+### Formula and derivation (prime modulus)
+
+For a prime modulus `p`, every integer `i` with `1 <= i < p` has an inverse modulo `p`. The recurrence is:
+
+```text
+inv[1] = 1
+for i = 2..n:
+    inv[i] = p - (p / i) * inv[p % i] (mod p)
+```
+
+Derivation sketch:
+- Write `p = i * q + r` with `q = p / i` and `r = p % i`.
+- Rearranging gives `i * q ≡ -r (mod p)` and therefore `i * ( -q * inv[r] ) ≡ 1 (mod p)` when `inv[r]` exists.
+- This leads to `inv[i] ≡ - (p / i) * inv[p % i] (mod p)`. Converting the negative representative into `[0, p-1]` yields the formula above.
+
+### Preconditions
+- The algorithm computes inverses for every `1 <= i <= n` and requires that each `i` be invertible modulo `p` (for the standard use-case choose `n <= p-1` and `p` prime).
+- If you need inverses modulo a composite `m`, this recurrence does not guarantee correctness for non-coprime values; use `extgcd` per value or a sieve-like approach to mark non-invertible entries.
+
+### C++ implementation (prime modulus)
+
+```cpp
+#include <vector>
+#include <cstdint>
+
+// compute inverses for 1..n modulo p (requires p to be prime and 1 <= n < p)
+std::vector<long long> invs_linear(long long p, int n) {
+    std::vector<long long> inv(n + 1);
+    if (n >= 1) inv[1] = 1;
+    for (int i = 2; i <= n; ++i) {
+        long long q = p / i;
+        long long r = p % i;
+        // inv[i] = p - q * inv[r] % p
+        inv[i] = (p - ( (__int128)q * inv[r] ) % p) % p;
+    }
+    return inv;
+}
+```
+
+Example usage:
+
+```cpp
+auto inv = invs_linear(1000000007LL, 10);
+// inv[1] == 1, inv[2] == 500000004, inv[3] == 333333336, ...
+```
+
+### Composite modulus: notes and fallback
+
+- For composite `m` many values `i` in `1..m-1` are not invertible. You can:
+    - Use `gcd(i, m)` to check invertibility; if `gcd(i, m) != 1`, mark inverse as "none" (e.g., `0` or `std::optional`). This check costs O(log m) per value and makes total O(n log m).
+    - Use `extgcd` to compute the inverse per value when `gcd(i,m)==1`. This is also O(n log m) in total.
+- There is no general O(n) method that computes all inverses for a composite modulus without relying on special structure (e.g., prime power factorization) because invertibility depends on primal factors.
+
+### Complexity
+- Time: O(n) arithmetic operations (for prime `p` and `n <= p-1`).
+- Memory: O(n) to store the array of inverses.
+
+### Practical tip
+- This linear method is widely used to precompute inverses to build modular factorials and binomial coefficients modulo prime `p` in O(n) time (compute factorials, inverse factorials via inverses or by computing inv_fact[n] = modpow(fact[n], p-2, p) and then inv_fact[i-1] = inv_fact[i] * i % p).
+
