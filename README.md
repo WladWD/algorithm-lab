@@ -31,7 +31,7 @@ This section collects fundamental algebraic and number-theory algorithms commonl
 |------------------------------------------------|---|
 | [Euclidean algorithm (GCD)](src/algebra/gcd)   | Iterative/recursive gcd(a, b). |
 | [Extended Euclid](src/algebra/gcdext)          | Find x, y such that ax + by = gcd(a,b). Used for modular inverses and Diophantine equations. |
-| Modular inverse                                | Compute a^{-1} mod m (via extgcd or powmod when m is prime). |
+| [Modular inverse](src/algebra/mod_inv)                                | Compute a^{-1} mod m (via extgcd or powmod when m is prime). |
 | [Fast modular exponentiation (powmod)](src/algebra/powmod)  | Binary exponentiation modulo m. |
 | [Chinese Remainder Theorem (CRT)](src/algebra/crt/) | Solve x ≡ a_i (mod m_i) for pairwise-coprime moduli. |
 | [Garner's algorithm](src/algebra/garner/)      | CRT variant useful for mixed/non-coprime moduli conversion and reconstruction. |
