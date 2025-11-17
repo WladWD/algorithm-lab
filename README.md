@@ -166,7 +166,7 @@ This section collects fundamental algebraic and number-theory algorithms commonl
 ### 12. Memory layout and Data Locality 
 | Topic | Description                                                                                                                                                                        |
 |--------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **AoS (Array of Structures) and SoA (Structure of Arrays)** | AoS and SoA are two different methods for organizing data in memory. |
+| **[AoS (Array of Structures) and SoA (Structure of Arrays)](benchmarks/memory_layout/aos_soa)** | AoS and SoA are two different methods for organizing data in memory. |
 
 ## ⚙️ Build, Debug & Profiling (shortcuts)
 
