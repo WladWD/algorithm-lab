@@ -164,9 +164,9 @@ This section collects fundamental algebraic and number-theory algorithms commonl
 | **Probabilistic** | Naive Bayes, Hidden Markov Models |
 
 ### 12. Memory layout and Data Locality 
-| Topic | Description                                                                                                                                                                            |
-|--------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **AoS vs SoA** | AoS (Array of Structures) and SoA (Structure of Arrays) are two different methods for organizing data in memory, and the choice between them depends on how the data will be accessed. |
+| Topic | Description                                                                                                                                                                        |
+|--------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **AoS (Array of Structures) and SoA (Structure of Arrays)** | AoS and SoA are two different methods for organizing data in memory. |
 
 ## ⚙️ Build, Debug & Profiling (shortcuts)
 
