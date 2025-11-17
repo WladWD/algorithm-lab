@@ -155,13 +155,18 @@ This section collects fundamental algebraic and number-theory algorithms commonl
 
 ---
 
-### 11. Machine Learning Basics (optional / future)
+### 11. Machine Learning Basics
 | Topic | Example Algorithms |
 |--------|-------------------|
 | **Supervised** | Linear Regression, Logistic Regression, KNN |
 | **Optimization** | Gradient Descent (batch / stochastic / momentum), Adam |
 | **Unsupervised** | K-Means, PCA |
 | **Probabilistic** | Naive Bayes, Hidden Markov Models |
+
+### 12. Memory layout and Data Locality 
+| Topic | Description                                                                                                                                                                            |
+|--------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **AoS vs SoA** | AoS (Array of Structures) and SoA (Structure of Arrays) are two different methods for organizing data in memory, and the choice between them depends on how the data will be accessed. |
 
 ## ⚙️ Build, Debug & Profiling (shortcuts)
 
