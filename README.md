@@ -150,7 +150,7 @@ This section collects fundamental algebraic and number-theory algorithms commonl
 |-----------|-----------|
 | **Parallel Sorting** | Parallel MergeSort, Bitonic Sort (SIMD / OpenMP) |
 | **Concurrent Data Processing** | Producer-Consumer pipeline |
-| **Memory Layout / Cache Optimization** | [SoA vs AoS](benchmarks/memory_layout/aos_soa), cache line alignment, prefetching |
+| **Memory Layout / Cache Optimization** | [SoA vs AoS](benchmarks/memory_layout/aos_soa), [cache line alignment, prefetching](benchmarks/memory_layout/cache/README.md) |
 | **Scheduling** | Work-stealing queues, load balancing heuristics |
 
 ---
