@@ -150,7 +150,7 @@ This section collects fundamental algebraic and number-theory algorithms commonl
 |-----------|-----------|
 | **Parallel Sorting** | Parallel MergeSort, Bitonic Sort (SIMD / OpenMP) |
 | **Concurrent Data Processing** | Producer-Consumer pipeline |
-| **Memory Layout / Cache Optimization** | SoA vs AoS, cache line alignment, prefetching |
+| **Memory Layout / Cache Optimization** | [SoA vs AoS](benchmarks/memory_layout/aos_soa), cache line alignment, prefetching |
 | **Scheduling** | Work-stealing queues, load balancing heuristics |
 
 ---
@@ -163,10 +163,6 @@ This section collects fundamental algebraic and number-theory algorithms commonl
 | **Unsupervised** | K-Means, PCA |
 | **Probabilistic** | Naive Bayes, Hidden Markov Models |
 
-### 12. Memory layout and Data Locality 
-| Topic | Description                                                                                                                                                                        |
-|--------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **[AoS (Array of Structures) and SoA (Structure of Arrays)](benchmarks/memory_layout/aos_soa)** | AoS and SoA are two different methods for organizing data in memory. |
 
 ## ⚙️ Build, Debug & Profiling (shortcuts)
 
