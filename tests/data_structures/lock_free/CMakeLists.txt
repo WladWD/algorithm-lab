@@ -13,3 +13,5 @@ target_link_libraries(test_data_structures_lock_free_queue PRIVATE
         GTest::gtest_main
 )
 add_test(NAME data_structures.lock_free.queue COMMAND test_data_structures_lock_free_queue)
+
+add_subdirectory(ring_buffer)

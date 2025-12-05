@@ -122,7 +122,7 @@ This section collects fundamental algebraic and number-theory algorithms commonl
 |------------|--------------------------------------------------------------------------------------------------------|
 | **Lock-Free Stack** | [Based on atomic CAS; Treiber’s stack](src/data_structures/lock_free/stack)                            |
 | **Lock-Free Queue** | [Michael & Scott queue (single-producer/single-consumer or MPMC)](src/data_structures/lock_free/queue) |
-| **Ring Buffer (Circular Queue)** | Fixed-capacity, cache-friendly, used in trading systems                                                |
+| **Ring Buffer (Circular Queue)** | [Fixed-capacity, cache-friendly, used in trading systems](src/data_structures/lock_free/ring_buffer/README.md) |
 | **Lock-Free Hash Map** | Open addressing + atomic updates                                                                       |
 | **Hazard Pointers / Epoch Reclamation** | Safe memory reclamation without global locks                                                           |
 | **Wait-Free Counter / Atomic Variables** | Atomic fetch-add / relaxed memory semantics                                                            |
