@@ -1,72 +1,167 @@
 # Ring Buffer (Circular Queue)
 
+
 ## Overview
 
-A ring buffer stores elements in a fixed-size circular array. Producers write items at the "tail" and consumers read items from the "head". When implemented properly, ring buffers provide constant-time enqueue/dequeue and excellent cache behavior.
+A ring buffer stores items in an array of size N and maintains two indices:
+- `head` — index of the next element to be consumed
+- `tail` — index of the next slot to be produced
 
-A ring buffer is especially attractive in producer-consumer scenarios where allocating per-element objects is expensive or where low allocation jitter is critical.
+Indices advance modulo `N`. Producers write at `tail` and then advance it; consumers read from `head` and advance it. In lock-free implementations these indices are typically atomic counters with appropriately chosen memory orderings.
 
-## Common variants
+Ring buffers are widely used in streaming, networking, logging, and real-time systems where predictable latency and minimal allocation jitter are required.
 
-- SPSC: single producer, single consumer — the simplest and fastest variant; can be implemented without locks and without atomic CAS in many cases.
-- MPSC: multiple producers, single consumer — typically implemented with atomic fetch_add for producers and a plain consumer index.
-- SPMC: single producer, multiple consumers — symmetrical to MPSC.
-- MPMC: multiple producers and multiple consumers — the most general; implementations usually require CAS/compare_exchange and careful progress guarantees.
+---
 
-Most low-latency systems use SPSC or MPSC variants because they are simpler and faster.
+## Variants
 
-## Correctness invariants
+Choose the variant that fits your concurrency model:
 
-Let capacity = N (usually power of two). Keep two indices:
-- head — next element to read (consumer index)
-- tail — next slot to write (producer index)
+- SPSC — Single-Producer / Single-Consumer
+  - Simplest, fastest. Often requires only relaxed atomics and a single release-acquire pair to publish/consume.
 
-Empty: head == tail
-Full: (tail + 1) % N == head  (when using one slot to distinguish full/empty)
+- MPSC — Multiple-Producers / Single-Consumer
+  - Producers claim slots via an atomic ticket (fetch_add) and publish the element; consumer remains single-threaded.
 
-Alternative: track size or use sequence counters (Lamport/Cohen patterns) to allow full-capacity usage; but the single-empty-slot approach is simplest.
+- SPMC — Single-Producer / Multiple-Consumers
+  - Symmetric to MPSC with consumer-side coordination.
 
-## Efficient implementations
+- MPMC — Multiple-Producers / Multiple-Consumers
+  - The most general and complex: usually needs per-slot sequence counters and CAS to guarantee correctness.
 
-Guidelines:
-- Use power-of-two capacity and index masking: index & (N - 1) to avoid modulo.
-- Pad head/tail to separate cache lines to avoid false sharing between producer and consumer.
-- For SPSC you can use relaxed memory ordering for many operations, using a release-acquire pair for publish/consume.
-- For MPSC producers typically use atomic fetch_add (relaxed semantics) to claim a slot and then publish the element with a release store; the consumer uses acquire loads.
+In this repository we focus on SPSC and MPSC patterns because they are simpler to reason about and perform well for common systems workloads.
 
-### SPSC (fastest)
-- No CAS required.
-- Producer updates tail (store) after writing the value with release semantics.
-- Consumer reads head and the slot with acquire semantics and then advances head.
-- Example: a standard circular array with atomic<uint64_t> head, tail; but only one writer/reader touches each index.
+---
 
-### MPSC (practical)
-- Producers use fetch_add on a single atomic counter to obtain a ticket/slot index.
-- Producers write data into the claimed slot and then perform a release-store to a per-slot sequence or flag to mark it ready.
-- Consumer scans slots (or uses a sequence counter) and performs acquire reads when consuming.
-- This pattern avoids heavy CAS on every enqueue and works well when writes are frequent and contention is moderate.
+## Correctness invariants & capacity conventions
 
-### MPMC (complex)
-- Requires per-slot CAS for correct handoff or more complex fencing with sequence numbers.
-- Consider using established libraries (folly::ProducerConsumerQueue, Boost.Lockfree) unless you need a custom implementation.
+Let `N` be the buffer array length (power-of-two is recommended). Common conventions:
 
-## Memory-ordering and false-sharing
+- Empty condition (one-slot reserved):
 
-- Use `alignas(64)` or explicit padding for indices and per-slot metadata to avoid false sharing.
+```
+head == tail        // buffer is empty
+```
+
+- Full condition (one-slot reserved):
+
+```
+(tail + 1) % N == head   // buffer is full
+```
+
+The one-slot-reserved convention is simple and avoids ambiguity between full and empty states. If full-capacity usage is required, use sequence counters that encode the producer/consumer epoch per-slot.
+
+Power-of-two `N` allows replacing `% N` with `& (N - 1)` for cheaper masking.
+
+---
+
+## Implementation patterns and recipes
+
+Practical recipes and common optimizations:
+
+- Use power-of-two capacity and index masking: `idx & (N - 1)`.
+- Pad or align `head` and `tail` to separate cache lines (e.g. `alignas(64)`) to avoid false sharing between producers and consumers.
 - For SPSC:
-  - Producer: write element -> std::atomic_thread_fence(std::memory_order_release) or release-store to tail.
-  - Consumer: read tail with acquire semantics to observe published elements.
-- For MPSC:
-  - Producers: use atomic fetch_add (acquire-release or relaxed + release publish step) to claim slots.
-  - Consumers: use acquire loads to read published flags.
+  - Producer: write payload into slot, then publish by writing `tail` with `memory_order_release`.
+  - Consumer: read `tail` with `memory_order_acquire` and then load payload.
+  - Many implementations can use `memory_order_relaxed` for loads/stores that are internal and do not synchronize.
 
-Prefer simple and well-understood orderings; avoid mixing many fences unless necessary.
+- For MPSC:
+  - Producers use `ticket = prod_index.fetch_add(1, relaxed)` to claim a slot index.
+  - Producers write into `slots[ticket & mask]` and then publish the slot with a release-store (e.g. increment per-slot sequence or flip a flag).
+  - Consumer reads per-slot sequence/flag with acquire semantics to ensure visibility.
+
+- Sequence-based approach (Vyukov-style) for MPMC: each slot carries a sequence number that encodes its epoch; producers and consumers use that number to detect readiness and ownership without heavy CAS on every operation.
+
+---
+
+## Memory-ordering and false sharing
+
+Typical memory-ordering recipe (SPSC):
+
+- Producer: construct payload into slot (non-atomic writes) -> `std::atomic_thread_fence(std::memory_order_release)` or `tail.store(next, std::memory_order_release)`.
+- Consumer: read `tail` with `std::memory_order_acquire` before loading the slot data.
+
+For MPSC/MPSC patterns combine relaxed `fetch_add` with a release publish step to avoid excessive fencing.
+
+Always align per-index atomics to cache-line boundaries:
+
+```cpp
+alignas(64) std::atomic<size_t> head;
+alignas(64) std::atomic<size_t> tail;
+```
+
+This avoids cache-line ping-pong when head and tail are updated by different threads.
+
+---
+
+## API design and usage examples (C++)
+
+Minimal API (recommended):
+
+```cpp
+template <typename T>
+class RingBuffer {
+public:
+    explicit RingBuffer(size_t capacity);
+    bool try_enqueue(const T &value); // non-blocking, returns false when full
+    bool try_dequeue(T &out);          // non-blocking, returns false when empty
+    size_t capacity() const noexcept;
+    size_t size() const noexcept;      // approximate under concurrency
+};
+```
+
+SPSC example (high-level snippet):
+
+```cpp
+SpscRing<int> q(1024);
+q.try_enqueue(42);
+int value;
+if (q.try_dequeue(value)) {
+    // consumed
+}
+```
+
+MPSC sketch (producer):
+
+```cpp
+// producer thread
+uint64_t ticket = prod_idx.fetch_add(1, std::memory_order_relaxed);
+Slot &s = slots[ticket & mask];
+// write payload into s.data
+// publish: s.seq.store(ticket + 1, std::memory_order_release);
+```
+
+Consumer checks `s.seq` with acquire semantics and consumes ready slots.
+
+---
+
+## Complexity and performance characteristics
+
+- Time: O(1) amortized for enqueue/dequeue (constant-time arithmetic and atomic ops).
+- Space: O(N) capacity. With sequence counters per-slot add O(N) metadata.
+- Contention: SPSC has minimal contention; MPSC introduces atomic `fetch_add` contention among producers; MPMC may suffer CAS retry storms under high contention.
+
+Performance tuning checklist:
+- Use `-O3 -march=native` when benchmarking.
+- Tune buffer size relative to working-set and cache sizes.
+- Pin threads (CPU affinity) for stable latency measurements.
+
+---
+
+## Pitfalls and practical tips
+
+- Do not free or reuse nodes early if other threads might still access them; use safe reclamation strategies when nodes are dynamically allocated.
+- Beware of integer overflow on indices: use sufficiently wide counters (64-bit) or mask indices carefully.
+- Prefer sequence-number-based designs for MPMC variants to avoid ABA issues.
+- Avoid hidden allocations under the hot path (use preallocated buffers).
+
+---
 
 ## References
 
-- L. M. Lamport: "Concurrent Programming" patterns and the circular buffer concept.
-- Dmitry Vyukov: MPMC queue algorithms and sequence-based ring buffer techniques.
-- Anthony Williams, "C++ Concurrency in Action" on lock-free patterns.
-
-
+- M. Michael & M. Scott, "Simple, Fast, and Practical Non-Blocking and Blocking Concurrent Queue Algorithms" (1996).
+- Dmitry Vyukov: MPMC queue and sequence-based ring buffer patterns (blog posts / sources).
+- Anthony Williams, "C++ Concurrency in Action" — chapter on lock-free algorithms.
+- Herb Sutter, concurrency talks and articles on lock-free design.
 
