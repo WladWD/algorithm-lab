@@ -211,4 +211,121 @@ private:
     alignas(std::hardware_destructive_interference_size) std::atomic<uint64_t> cons_idx_;
 };
 
+// ---------------------- MPMC ring buffer (Vyukov-style) ----------------------
+// Multiple-producer / multiple-consumer lock-free bounded queue.
+// - Non-blocking try_enqueue / try_dequeue that return false on full/empty
+// - Uses sequence numbers per slot and CAS on head/tail indices
+// - Power-of-two capacity for masking
+
+template<typename T>
+class MpmcRingBuffer {
+public:
+    static_assert(std::is_nothrow_move_constructible_v<T> || std::is_nothrow_copy_constructible_v<T>,
+                  "MpmcRingBuffer requires T to be nothrow-move-constructible or nothrow-copy-constructible;") ;
+
+    explicit MpmcRingBuffer(size_t capacity)
+    : capacity_(next_pow2(std::max<size_t>(2, capacity))), mask_(capacity_ - 1), slots_(capacity_)
+    {
+        for (size_t i = 0; i < capacity_; ++i) {
+            slots_[i].seq.store(i, std::memory_order_relaxed);
+        }
+        head_.store(0, std::memory_order_relaxed);
+        tail_.store(0, std::memory_order_relaxed);
+    }
+
+    MpmcRingBuffer(const MpmcRingBuffer&) = delete;
+    MpmcRingBuffer& operator=(const MpmcRingBuffer&) = delete;
+
+    ~MpmcRingBuffer() {
+        // best-effort: consumer should have drained queue; otherwise objects still in slots are leaked
+    }
+
+    // Non-blocking enqueue: returns false if queue appears full
+    bool try_enqueue(const T& v) {
+        uint64_t pos = tail_.load(std::memory_order_relaxed);
+        while (true) {
+            Slot& slot = slots_[pos & mask_];
+            uint64_t seq = slot.seq.load(std::memory_order_acquire);
+            intptr_t dif = static_cast<intptr_t>(seq) - static_cast<intptr_t>(pos);
+            if (dif == 0) {
+                // try to claim this slot
+                if (tail_.compare_exchange_weak(pos, pos + 1, std::memory_order_relaxed, std::memory_order_relaxed)) {
+                    void* dst = static_cast<void*>(slot.storage.data());
+                    new (dst) T(v);
+                    slot.seq.store(pos + 1, std::memory_order_release);
+                    return true;
+                }
+                // CAS failed, pos updated with latest tail; retry
+                continue;
+            } else if (dif < 0) {
+                // queue full
+                return false;
+            } else {
+                // slot not ready yet, advance pos and retry
+                pos = tail_.load(std::memory_order_relaxed);
+            }
+        }
+    }
+
+    bool try_enqueue(T&& v) {
+        uint64_t pos = tail_.load(std::memory_order_relaxed);
+        while (true) {
+            Slot& slot = slots_[pos & mask_];
+            uint64_t seq = slot.seq.load(std::memory_order_acquire);
+            intptr_t dif = static_cast<intptr_t>(seq) - static_cast<intptr_t>(pos);
+            if (dif == 0) {
+                if (tail_.compare_exchange_weak(pos, pos + 1, std::memory_order_relaxed, std::memory_order_relaxed)) {
+                    void* dst = static_cast<void*>(slot.storage.data());
+                    new (dst) T(std::move(v));
+                    slot.seq.store(pos + 1, std::memory_order_release);
+                    return true;
+                }
+                continue;
+            } else if (dif < 0) {
+                return false;
+            } else {
+                pos = tail_.load(std::memory_order_relaxed);
+            }
+        }
+    }
+
+    // Non-blocking dequeue: returns false if queue appears empty
+    bool try_dequeue(T& out) {
+        uint64_t pos = head_.load(std::memory_order_relaxed);
+        while (true) {
+            Slot& slot = slots_[pos & mask_];
+            uint64_t seq = slot.seq.load(std::memory_order_acquire);
+            intptr_t dif = static_cast<intptr_t>(seq) - static_cast<intptr_t>(pos + 1);
+            if (dif == 0) {
+                if (head_.compare_exchange_weak(pos, pos + 1, std::memory_order_relaxed, std::memory_order_relaxed)) {
+                    T* ptr = std::launder(reinterpret_cast<T*>(static_cast<void*>(slot.storage.data())));
+                    out = std::move(*ptr);
+                    ptr->~T();
+                    slot.seq.store(pos + capacity_, std::memory_order_release);
+                    return true;
+                }
+                continue;
+            } else if (dif < 0) {
+                return false; // empty
+            } else {
+                pos = head_.load(std::memory_order_relaxed);
+            }
+        }
+    }
+
+    size_t capacity() const noexcept { return capacity_; }
+
+private:
+    struct Slot {
+        std::atomic<uint64_t> seq;
+        alignas(alignof(T)) std::array<std::byte, sizeof(T)> storage;
+    };
+
+    const size_t capacity_;
+    const uint64_t mask_;
+    std::vector<Slot> slots_;
+    alignas(std::hardware_destructive_interference_size) std::atomic<uint64_t> head_;
+    alignas(std::hardware_destructive_interference_size) std::atomic<uint64_t> tail_;
+};
+
 } // namespace data_structures::lock_free
