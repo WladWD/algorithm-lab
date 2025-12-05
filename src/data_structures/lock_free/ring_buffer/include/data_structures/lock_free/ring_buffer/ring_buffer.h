@@ -1,9 +1,11 @@
 #pragma once
 
 #include <atomic>
+#include <array>
 #include <cstddef>
 #include <cstdint>
 #include <new>
+#include <thread>
 #include <type_traits>
 #include <vector>
 #include <cassert>
@@ -101,14 +103,16 @@ public:
 
 private:
     inline T* elem_ptr(size_t idx) noexcept {
-        // placement location inside vector<T> buffer_
-        return std::launder(reinterpret_cast<T*>(&buffer_[idx]));
+        // placement location inside buffer_ which stores aligned byte arrays
+        void* ptr = static_cast<void*>(buffer_[idx].data.data());
+        return std::launder(reinterpret_cast<T*>(ptr));
     }
 
     const size_t capacity_;
     const size_t mask_;
-    // storage: vector of uninitialized T
-    std::vector<std::aligned_storage_t<sizeof(T), alignof(T)>> buffer_;
+    // storage: vector of uninitialized bytes aligned for T
+    struct AlignedSlot { alignas(alignof(T)) std::array<std::byte, sizeof(T)> data; };
+    std::vector<AlignedSlot> buffer_;
     alignas(std::hardware_destructive_interference_size) std::atomic<size_t> head_;
     alignas(std::hardware_destructive_interference_size) std::atomic<size_t> tail_;
 };
@@ -121,6 +125,10 @@ private:
 template<typename T>
 class MpscRingBuffer {
 public:
+    static_assert(std::is_nothrow_move_constructible_v<T> || std::is_nothrow_copy_constructible_v<T>,
+                  "MpscRingBuffer requires T to be nothrow-move-constructible or nothrow-copy-constructible;"
+                  " throwing constructors can lead to consumer stalls/deadlock.");
+
     explicit MpscRingBuffer(size_t capacity)
     : capacity_(next_pow2(std::max<size_t>(2, capacity))), mask_(capacity_ - 1), slots_(capacity_)
     {
@@ -150,7 +158,8 @@ public:
             std::this_thread::yield();
         }
         // construct in place
-        new (&slot.storage) T(v);
+        void* dst = static_cast<void*>(slot.storage.data());
+        new (dst) T(v);
         // publish
         slot.seq.store(ticket + 1, std::memory_order_release);
         return true;
@@ -163,7 +172,8 @@ public:
         while (slot.seq.load(std::memory_order_acquire) != expected) {
             std::this_thread::yield();
         }
-        new (&slot.storage) T(std::move(v));
+        void* dst = static_cast<void*>(slot.storage.data());
+        new (dst) T(std::move(v));
         slot.seq.store(ticket + 1, std::memory_order_release);
         return true;
     }
@@ -175,7 +185,7 @@ public:
         uint64_t seq = slot.seq.load(std::memory_order_acquire);
         if (seq == cid + 1) {
             // ready
-            T* ptr = reinterpret_cast<T*>(&slot.storage);
+            T* ptr = std::launder(reinterpret_cast<T*>(static_cast<void*>(slot.storage.data())));
             out = std::move(*ptr);
             ptr->~T();
             slot.seq.store(cid + capacity_, std::memory_order_release); // make slot available; set to next expected ticket
@@ -190,7 +200,8 @@ public:
 private:
     struct Slot {
         std::atomic<uint64_t> seq; // sequence/epoch
-        std::aligned_storage_t<sizeof(T), alignof(T)> storage;
+        // storage aligned for T using byte array
+        alignas(alignof(T)) std::array<std::byte, sizeof(T)> storage;
     };
 
     const size_t capacity_;
