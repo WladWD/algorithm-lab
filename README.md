@@ -29,12 +29,12 @@ This section collects fundamental algebraic and number-theory algorithms commonl
 
 | Algorithm                                      | Description |
 |------------------------------------------------|---|
-| [Euclidean algorithm (GCD)](src/algebra/gcd)   | Iterative/recursive gcd(a, b). |
-| [Extended Euclid](src/algebra/gcdext)          | Find x, y such that ax + by = gcd(a,b). Used for modular inverses and Diophantine equations. |
-| [Modular inverse](src/algebra/mod_inv)                                | Compute a^{-1} mod m (via extgcd or powmod when m is prime). |
-| [Fast modular exponentiation (powmod)](src/algebra/powmod)  | Binary exponentiation modulo m. |
-| [Chinese Remainder Theorem (CRT)](src/algebra/crt/) | Solve x ≡ a_i (mod m_i) for pairwise-coprime moduli. |
-| [Garner's algorithm](src/algebra/garner/)      | CRT variant useful for mixed/non-coprime moduli conversion and reconstruction. |
+| [Euclidean algorithm (GCD)](src/algebra/gcd/README.md)   | Iterative/recursive gcd(a, b). |
+| [Extended Euclid](src/algebra/gcdext/README.md)          | Find x, y such that ax + by = gcd(a,b). Used for modular inverses and Diophantine equations. |
+| [Modular inverse](src/algebra/mod_inv/README.md)        | Compute a^{-1} mod m (via extgcd or powmod when m is prime). |
+| [Fast modular exponentiation (powmod)](src/algebra/powmod/README.md)  | Binary exponentiation modulo m. |
+| [Chinese Remainder Theorem (CRT)](src/algebra/crt/README.md) | Solve x ≡ a_i (mod m_i) for pairwise-coprime moduli. |
+| [Garner's algorithm](src/algebra/garner/README.md)      | CRT variant useful for mixed/non-coprime moduli conversion and reconstruction. |
 | Sieve of Eratosthenes                          | Generate primes up to N efficiently. |
 | Miller–Rabin primality                         | Probabilistic primality test (deterministic bases for 64-bit). |
 | Pollard's Rho                                  | Practical integer factorization for 64-bit numbers. |
@@ -98,7 +98,7 @@ This section collects fundamental algebraic and number-theory algorithms commonl
 | Topic | Examples |
 |--------|-----------|
 | **Number Theory** | GCD / Extended Euclid, Modular Exponentiation, Sieve of Eratosthenes, Prime Factorization |
-| **Combinatorics** | nCr (mod prime), Pascal’s Triangle, Permutations / Combinations generator |
+| **Combinatorics** | nCr (mod prime), Pascal’s Triangle, Permutations / Combinations generator, Principle of Inclusion–Exclusion (PIE) |
 | **Geometry** | Convex Hull (Graham, Andrew), Line Intersection, Orientation, Closest Pair |
 | **Linear Algebra** | Matrix Multiplication (Strassen), Gaussian Elimination |
 | **Probability / Statistics** | Random sampling, reservoir sampling, Monte Carlo π estimation |
