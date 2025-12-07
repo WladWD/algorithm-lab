@@ -127,7 +127,6 @@ This section collects fundamental algebraic and number-theory algorithms commonl
 | **Hazard Pointers / Epoch Reclamation** | Safe memory reclamation without global locks                                                           |
 | **Wait-Free Counter / Atomic Variables** | Atomic fetch-add / relaxed memory semantics                                                            |
 | **Barrier / Latch Implementations** | Thread coordination primitives                                                                         |
-| **SPSC / MPSC Queues** | Single- / Multi- producer-consumer queues for data passing                                             |
 | **Spinlocks / Backoff Strategies** | For fallback mechanisms under contention                                                               |
 
 ---
