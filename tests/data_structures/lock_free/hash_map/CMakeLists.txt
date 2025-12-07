@@ -1,6 +1,7 @@
-# Tests for lock-free hash_map
-add_executable(test_lock_free_hash_map hash_map.cpp)
-target_link_libraries(test_lock_free_hash_map PRIVATE data_structures::lock_free::hash_map GTest::gtest_main)
-
-group_tests("data_structures/lock_free")
-
+file(GLOB HASH_MAP_TEST_SRC test_*.cpp)
+add_executable(test_data_structures_lock_free_hash_map ${HASH_MAP_TEST_SRC})
+target_link_libraries(test_data_structures_lock_free_hash_map PRIVATE
+        data_structures::lock_free::hash_map
+        GTest::gtest_main
+)
+add_test(NAME data_structures.lock_free.hash_map COMMAND test_data_structures_lock_free_hash_map)
