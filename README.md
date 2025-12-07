@@ -95,13 +95,13 @@ This section collects fundamental algebraic and number-theory algorithms commonl
 
 ### 6. Mathematical Algorithms
 
-| Topic | Examples |
-|--------|-----------|
-| **Number Theory** | GCD / Extended Euclid, Modular Exponentiation, Sieve of Eratosthenes, Prime Factorization |
-| **Combinatorics** | nCr (mod prime), Pascal’s Triangle, Permutations / Combinations generator, Principle of Inclusion–Exclusion (PIE) |
-| **Geometry** | Convex Hull (Graham, Andrew), Line Intersection, Orientation, Closest Pair |
-| **Linear Algebra** | Matrix Multiplication (Strassen), Gaussian Elimination |
-| **Probability / Statistics** | Random sampling, reservoir sampling, Monte Carlo π estimation |
+| Topic | Examples                                                                                                                                                  |
+|--------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Number Theory** | GCD / Extended Euclid, Modular Exponentiation, Sieve of Eratosthenes, Prime Factorization                                                                 |
+| **Combinatorics** | nCr (mod prime), Pascal’s Triangle, Permutations / Combinations generator, [Principle of Inclusion–Exclusion (PIE)](src/math/combinatorics/pie/README.md) |
+| **Geometry** | Convex Hull (Graham, Andrew), Line Intersection, Orientation, Closest Pair                                                                                |
+| **Linear Algebra** | Matrix Multiplication (Strassen), Gaussian Elimination                                                                                                    |
+| **Probability / Statistics** | Random sampling, reservoir sampling, Monte Carlo π estimation                                                                                             |
 
 ---
 
