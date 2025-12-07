@@ -15,6 +15,8 @@ $$
 \left| \bigcup_{i=1}^n A_i \right| = \sum |A_i| - \sum |A_i \cap A_j| + \sum |A_i \cap A_j \cap A_k| - \dots + (-1)^{n-1} |A_1 \cap \dots \cap A_n|
 $$
 
+<img width="200" height="160" alt="image" src="https://github.com/user-attachments/assets/3cfb835d-d67c-4ce2-a039-3fda280324f0" />
+
 ## 2. Application: "Number of Effective Subsequences"
 
 A common variation of PIE in Competitive Programming is determining how many subsequences of an array have a Bitwise OR sum equal to a specific target $K$.
