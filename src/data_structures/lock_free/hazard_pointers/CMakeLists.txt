@@ -1,0 +1,6 @@
+file(GLOB SRC src/*.cpp)
+add_library(data_structures_lock_free_hazard_pointers STATIC ${SRC})
+target_include_directories(data_structures_lock_free_hazard_pointers PUBLIC include)
+add_library(data_structures::lock_free::hazard_pointers ALIAS data_structures_lock_free_hazard_pointers)
+target_compile_features(data_structures_lock_free_hazard_pointers PUBLIC cxx_std_23)
+
