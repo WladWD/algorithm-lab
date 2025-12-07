@@ -150,3 +150,46 @@ The Formula Logic: We calculate the contribution of every submask.
 
 Note on result: Depending on whether you want to calculate the union or the intersection, or count "exactly m" vs "at most m", the starting sign might differ. This implementation assumes an alternating sum structure to filter out subsequences that do not have all bits of m set.
 
+## Appendix: Mathematical Proof of PIE
+
+Why does adding and subtracting intersection sizes result in the correct count of the union? We can prove this by tracking how many times an arbitrary element $x$ is counted.
+
+### The Claim
+We want to show that every element $x$ that belongs to at least one of the sets $A_1, \dots, A_n$ contributes exactly **1** to the total sum.
+
+### The Proof
+Let $x$ be an element that belongs to exactly $k$ of the sets (where $k \ge 1$).
+
+1.  **First Term ($\sum |A_i|$):**
+    Since $x$ is present in $k$ sets, it is counted $\binom{k}{1}$ times.
+    *Contribution:* $+\binom{k}{1}$
+
+2.  **Second Term ($-\sum |A_i \cap A_j|$):**
+    $x$ is present in the intersection of a pair of sets only if both sets are among the $k$ sets containing $x$. There are $\binom{k}{2}$ such pairs.
+    *Contribution:* $-\binom{k}{2}$
+
+3.  **Third Term ($+\sum |A_i \cap A_j \cap A_l|$):**
+    $x$ is present in the intersection of a triple only if all three sets are among the $k$ sets.
+    *Contribution:* $+\binom{k}{3}$
+
+4.  **General Term:**
+    For the intersection of $m$ sets, $x$ is counted $\binom{k}{m}$ times. The sign alternates based on $m$.
+
+### The Total Sum
+The total contribution of element $x$ to the PIE formula is:
+
+$$S = \binom{k}{1} - \binom{k}{2} + \binom{k}{3} - \dots + (-1)^{k-1}\binom{k}{k}$$
+
+To solve this, recall the **Binomial Expansion** of $(1 - 1)^k$:
+
+$$(1 - 1)^k = \sum_{j=0}^{k} \binom{k}{j}(-1)^j$$
+
+$$0 = \binom{k}{0} - \binom{k}{1} + \binom{k}{2} - \binom{k}{3} + \dots$$
+
+Since $\binom{k}{0} = 1$, we can rearrange the equation:
+
+$$1 = \binom{k}{1} - \binom{k}{2} + \binom{k}{3} - \dots$$
+
+### Conclusion
+The total sum $S$ equals **1**.
+Therefore, every element present in the union is counted exactly once. Elements present in 0 sets are counted 0 times.
