@@ -5,6 +5,7 @@ add_subdirectory(data_structures/lock_free/stack)
 add_subdirectory(data_structures/lock_free/queue)
 add_subdirectory(data_structures/lock_free/hash_map)
 add_subdirectory(data_structures/lock_free/ring_buffer)
+add_subdirectory(data_structures/lock_free/barrier)
 add_subdirectory(data_structures/range_query/mo)
 add_subdirectory(data_structures/range_query/sqrt_decomposition)
 
