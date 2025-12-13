@@ -25,66 +25,6 @@ This module focuses on **lightweight, explicit synchronization**:
 - Minimal shared state and cache contention.
 - Friendly to **profiling**, **benchmarking**, and **teaching** the C++ memory model.
 
----
-
-## API Overview
-
-> **Note:** Names and exact signatures may evolve as the implementation matures. The intent is to stay close to the C++20 `std::barrier` / `std::latch` interfaces while keeping the code approachable.
-
-### `Barrier`
-
-Reusable barrier for a fixed number of participants.
-
-```cpp
-class Barrier {
-public:
-    explicit Barrier(std::size_t expected);
-
-    // Arrive at the barrier and block until all participants have arrived.
-    void arrive_and_wait();
-
-    // Optional: arrive at the barrier but declare that this participant
-    // will not take part in future phases (reduces the participant count).
-    void arrive_and_drop();
-};
-```
-
-**Key properties:**
-
-- The barrier is **phase-based**. Each successful `arrive_and_wait()` advances the internal phase.
-- All participating threads observe a **happens-before edge** from work done before the barrier to work done after it.
-- Designed for **fixed-size thread pools** and iterative algorithms.
-
-### `CountDownLatch`
-
-One-shot latch for “wait until N events complete” scenarios.
-
-```cpp
-class CountDownLatch {
-public:
-    explicit CountDownLatch(std::size_t initial_count);
-
-    // Decrement the counter by n (default 1). When the counter reaches zero,
-    // all waiting threads are released.
-    void count_down(std::size_t n = 1);
-
-    // Block until the counter reaches zero.
-    void wait();
-
-    // Optional: timed wait that returns false on timeout.
-    template <class Rep, class Period>
-    bool wait_for(std::chrono::duration<Rep, Period> timeout);
-};
-```
-
-**Typical use cases:**
-
-- Main thread waits for a fixed number of worker tasks to finish.
-- Coordinating startup/shutdown sequences.
-- Testing and benchmarking concurrency scenarios.
-
----
-
 ## Design & Memory Ordering
 
 Both primitives are implemented using `std::atomic` with explicit **acquire/release** semantics.
@@ -114,8 +54,6 @@ This ensures:
 This ensures that:
 
 - All work done by producers before the final `count_down()` is visible to consumers after `wait()` returns.
-
-> Implementation details (spinning vs. blocking, futex/condvar usage) are intentionally kept simple and explicit so that the code serves as a learning tool for the C++ memory model.
 
 ---
 
@@ -187,52 +125,3 @@ void latch_example(std::size_t num_tasks) {
     }
 }
 ```
-
----
-
-## Testing Strategy
-
-The test suite for this module is expected to cover:
-
-- **Basic correctness**
-  - All threads can repeatedly synchronize on the same `Barrier` without deadlock.
-  - `CountDownLatch` releases all waiters exactly once when the count reaches zero.
-- **Ordering guarantees**
-  - Work performed before the barrier/latch is visible after synchronization.
-- **Edge cases**
-  - Single-thread usage (trivial barrier/latch).
-  - Large participant counts.
-  - Stress tests with many iterations and randomized arrival patterns.
-
-Running tests under **ThreadSanitizer** and **UndefinedBehaviorSanitizer** is recommended to validate the absence of data races and UB.
-
----
-
-## Relationship to C++20 `std::barrier` / `std::latch`
-
-The design of these primitives is intentionally close to the standard library equivalents:
-
-- Similar conceptual model (fixed participant count, phase-based barrier, one-shot latch).
-- Explicit **happens-before** guarantees.
-- Emphasis on **teaching** and **experimentation** rather than replacing highly optimized standard library implementations.
-
-This makes the code a good reference when learning:
-
-- How to build higher-level synchronization primitives from `std::atomic`.
-- How to reason about the C++ memory model in the presence of multiple threads.
-
----
-
-## Directory Layout
-
-Within the repository, this module is organized as follows:
-
-- `include/data_structures/lock_free/barrier/barrier.h`
-  - Public API for `Barrier` and `CountDownLatch`.
-- `src/data_structures/lock_free/barrier/src/barrier.cpp`
-  - Implementation details (atomics, phase management, waiting strategy).
-- `tests/data_structures/lock_free/barrier/test_barrier.cpp`
-  - Unit tests and stress tests for both primitives.
-
-Refer to the top-level `README.md` and `docs/` for build, test, and benchmarking instructions.
-
