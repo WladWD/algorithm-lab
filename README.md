@@ -127,7 +127,7 @@ This section collects fundamental algebraic and number-theory algorithms commonl
 | **Hazard Pointers / Epoch Reclamation** | [Safe memory reclamation without global locks](src/data_structures/lock_free/hazard_pointers/README.md)        |
 | **Atomic Variables** | [Atomic operations / memory ordering](src/data_structures/lock_free/atomic/README.md)                                                                            |
 | **Barrier / Latch Implementations** | [Thread coordination primitives](src/data_structures/lock_free/barrier/README.md)                                                                                 |
-| **Spinlocks / Backoff Strategies** | For fallback mechanisms under contention                                                                       |
+| **Spinlocks / Backoff Strategies** | [For fallback mechanisms under contention](src/data_structures/lock_free/spinlock/README.md)                                                                       |
 
 ---
 
