@@ -74,7 +74,7 @@ This section collects fundamental algebraic and number-theory algorithms commonl
 |-----------|----------------|
 | **Fundamentals** | Dynamic Array, Linked List, Stack, Queue, Deque |
 | **Associative** | Hash Table (open addressing + chaining), Ordered Map (balanced BST) |
-| **Trees** | Binary Search Tree, AVL Tree, Red-Black Tree, Segment Tree, Fenwick (BIT), Trie |
+| **Trees** | Binary Search Tree, AVL Tree, Red-Black Tree, Segment Tree, [Fenwick tree (BIT)](src/data_structures/range_query/fenwick), Trie |
 | **Heaps / Priority Queues** | Binary Heap, Fibonacci Heap, Pairing Heap |
 | **Union-Find / DSU** | Path compression + union by rank |
 | **Spatial Structures** | KD-Tree, Quadtree, R-Tree (optional, for advanced geometry) |

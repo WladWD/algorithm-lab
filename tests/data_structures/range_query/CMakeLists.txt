@@ -5,3 +5,7 @@ add_test(NAME data_structures.range_query.mo COMMAND test_data_structures_range_
 add_executable(test_data_structures_range_query_sqrt sqrt_decomposition/test_sqrt.cpp)
 target_link_libraries(test_data_structures_range_query_sqrt PRIVATE data_structures::range_query::sqrt_decomposition GTest::gtest_main)
 add_test(NAME data_structures.range.query.sqrt COMMAND test_data_structures_range_query_sqrt)
+
+add_executable(test_data_structures_range_query_fenwick fenwick/test_fenwick.cpp)
+target_link_libraries(test_data_structures_range_query_fenwick PRIVATE data_structures::range_query::fenwick GTest::gtest_main)
+add_test(NAME data_structures.range_query.fenwick COMMAND test_data_structures_range_query_fenwick)

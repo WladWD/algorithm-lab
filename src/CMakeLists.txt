@@ -9,5 +9,6 @@ add_subdirectory(data_structures/lock_free/barrier)
 add_subdirectory(data_structures/lock_free/spinlock)
 add_subdirectory(data_structures/range_query/mo)
 add_subdirectory(data_structures/range_query/sqrt_decomposition)
+add_subdirectory(data_structures/range_query/fenwick)
 
 add_subdirectory(algebra)
