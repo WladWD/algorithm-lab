@@ -18,3 +18,10 @@ target_link_libraries(test_graphs_dfs PRIVATE
         GTest::gtest_main
 )
 add_test(NAME graphs.dfs COMMAND test_graphs_dfs)
+
+add_executable(test_graphs_bfs bfs/test_bfs.cpp)
+target_link_libraries(test_graphs_bfs PRIVATE
+        algo_graphs_bfs
+        GTest::gtest_main
+)
+add_test(NAME graphs.bfs COMMAND test_graphs_bfs)
