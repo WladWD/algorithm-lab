@@ -35,10 +35,27 @@ struct TopologicalSortResult {
 // Complexity: O(V + E) time, O(V) memory.
 TopologicalSortResult topological_sort(const AdjList& g);
 
+// DFS-based topological sort (postorder).
+//
+// This variant performs a full DFS forest, adds each vertex to the ordering on exit,
+// and reverses the result.
+//
+// Cycle detection is done via standard DFS colors:
+// encountering a back-edge to a gray vertex implies a directed cycle.
+//
+// If the graph contains a directed cycle, returns has_cycle=true.
+//
+// Complexity: O(V + E) time, O(V) memory.
+TopologicalSortResult topological_sort_dfs(const AdjList& g);
+
 // Convenience wrapper: returns only the ordering.
 //
 // If the graph has a cycle, returns an empty vector.
 std::vector<int32_t> topological_order_or_empty(const AdjList& g);
+
+// Convenience wrapper for DFS-based variant.
+// If the graph has a cycle, returns an empty vector.
+std::vector<int32_t> topological_order_or_empty_dfs(const AdjList& g);
 
 } // namespace algorithms::graphs::topological_sort
 

@@ -2,6 +2,11 @@
 
 This note matches the implementation in `src/topological_sort.cpp`.
 
+We provide correctness notes for two variants implemented in this module:
+
+- **Kahn's algorithm** (in-degree + queue)
+- **DFS postorder** (reverse exit-time order)
+
 We are given a directed graph `G = (V, E)` represented by an adjacency list `g`, with
 vertices `V = {0, 1, ..., n-1}`.
 
@@ -112,10 +117,55 @@ while all cycle vertices remain, so the algorithm cannot remove all vertices. Th
 
 ---
 
+## DFS-based variant (reverse postorder)
+
+This section sketches correctness for `topological_sort_dfs`.
+
+### Algorithm
+
+We run a full DFS forest over vertices in increasing id order. We maintain a `color` array:
+
+- **white**: not visited
+- **gray**: on the current DFS recursion stack
+- **black**: fully processed
+
+When DFS finishes exploring a vertex `v` (i.e. all outgoing edges have been processed), we append `v` to an array `out`.
+Finally, we reverse `out`.
+
+### Invariants
+
+> **Invariant D (postorder property):**
+> A vertex `v` is appended to `out` only after every vertex reachable from `v` by a directed path in the DFS tree has finished (becomes black).
+
+This is the standard DFS postorder property: children finish before parents.
+
+### Correctness on DAGs
+
+Assume the graph is a DAG.
+
+Consider any directed edge `u -> v`.
+
+- If DFS discovers `v` (directly or indirectly) while exploring `u`, then `v` finishes before `u` and is appended to `out` before `u`.
+- If `v` was already finished when `u` is explored, then `v` is already in `out`.
+
+In both cases, `v` appears before `u` in `out`, so after reversing, `u` appears before `v`.
+
+Therefore the reversed postorder is a valid topological ordering.
+
+### Cycle detection via back-edges
+
+During DFS, encountering an edge `u -> v` where `v` is **gray** means `v` is an ancestor of `u` in the current recursion stack.
+This implies there is a directed path `v => ... => u` in the DFS tree, and together with `u -> v` it forms a directed cycle.
+
+So the algorithm sets `has_cycle = true` exactly when it finds such a back-edge.
+
+Conversely, if the graph contains a directed cycle, then during DFS of that cycle, some edge will eventually point to a vertex that is still gray (an ancestor on the stack), producing a back-edge and detecting the cycle.
+
+---
+
 ## Complexity
 
 Computing in-degrees takes `O(E)` total work. Each vertex is enqueued/dequeued at most once, and each edge is
 processed once when its source is removed.
 
 Total time is `O(V + E)` and extra space is `O(V)`.
-

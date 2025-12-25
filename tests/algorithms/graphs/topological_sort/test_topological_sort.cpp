@@ -9,7 +9,9 @@
 namespace {
 using algorithms::graphs::topological_sort::AdjList;
 using algorithms::graphs::topological_sort::topological_order_or_empty;
+using algorithms::graphs::topological_sort::topological_order_or_empty_dfs;
 using algorithms::graphs::topological_sort::topological_sort;
+using algorithms::graphs::topological_sort::topological_sort_dfs;
 
 static bool is_topological_order_for_graph(const AdjList& g, const std::vector<int32_t>& order) {
     const int32_t n = static_cast<int32_t>(g.size());
@@ -136,6 +138,68 @@ TEST(TopologicalSort, IgnoresInvalidEdgesDefensively) {
     auto res = topological_sort(g);
     EXPECT_FALSE(res.has_cycle);
     ASSERT_TRUE(is_topological_order_for_graph(g, res.order));
+}
+
+TEST(TopologicalSortDFS, EmptyGraph) {
+    AdjList g;
+
+    auto res = topological_sort_dfs(g);
+    EXPECT_FALSE(res.has_cycle);
+    EXPECT_TRUE(res.order.empty());
+
+    EXPECT_TRUE(topological_order_or_empty_dfs(g).empty());
+}
+
+TEST(TopologicalSortDFS, SimpleChainHasUniqueOrder) {
+    AdjList g(4);
+    g[0] = {1};
+    g[1] = {2};
+    g[2] = {3};
+
+    auto res = topological_sort_dfs(g);
+    EXPECT_FALSE(res.has_cycle);
+    EXPECT_EQ(res.order, (std::vector<int32_t>{0, 1, 2, 3}));
+}
+
+TEST(TopologicalSortDFS, MultipleValidOrdersValidateByPredicate) {
+    AdjList g(4);
+    g[0] = {2};
+    g[1] = {2};
+    g[2] = {3};
+
+    auto res = topological_sort_dfs(g);
+    EXPECT_FALSE(res.has_cycle);
+    ASSERT_TRUE(is_topological_order_for_graph(g, res.order));
+}
+
+TEST(TopologicalSortDFS, CycleIsDetected) {
+    AdjList g(3);
+    g[0] = {1};
+    g[1] = {2};
+    g[2] = {0};
+
+    auto res = topological_sort_dfs(g);
+    EXPECT_TRUE(res.has_cycle);
+    EXPECT_LT(res.order.size(), 3U);
+
+    EXPECT_TRUE(topological_order_or_empty_dfs(g).empty());
+}
+
+TEST(TopologicalSort, KahnAndDfsAgreeOnDagValidity) {
+    AdjList g(6);
+    g[0] = {2, 3};
+    g[1] = {3};
+    g[2] = {4};
+    g[3] = {4, 5};
+
+    auto kahn = topological_sort(g);
+    auto dfs = topological_sort_dfs(g);
+
+    ASSERT_FALSE(kahn.has_cycle);
+    ASSERT_FALSE(dfs.has_cycle);
+
+    EXPECT_TRUE(is_topological_order_for_graph(g, kahn.order));
+    EXPECT_TRUE(is_topological_order_for_graph(g, dfs.order));
 }
 
 } // namespace
