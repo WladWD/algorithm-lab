@@ -25,3 +25,10 @@ target_link_libraries(test_graphs_bfs PRIVATE
         GTest::gtest_main
 )
 add_test(NAME graphs.bfs COMMAND test_graphs_bfs)
+
+add_executable(test_graphs_topological_sort topological_sort/test_topological_sort.cpp)
+target_link_libraries(test_graphs_topological_sort PRIVATE
+        algo_graphs_topological_sort
+        GTest::gtest_main
+)
+add_test(NAME graphs.topological_sort COMMAND test_graphs_topological_sort)

@@ -2,11 +2,7 @@
 
 #include <atomic>
 #include <functional>
-#include <memory>
-#include <mutex>
 #include <optional>
-#include <stdexcept>
-#include <string>
 #include <vector>
 
 namespace data_structures::lock_free::hash_map {
@@ -16,6 +12,7 @@ namespace data_structures::lock_free::hash_map {
 // - Insert prepends a node via CAS to the bucket head.
 // - Erase performs logical deletion by setting an atomic flag on the node.
 // - Find skips logically deleted nodes.
+//
 // Memory reclamation is NOT provided: deleted nodes are retained until clear()
 // which must only be called when there are no concurrent operations.
 
@@ -36,14 +33,6 @@ private:
     std::vector<std::atomic<Node*>> table_;
     std::hash<K> hasher_;
     std::atomic<size_t> size_{0};
-
-    // Simple registry for nodes that can be freed on clear(); not used for per-op reclamation
-    static inline std::mutex registry_mtx_{};
-    static inline std::vector<Node*> registry_{};
-    static void retire_node(Node* n) {
-        std::lock_guard<std::mutex> g(registry_mtx_);
-        registry_.push_back(n);
-    }
 
     size_t bucket_index(const K& key) const noexcept { return hasher_(key) % buckets_; }
 
@@ -125,13 +114,11 @@ private:
             if (!p->deleted.load(std::memory_order_acquire) && p->key == key) {
                 if (p->deleted.compare_exchange_strong(expected, true, std::memory_order_acq_rel)) {
                     size_.fetch_sub(1, std::memory_order_relaxed);
-                    // We don't physically remove the node to keep the implementation simple.
-                    // Optionally retire the node for later deletion.
-                    retire_node(p);
+                    // We don't physically remove the node or free it here.
+                    // Without a proper reclamation scheme, freeing could race with readers.
                     return true;
-                } else {
-                    return false; // already deleted concurrently
                 }
+                return false; // already deleted concurrently
             }
         }
         return false;
@@ -152,12 +139,9 @@ private:
                 p = nx;
             }
         }
-
-        std::lock_guard<std::mutex> g(registry_mtx_);
-        for (auto n : registry_) delete n;
-        registry_.clear();
         size_.store(0, std::memory_order_relaxed);
     }
 };
+
 } // namespace data_structures::lock_free::hash_map
 
