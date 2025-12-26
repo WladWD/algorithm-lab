@@ -39,3 +39,10 @@ target_link_libraries(test_graphs_kosaraju_scc PRIVATE
         GTest::gtest_main
 )
 add_test(NAME graphs.kosaraju_scc COMMAND test_graphs_kosaraju_scc)
+
+add_executable(test_graphs_kruskal_mst kruskal_mst/test_kruskal_mst.cpp)
+target_link_libraries(test_graphs_kruskal_mst PRIVATE
+        algo_graphs_kruskal_mst
+        GTest::gtest_main
+)
+add_test(NAME graphs.kruskal_mst COMMAND test_graphs_kruskal_mst)
