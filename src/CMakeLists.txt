@@ -3,6 +3,7 @@ add_subdirectory(algorithms/graphs/bipartite_check)
 add_subdirectory(algorithms/graphs/dfs)
 add_subdirectory(algorithms/graphs/bfs)
 add_subdirectory(algorithms/graphs/topological_sort)
+add_subdirectory(algorithms/graphs/kosaraju_scc)
 
 add_subdirectory(data_structures/lock_free/stack)
 add_subdirectory(data_structures/lock_free/queue)

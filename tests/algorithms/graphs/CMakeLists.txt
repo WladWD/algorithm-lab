@@ -32,3 +32,10 @@ target_link_libraries(test_graphs_topological_sort PRIVATE
         GTest::gtest_main
 )
 add_test(NAME graphs.topological_sort COMMAND test_graphs_topological_sort)
+
+add_executable(test_graphs_kosaraju_scc kosaraju_scc/test_kosaraju_scc.cpp)
+target_link_libraries(test_graphs_kosaraju_scc PRIVATE
+        algo_graphs_kosaraju_scc
+        GTest::gtest_main
+)
+add_test(NAME graphs.kosaraju_scc COMMAND test_graphs_kosaraju_scc)
