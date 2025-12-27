@@ -17,4 +17,6 @@ add_subdirectory(data_structures/range_query/mo)
 add_subdirectory(data_structures/range_query/sqrt_decomposition)
 add_subdirectory(data_structures/range_query/fenwick)
 
+add_subdirectory(data_structures/dsu)
+
 add_subdirectory(algebra)
