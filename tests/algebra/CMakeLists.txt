@@ -1,6 +1,6 @@
 add_executable(test_garner garner/test_garner.cpp)
 target_link_libraries(test_garner PRIVATE algo_algebra_garner GTest::gtest_main)
-add_test(NAME graphs.dijkstra COMMAND test_garner)
+add_test(NAME algebra.garner COMMAND test_garner)
 
 add_executable(test_gcd gcd/test_gcd.cpp)
 target_link_libraries(test_gcd PRIVATE algo_algebra_gcd GTest::gtest_main)
@@ -13,3 +13,7 @@ add_test(NAME algebra.gcdext COMMAND test_gcdext)
 add_executable(test_mod_inv mod_inv/test_mod_inv.cpp)
 target_link_libraries(test_mod_inv PRIVATE algo_algebra_mod_inv GTest::gtest_main)
 add_test(NAME algebra.mod_inv COMMAND test_mod_inv)
+
+add_executable(test_sieve sieve/test_sieve.cpp)
+target_link_libraries(test_sieve PRIVATE algo_algebra_sieve GTest::gtest_main)
+add_test(NAME algebra.sieve COMMAND test_sieve)

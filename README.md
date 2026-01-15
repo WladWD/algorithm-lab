@@ -35,7 +35,7 @@ This section collects fundamental algebraic and number-theory algorithms commonl
 | [Fast modular exponentiation (powmod)](src/algebra/powmod/README.md)  | Binary exponentiation modulo m. |
 | [Chinese Remainder Theorem (CRT)](src/algebra/crt/README.md) | Solve x ≡ a_i (mod m_i) for pairwise-coprime moduli. |
 | [Garner's algorithm](src/algebra/garner/README.md)      | CRT variant useful for mixed/non-coprime moduli conversion and reconstruction. |
-| Sieve of Eratosthenes                          | Generate primes up to N efficiently. |
+| [Sieve of Eratosthenes](src/algebra/sieve/README.md)    | Generate primes up to N efficiently. |
 | Miller–Rabin primality                         | Probabilistic primality test (deterministic bases for 64-bit). |
 | Pollard's Rho                                  | Practical integer factorization for 64-bit numbers. |
 | Discrete logarithm (BSGS)                      | Baby-step giant-step for solving a^x ≡ b (mod p). |
