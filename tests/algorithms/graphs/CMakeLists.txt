@@ -5,6 +5,13 @@ target_link_libraries(test_graphs_dijkstra PRIVATE
 )
 add_test(NAME graphs.dijkstra COMMAND test_graphs_dijkstra)
 
+add_executable(test_graphs_bellman_ford bellman_ford/test_bellman_ford.cpp)
+target_link_libraries(test_graphs_bellman_ford PRIVATE
+        algo_graphs_bellman_ford
+        GTest::gtest_main
+)
+add_test(NAME graphs.bellman_ford COMMAND test_graphs_bellman_ford)
+
 add_executable(test_graphs_bipartite bipartite_check/test_bipartite_check.cpp)
 target_link_libraries(test_graphs_bipartite PRIVATE
         algo_graphs_bipartite_check
