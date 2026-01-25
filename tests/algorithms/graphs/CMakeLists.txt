@@ -60,3 +60,10 @@ target_link_libraries(test_graphs_prim_mst PRIVATE
         GTest::gtest_main
 )
 add_test(NAME graphs.prim_mst COMMAND test_graphs_prim_mst)
+
+add_executable(test_graphs_floyd_warshall floyd_warshall/test_floyd_warshall.cpp)
+target_link_libraries(test_graphs_floyd_warshall PRIVATE
+        algo_graphs_floyd_warshall
+        GTest::gtest_main
+)
+add_test(NAME graphs.floyd_warshall COMMAND test_graphs_floyd_warshall)
