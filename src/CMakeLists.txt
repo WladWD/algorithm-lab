@@ -8,6 +8,7 @@ add_subdirectory(algorithms/graphs/kosaraju_scc)
 add_subdirectory(algorithms/graphs/kruskal_mst)
 add_subdirectory(algorithms/graphs/prim_mst)
 add_subdirectory(algorithms/graphs/floyd_warshall)
+add_subdirectory(algorithms/sorting/quicksort)
 
 add_subdirectory(data_structures/lock_free/stack)
 add_subdirectory(data_structures/lock_free/queue)

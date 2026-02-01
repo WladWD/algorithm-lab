@@ -61,7 +61,7 @@ This section collects fundamental algebraic and number-theory algorithms commonl
 
 | Type | Algorithms |
 |------|-------------|
-| **Comparison-Based** | QuickSort, MergeSort, HeapSort, ShellSort |
+| **Comparison-Based** | [QuickSort](src/algorithms/sorting/quicksort), MergeSort, HeapSort, ShellSort |
 | **Non-Comparison-Based** | Counting Sort, Radix Sort, Bucket Sort |
 | **Searching** | Binary Search, Interpolation Search, Ternary Search, Exponential Search |
 | **Selection** | QuickSelect, Median of Medians |
