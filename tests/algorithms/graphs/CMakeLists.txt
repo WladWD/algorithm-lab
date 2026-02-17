@@ -67,3 +67,11 @@ target_link_libraries(test_graphs_floyd_warshall PRIVATE
         GTest::gtest_main
 )
 add_test(NAME graphs.floyd_warshall COMMAND test_graphs_floyd_warshall)
+
+add_executable(test_graphs_edmonds_karp edmonds_karp/test_edmonds_karp.cpp)
+target_link_libraries(test_graphs_edmonds_karp PRIVATE
+        algo_graphs_edmonds_karp
+        GTest::gtest_main
+)
+add_test(NAME graphs.edmonds_karp COMMAND test_graphs_edmonds_karp)
+
