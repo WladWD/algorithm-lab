@@ -75,3 +75,10 @@ target_link_libraries(test_graphs_edmonds_karp PRIVATE
 )
 add_test(NAME graphs.edmonds_karp COMMAND test_graphs_edmonds_karp)
 
+add_executable(test_graphs_dinic dinic/test_dinic.cpp)
+target_link_libraries(test_graphs_dinic PRIVATE
+        algo_graphs_dinic
+        GTest::gtest_main
+)
+add_test(NAME graphs.dinic COMMAND test_graphs_dinic)
+
