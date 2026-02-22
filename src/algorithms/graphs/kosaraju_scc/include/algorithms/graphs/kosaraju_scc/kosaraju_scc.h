@@ -44,4 +44,3 @@ std::vector<std::vector<int32_t>> build_components(const SccResult& scc);
 AdjList build_condensation_graph(const AdjList& g, const SccResult& scc);
 
 } // namespace algorithms::graphs::kosaraju_scc
-

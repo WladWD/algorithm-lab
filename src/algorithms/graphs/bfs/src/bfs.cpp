@@ -1,5 +1,4 @@
 #include <algorithms/graphs/bfs/bfs.h>
-
 #include <cstddef>
 #include <queue>
 
@@ -100,4 +99,3 @@ BfsForest bfs_forest(const AdjList& g) {
 }
 
 } // namespace algorithms::graphs::bfs
-

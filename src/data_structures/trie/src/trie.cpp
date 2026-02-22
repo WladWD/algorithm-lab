@@ -1,6 +1,5 @@
-#include <data_structures/trie/trie.h>
-
 #include <algorithm>
+#include <data_structures/trie/trie.h>
 
 namespace ds::trie {
 
@@ -121,9 +120,13 @@ std::string Trie::longest_prefix_of(std::string_view word) const {
     return std::string(word.substr(0, last_end));
 }
 
-int Trie::size() const { return word_count_; }
+int Trie::size() const {
+    return word_count_;
+}
 
-bool Trie::empty() const { return word_count_ == 0; }
+bool Trie::empty() const {
+    return word_count_ == 0;
+}
 
 void Trie::clear() {
     nodes_.clear();
@@ -158,8 +161,7 @@ int Trie::traverse(std::string_view key) const {
     return cur;
 }
 
-void Trie::collect(int node_idx, std::string& current,
-                   std::vector<std::string>& result) const {
+void Trie::collect(int node_idx, std::string& current, std::vector<std::string>& result) const {
     if (nodes_[node_idx].is_end) {
         result.push_back(current);
     }
@@ -174,6 +176,3 @@ void Trie::collect(int node_idx, std::string& current,
 }
 
 } // namespace ds::trie
-
-
-

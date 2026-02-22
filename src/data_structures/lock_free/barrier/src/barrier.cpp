@@ -16,14 +16,15 @@ inline void cpu_relax() noexcept {
 
 } // namespace
 
-Barrier::Barrier(std::size_t expected) noexcept
-    : expected_{expected},
-      arrived_{0},
-      phase_{0} {}
+Barrier::Barrier(std::size_t expected) noexcept : expected_{expected}, arrived_{0}, phase_{0} {}
 
-void Barrier::arrive_and_wait() noexcept { arrive(false); }
+void Barrier::arrive_and_wait() noexcept {
+    arrive(false);
+}
 
-void Barrier::arrive_and_drop() noexcept { arrive(true); }
+void Barrier::arrive_and_drop() noexcept {
+    arrive(true);
+}
 
 void Barrier::arrive(bool drop) noexcept {
     const std::size_t current_phase = phase_.load(std::memory_order_acquire);
@@ -57,8 +58,7 @@ void Barrier::arrive(bool drop) noexcept {
     }
 }
 
-CountDownLatch::CountDownLatch(std::size_t initial_count) noexcept
-    : count_{initial_count} {}
+CountDownLatch::CountDownLatch(std::size_t initial_count) noexcept : count_{initial_count} {}
 
 void CountDownLatch::count_down(std::size_t n) noexcept {
     if (n == 0) {
@@ -85,4 +85,3 @@ void CountDownLatch::backoff() noexcept {
 }
 
 } // namespace data_structures::lock_free
-

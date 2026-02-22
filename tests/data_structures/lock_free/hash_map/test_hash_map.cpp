@@ -1,5 +1,6 @@
-#include <gtest/gtest.h>
 #include "data_structures/lock_free/hash_map/hash_map.h"
+
+#include <gtest/gtest.h>
 #include <string>
 
 using namespace data_structures::lock_free::hash_map;

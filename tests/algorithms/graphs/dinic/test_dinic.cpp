@@ -109,7 +109,7 @@ TEST(Dinic, MultiplePathsDifferentCapacities) {
 // Test bottleneck at source
 TEST(Dinic, BottleneckAtSource) {
     FlowNetwork network(3);
-    network.add_edge(0, 1, 5);   // Bottleneck
+    network.add_edge(0, 1, 5); // Bottleneck
     network.add_edge(1, 2, 100);
     EXPECT_EQ(network.max_flow(0, 2), 5);
 }
@@ -118,7 +118,7 @@ TEST(Dinic, BottleneckAtSource) {
 TEST(Dinic, BottleneckAtSink) {
     FlowNetwork network(3);
     network.add_edge(0, 1, 100);
-    network.add_edge(1, 2, 5);   // Bottleneck
+    network.add_edge(1, 2, 5); // Bottleneck
     EXPECT_EQ(network.max_flow(0, 2), 5);
 }
 
@@ -146,7 +146,7 @@ TEST(Dinic, DiamondGraph) {
 TEST(Dinic, AntiParallelEdges) {
     FlowNetwork network(2);
     network.add_edge(0, 1, 10);
-    network.add_edge(1, 0, 5);  // Anti-parallel
+    network.add_edge(1, 0, 5); // Anti-parallel
     EXPECT_EQ(network.max_flow(0, 1), 10);
 }
 
@@ -156,7 +156,7 @@ TEST(Dinic, LinearChain) {
     network.add_edge(0, 1, 10);
     network.add_edge(1, 2, 8);
     network.add_edge(2, 3, 12);
-    network.add_edge(3, 4, 6);  // Bottleneck
+    network.add_edge(3, 4, 6); // Bottleneck
     EXPECT_EQ(network.max_flow(0, 4), 6);
 }
 
@@ -198,8 +198,8 @@ TEST(Dinic, GetFlowOnEdges) {
     network.add_edge(1, 2, 5);
     (void)network.max_flow(0, 2);
 
-    EXPECT_EQ(network.get_flow(0, 1), 5);  // 5 units flow through
-    EXPECT_EQ(network.get_flow(1, 2), 5);  // 5 units flow through
+    EXPECT_EQ(network.get_flow(0, 1), 5); // 5 units flow through
+    EXPECT_EQ(network.get_flow(1, 2), 5); // 5 units flow through
 }
 
 // Stress test with larger network
@@ -213,7 +213,7 @@ TEST(Dinic, LargerNetwork) {
     // Layer 2: vertices 11..20
     // Layer 3: sink (99)
 
-    std::mt19937 gen(42);  // Fixed seed for reproducibility
+    std::mt19937 gen(42); // Fixed seed for reproducibility
     std::uniform_int_distribution<int32_t> cap_dist(1, 100);
 
     // Source to layer 1
@@ -224,7 +224,7 @@ TEST(Dinic, LargerNetwork) {
     // Layer 1 to layer 2
     for (int32_t i = 1; i <= 10; ++i) {
         for (int32_t j = 11; j <= 20; ++j) {
-            if (gen() % 3 == 0) {  // Sparse connections
+            if (gen() % 3 == 0) { // Sparse connections
                 network.add_edge(i, j, cap_dist(gen));
             }
         }
@@ -236,14 +236,14 @@ TEST(Dinic, LargerNetwork) {
     }
 
     auto flow = network.max_flow(0, 99);
-    EXPECT_GT(flow, 0);  // Should find some flow
+    EXPECT_GT(flow, 0); // Should find some flow
 }
 
 // Test network with zero capacity edges (should not contribute to flow)
 TEST(Dinic, ZeroCapacityEdges) {
     FlowNetwork network(3);
     network.add_edge(0, 1, 10);
-    network.add_edge(1, 2, 0);  // Zero capacity
+    network.add_edge(1, 2, 0); // Zero capacity
     EXPECT_EQ(network.max_flow(0, 2), 0);
 }
 
@@ -264,7 +264,7 @@ TEST(Dinic, NetworkWithCycles) {
     FlowNetwork network(4);
     network.add_edge(0, 1, 10);
     network.add_edge(1, 2, 10);
-    network.add_edge(2, 1, 5);  // Creates cycle
+    network.add_edge(2, 1, 5); // Creates cycle
     network.add_edge(2, 3, 10);
     EXPECT_EQ(network.max_flow(0, 3), 10);
 }
@@ -297,8 +297,8 @@ TEST(Dinic, DisconnectedComponents) {
     network.add_edge(3, 4, 10);
     network.add_edge(4, 5, 10);
 
-    EXPECT_EQ(network.max_flow(0, 2), 10);  // Within component 1
-    EXPECT_EQ(network.max_flow(3, 5), 10);  // Within component 2 (new network needed)
+    EXPECT_EQ(network.max_flow(0, 2), 10); // Within component 1
+    EXPECT_EQ(network.max_flow(3, 5), 10); // Within component 2 (new network needed)
 }
 
 // Classic example: maximum flow equals minimum cut
@@ -312,10 +312,10 @@ TEST(Dinic, MaxFlowMinCut) {
     //    b ------ t
     //        5
     FlowNetwork network(4);
-    network.add_edge(0, 1, 5);   // s -> a
-    network.add_edge(0, 2, 5);   // s -> b
-    network.add_edge(1, 3, 5);   // a -> t
-    network.add_edge(2, 3, 5);   // b -> t
+    network.add_edge(0, 1, 5); // s -> a
+    network.add_edge(0, 2, 5); // s -> b
+    network.add_edge(1, 3, 5); // a -> t
+    network.add_edge(2, 3, 5); // b -> t
 
     // Min cut = {(s,a), (s,b)} or {(a,t), (b,t)} = 10
     EXPECT_EQ(network.max_flow(0, 3), 10);
@@ -373,4 +373,3 @@ TEST(Dinic, LayeredDAG) {
     auto flow = network.max_flow(0, 7);
     EXPECT_EQ(flow, 28);
 }
-

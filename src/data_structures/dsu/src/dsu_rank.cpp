@@ -1,14 +1,19 @@
-#include <data_structures/dsu/dsu_rank.h>
-
 #include <algorithm>
+#include <data_structures/dsu/dsu_rank.h>
 
 namespace ds::dsu {
 
-DisjointSetUnionRank::DisjointSetUnionRank(int n) { assign(n); }
+DisjointSetUnionRank::DisjointSetUnionRank(int n) {
+    assign(n);
+}
 
-int DisjointSetUnionRank::size() const { return n_; }
+int DisjointSetUnionRank::size() const {
+    return n_;
+}
 
-bool DisjointSetUnionRank::is_valid(int v) const { return 0 <= v && v < n_; }
+bool DisjointSetUnionRank::is_valid(int v) const {
+    return 0 <= v && v < n_;
+}
 
 void DisjointSetUnionRank::assign(int n) {
     n_ = std::max(0, n);
@@ -89,7 +94,8 @@ int DisjointSetUnionRank::component_size(int v) {
     return size_[static_cast<size_t>(r)];
 }
 
-int DisjointSetUnionRank::components() const { return components_; }
+int DisjointSetUnionRank::components() const {
+    return components_;
+}
 
 } // namespace ds::dsu
-

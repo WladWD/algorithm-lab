@@ -13,7 +13,7 @@ namespace data_structures::lock_free {
 /// participating thread and all work done after the call in any participating
 /// thread in the next phase.
 class Barrier {
-public:
+  public:
     /// Construct a barrier for \p expected participants.
     /// Behaviour is undefined if expected == 0.
     explicit Barrier(std::size_t expected) noexcept;
@@ -30,7 +30,7 @@ public:
     /// participants for future phases by one when the current phase completes.
     void arrive_and_drop() noexcept;
 
-private:
+  private:
     void arrive(bool drop) noexcept;
 
     std::atomic<std::size_t> expected_;
@@ -43,7 +43,7 @@ private:
 /// Allows one or more waiting threads to block in wait() until the internal
 /// counter reaches zero. Producers call count_down() to decrement the counter.
 class CountDownLatch {
-public:
+  public:
     /// Create a latch with the given initial count. Behaviour is undefined if
     /// initial_count is zero and wait() is called.
     explicit CountDownLatch(std::size_t initial_count) noexcept;
@@ -72,11 +72,10 @@ public:
         return true;
     }
 
-private:
+  private:
     bool is_ready() const noexcept;
     static void backoff() noexcept;
 
     mutable std::atomic<std::size_t> count_;
 };
 } // namespace data_structures::lock_free
-

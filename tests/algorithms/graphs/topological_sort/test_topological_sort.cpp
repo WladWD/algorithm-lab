@@ -1,9 +1,7 @@
-#include <algorithms/graphs/topological_sort/topological_sort.h>
-
-#include <gtest/gtest.h>
-
 #include <algorithm>
+#include <algorithms/graphs/topological_sort/topological_sort.h>
 #include <cstdint>
+#include <gtest/gtest.h>
 #include <vector>
 
 namespace {
@@ -203,4 +201,3 @@ TEST(TopologicalSort, KahnAndDfsAgreeOnDagValidity) {
 }
 
 } // namespace
-

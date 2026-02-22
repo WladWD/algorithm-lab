@@ -6,7 +6,7 @@
 namespace algebra::mod_inv {
 // Extended Euclidean algorithm: compute gcd(a,b) and coefficients x,y such that a*x + b*y == gcd
 // Returns non-negative gcd. x and y are set to one solution (may be negative).
-long long extgcd(long long a, long long b, long long &x, long long &y);
+long long extgcd(long long a, long long b, long long& x, long long& y);
 
 // Compute modular inverse of a modulo m using extended Euclidean algorithm.
 // Returns std::optional<long long> containing inverse in [0, m-1] if it exists, or std::nullopt otherwise.

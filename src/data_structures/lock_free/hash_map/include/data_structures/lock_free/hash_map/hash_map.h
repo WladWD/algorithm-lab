@@ -16,9 +16,8 @@ namespace data_structures::lock_free::hash_map {
 // Memory reclamation is NOT provided: deleted nodes are retained until clear()
 // which must only be called when there are no concurrent operations.
 
-template <typename K, typename V>
-class LockFreeHashMap {
-private:
+template <typename K, typename V> class LockFreeHashMap {
+  private:
     struct Node {
         K key;
         V value;
@@ -26,7 +25,8 @@ private:
         Node* next{nullptr};
 
         Node(const K& k, const V& v) : key(k), value(v), deleted(false), next(nullptr) {}
-        Node(K&& k, V&& v) : key(std::move(k)), value(std::move(v)), deleted(false), next(nullptr) {}
+        Node(K&& k, V&& v)
+            : key(std::move(k)), value(std::move(v)), deleted(false), next(nullptr) {}
     };
 
     const size_t buckets_;
@@ -144,4 +144,3 @@ private:
 };
 
 } // namespace data_structures::lock_free::hash_map
-

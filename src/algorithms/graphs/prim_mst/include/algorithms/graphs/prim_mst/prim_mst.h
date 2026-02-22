@@ -18,10 +18,10 @@ struct Edge {
 // For connected graphs this is a Minimum Spanning Tree (MST).
 // For disconnected graphs this is a Minimum Spanning Forest (MSF).
 struct PrimMstResult {
-    int32_t vertices = 0;      // input n
-    int32_t components = 0;    // number of components in the resulting forest
-    int64_t total_weight = 0;  // sum of weights of chosen edges
-    std::vector<Edge> edges;   // chosen edges (size == n - components)
+    int32_t vertices = 0;     // input n
+    int32_t components = 0;   // number of components in the resulting forest
+    int64_t total_weight = 0; // sum of weights of chosen edges
+    std::vector<Edge> edges;  // chosen edges (size == n - components)
 };
 
 // Compute the minimum spanning forest using Prim's algorithm (binary heap).
@@ -42,4 +42,3 @@ struct PrimMstResult {
 PrimMstResult prim_mst(int32_t n, const std::vector<Edge>& edges);
 
 } // namespace algorithms::graphs::prim_mst
-

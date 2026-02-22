@@ -1,6 +1,5 @@
-#include <algorithms/graphs/dfs/dfs.h>
-
 #include <algorithm>
+#include <algorithms/graphs/dfs/dfs.h>
 #include <cstddef>
 #include <stack>
 #include <utility>
@@ -12,7 +11,7 @@ struct Frame {
     int32_t parent;
     size_t next_idx;
 };
-}
+} // namespace
 
 DfsForest dfs_forest(const AdjList& g) {
     const int32_t n = static_cast<int32_t>(g.size());
@@ -105,12 +104,8 @@ std::vector<int32_t> dfs_order_from(const AdjList& g, int32_t start) {
 }
 
 namespace {
-void dfs_rec_visit(const AdjList& g,
-                   int32_t v,
-                   int32_t parent,
-                   std::vector<uint8_t>& color,
-                   int32_t& timer,
-                   DfsForest& out) {
+void dfs_rec_visit(const AdjList& g, int32_t v, int32_t parent, std::vector<uint8_t>& color,
+                   int32_t& timer, DfsForest& out) {
     const int32_t n = static_cast<int32_t>(g.size());
     const auto sv = static_cast<size_t>(v);
 
@@ -158,9 +153,7 @@ DfsForest dfs_forest_recursive(const AdjList& g) {
 }
 
 namespace {
-void dfs_rec_order(const AdjList& g,
-                   int32_t v,
-                   std::vector<uint8_t>& seen,
+void dfs_rec_order(const AdjList& g, int32_t v, std::vector<uint8_t>& seen,
                    std::vector<int32_t>& order) {
     const int32_t n = static_cast<int32_t>(g.size());
     const auto sv = static_cast<size_t>(v);
@@ -196,4 +189,3 @@ std::vector<int32_t> dfs_order_from_recursive(const AdjList& g, int32_t start) {
 }
 
 } // namespace algorithms::graphs::dfs
-

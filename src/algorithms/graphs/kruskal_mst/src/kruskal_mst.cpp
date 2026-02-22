@@ -7,7 +7,7 @@ namespace algorithms::graphs::kruskal_mst {
 namespace {
 
 class Dsu {
-public:
+  public:
     explicit Dsu(int32_t n) : parent_(static_cast<size_t>(n)), size_(static_cast<size_t>(n), 1) {
         std::iota(parent_.begin(), parent_.end(), 0);
     }
@@ -40,7 +40,7 @@ public:
         return true;
     }
 
-private:
+  private:
     std::vector<int32_t> parent_;
     std::vector<int32_t> size_;
 };
@@ -111,4 +111,3 @@ KruskalMstResult kruskal_mst(int32_t n, std::vector<Edge> edges) {
 }
 
 } // namespace algorithms::graphs::kruskal_mst
-

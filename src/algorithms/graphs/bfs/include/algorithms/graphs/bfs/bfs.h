@@ -51,4 +51,3 @@ struct BfsForest {
 BfsForest bfs_forest(const AdjList& g);
 
 } // namespace algorithms::graphs::bfs
-

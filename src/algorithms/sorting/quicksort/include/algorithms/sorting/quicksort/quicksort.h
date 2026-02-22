@@ -25,8 +25,7 @@ namespace algorithms::sorting::quicksort {
 template <class RandomIt, class Compare>
 void quicksort(RandomIt first, RandomIt last, Compare comp);
 
-template <class RandomIt>
-void quicksort(RandomIt first, RandomIt last) {
+template <class RandomIt> void quicksort(RandomIt first, RandomIt last) {
     using T = typename std::iterator_traits<RandomIt>::value_type;
     quicksort(first, last, std::less<T>{});
 }
@@ -60,7 +59,7 @@ inline void insertion_sort(RandomIt first, RandomIt last, Compare comp) {
 
 template <class RandomIt>
 inline typename std::iterator_traits<RandomIt>::value_type median_of_three(RandomIt a, RandomIt b,
-                                                                          RandomIt c) {
+                                                                           RandomIt c) {
     using T = typename std::iterator_traits<RandomIt>::value_type;
     const T& x = *a;
     const T& y = *b;
@@ -78,10 +77,9 @@ inline typename std::iterator_traits<RandomIt>::value_type median_of_three(Rando
 
 template <class RandomIt, class Compare>
 inline void quicksort_impl(RandomIt first, RandomIt last, Compare comp, int depth_limit) {
-    static_assert(
-        std::is_base_of_v<std::random_access_iterator_tag,
-                          typename std::iterator_traits<RandomIt>::iterator_category>,
-        "quicksort requires RandomAccessIterator");
+    static_assert(std::is_base_of_v<std::random_access_iterator_tag,
+                                    typename std::iterator_traits<RandomIt>::iterator_category>,
+                  "quicksort requires RandomAccessIterator");
 
     while (true) {
         const auto n = static_cast<std::size_t>(last - first);
@@ -141,4 +139,3 @@ void quicksort(RandomIt first, RandomIt last, Compare comp) {
 }
 
 } // namespace algorithms::sorting::quicksort
-

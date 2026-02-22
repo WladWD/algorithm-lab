@@ -1,8 +1,10 @@
-#include <data_structures/range_query/fenwick/fenwick.h>
 #include <algorithm>
+#include <data_structures/range_query/fenwick/fenwick.h>
 
 namespace ds::range_query::fenwick {
-FenwickTree::FenwickTree(int n) { assign(n); }
+FenwickTree::FenwickTree(int n) {
+    assign(n);
+}
 
 FenwickTree::FenwickTree(const std::vector<int64_t>& arr) {
     assign(static_cast<int>(arr.size()));
@@ -12,7 +14,9 @@ FenwickTree::FenwickTree(const std::vector<int64_t>& arr) {
     }
 }
 
-int FenwickTree::size() const { return n_; }
+int FenwickTree::size() const {
+    return n_;
+}
 
 void FenwickTree::assign(int n) {
     n_ = std::max(0, n);
@@ -39,7 +43,7 @@ int64_t FenwickTree::prefix_sum(int r) const {
     r = std::min(r, n_ - 1);
 
     int64_t res = 0;
-    for (int i = r; i >= 0; i = (i&(i+1))-1) {
+    for (int i = r; i >= 0; i = (i & (i + 1)) - 1) {
         res += tree_[static_cast<size_t>(i)];
     }
     return res;
@@ -67,4 +71,3 @@ int64_t FenwickTree::range_sum(int l, int r) const {
 }
 
 } // namespace ds::range_query::fenwick
-

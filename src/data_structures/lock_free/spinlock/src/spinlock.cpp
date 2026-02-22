@@ -45,4 +45,3 @@ void Backoff::pause() noexcept {
 }
 
 } // namespace data_structures::lock_free
-

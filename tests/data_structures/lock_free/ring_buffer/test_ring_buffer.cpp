@@ -1,5 +1,6 @@
-#include <gtest/gtest.h>
 #include "data_structures/lock_free/ring_buffer/ring_buffer.h"
+
+#include <gtest/gtest.h>
 #include <string>
 
 using namespace data_structures::lock_free;
@@ -42,4 +43,3 @@ TEST(RingBuffer, MpmcTryFullEmpty) {
     }
     EXPECT_GE(drained, 1);
 }
-

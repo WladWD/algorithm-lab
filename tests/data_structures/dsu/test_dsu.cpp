@@ -1,9 +1,7 @@
+#include <algorithm>
 #include <data_structures/dsu/dsu.h>
 #include <data_structures/dsu/dsu_rank.h>
-
 #include <gtest/gtest.h>
-
-#include <algorithm>
 #include <random>
 #include <set>
 #include <vector>
@@ -239,4 +237,3 @@ TEST(DisjointSetUnionRank, RandomAgainstNaive) {
 }
 
 } // namespace
-

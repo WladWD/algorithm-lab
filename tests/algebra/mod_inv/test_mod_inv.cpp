@@ -1,5 +1,6 @@
-#include <gtest/gtest.h>
 #include "algebra/mod_inv/mod_inv.h"
+
+#include <gtest/gtest.h>
 
 using namespace algebra::mod_inv;
 

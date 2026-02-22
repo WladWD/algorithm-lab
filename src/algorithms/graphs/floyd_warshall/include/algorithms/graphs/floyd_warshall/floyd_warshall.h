@@ -40,4 +40,3 @@ struct FloydWarshallResult {
 FloydWarshallResult floyd_warshall(const std::vector<std::vector<int32_t>>& weights);
 
 } // namespace algorithms::graphs::floyd_warshall
-

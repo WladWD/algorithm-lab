@@ -9,7 +9,7 @@ namespace data_structures::lock_free {
 // This implementation uses std::atomic_flag with acquire/release semantics
 // and an internal backoff loop to reduce contention.
 class Spinlock {
-public:
+  public:
     Spinlock() noexcept : flag_{ATOMIC_FLAG_INIT} {}
 
     Spinlock(const Spinlock&) = delete;
@@ -24,7 +24,7 @@ public:
     // Release the lock.
     void unlock() noexcept;
 
-private:
+  private:
     std::atomic_flag flag_;
 };
 
@@ -33,15 +33,14 @@ private:
 // On early iterations it performs CPU relax hints; on later iterations it
 // yields to the OS scheduler to reduce contention.
 class Backoff {
-public:
+  public:
     Backoff() noexcept : count_{0} {}
 
     // Apply one step of backoff.
     void pause() noexcept;
 
-private:
+  private:
     unsigned count_;
 };
 
 } // namespace data_structures::lock_free
-

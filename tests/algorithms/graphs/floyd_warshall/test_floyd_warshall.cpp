@@ -1,8 +1,6 @@
-#include <gtest/gtest.h>
-
 #include <algorithms/graphs/floyd_warshall/floyd_warshall.h>
-
 #include <cstdint>
+#include <gtest/gtest.h>
 #include <vector>
 
 namespace fw = algorithms::graphs::floyd_warshall;
@@ -87,4 +85,3 @@ TEST(FloydWarshall, NonSquareMatrixReturnsEmpty) {
     EXPECT_TRUE(res.next.empty());
     EXPECT_FALSE(res.has_negative_cycle);
 }
-

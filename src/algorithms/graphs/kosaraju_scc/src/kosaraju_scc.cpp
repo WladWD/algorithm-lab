@@ -1,6 +1,5 @@
-#include <algorithms/graphs/kosaraju_scc/kosaraju_scc.h>
-
 #include <algorithm>
+#include <algorithms/graphs/kosaraju_scc/kosaraju_scc.h>
 #include <cstddef>
 #include <cstdint>
 #include <vector>
@@ -26,9 +25,7 @@ AdjList build_transpose(const AdjList& g) {
 }
 
 // Iterative DFS that appends vertices to `out_order` in postorder.
-static void dfs_postorder_iter(const AdjList& g,
-                               int32_t start,
-                               std::vector<uint8_t>& used,
+static void dfs_postorder_iter(const AdjList& g, int32_t start, std::vector<uint8_t>& used,
                                std::vector<int32_t>& out_order) {
     // state: (vertex, next_edge_index)
     struct Frame {
@@ -66,9 +63,7 @@ static void dfs_postorder_iter(const AdjList& g,
 }
 
 // Iterative DFS on transpose that assigns component id.
-static void dfs_assign_iter(const AdjList& gt,
-                            int32_t start,
-                            int32_t comp_id,
+static void dfs_assign_iter(const AdjList& gt, int32_t start, int32_t comp_id,
                             std::vector<int32_t>& comp_of) {
     std::vector<int32_t> st;
     st.push_back(start);
@@ -194,4 +189,3 @@ AdjList build_condensation_graph(const AdjList& g, const SccResult& scc) {
 }
 
 } // namespace algorithms::graphs::kosaraju_scc
-

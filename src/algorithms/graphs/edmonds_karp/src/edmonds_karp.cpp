@@ -52,14 +52,14 @@ int64_t FlowNetwork::max_flow(int32_t source, int32_t sink) {
         // Find minimum residual capacity along the path (bottleneck)
         int32_t path_flow = std::numeric_limits<int32_t>::max();
 
-        for (int32_t v = sink; v != source; ) {
+        for (int32_t v = sink; v != source;) {
             auto [u, edge_idx] = parent[v];
             path_flow = std::min(path_flow, adj_[u][edge_idx].capacity - adj_[u][edge_idx].flow);
             v = u;
         }
 
         // Update flow along the path (and reverse edges)
-        for (int32_t v = sink; v != source; ) {
+        for (int32_t v = sink; v != source;) {
             auto [u, edge_idx] = parent[v];
             adj_[u][edge_idx].flow += path_flow;
             adj_[v][adj_[u][edge_idx].rev_idx].flow -= path_flow;
@@ -81,11 +81,8 @@ int32_t FlowNetwork::get_flow(int32_t from, int32_t to) const {
     return -1; // Edge not found
 }
 
-int64_t compute_max_flow(
-    int32_t n,
-    const std::vector<std::tuple<int32_t, int32_t, int32_t>>& edges,
-    int32_t source,
-    int32_t sink) {
+int64_t compute_max_flow(int32_t n, const std::vector<std::tuple<int32_t, int32_t, int32_t>>& edges,
+                         int32_t source, int32_t sink) {
 
     FlowNetwork network(n);
     for (const auto& [from, to, capacity] : edges) {
@@ -95,4 +92,3 @@ int64_t compute_max_flow(
 }
 
 } // namespace algorithms::graphs::edmonds_karp
-

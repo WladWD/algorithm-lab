@@ -13,10 +13,10 @@ namespace algorithms::graphs::dinic {
  * Each edge stores a reference to its reverse edge for efficient flow updates.
  */
 struct FlowEdge {
-    int32_t to;          // Target vertex
-    int32_t capacity;    // Maximum capacity of this edge
-    int32_t flow;        // Current flow through this edge
-    int32_t rev_idx;     // Index of the reverse edge in the adjacency list of 'to'
+    int32_t to;       // Target vertex
+    int32_t capacity; // Maximum capacity of this edge
+    int32_t flow;     // Current flow through this edge
+    int32_t rev_idx;  // Index of the reverse edge in the adjacency list of 'to'
 };
 
 /**
@@ -27,7 +27,7 @@ struct FlowEdge {
  * construction (BFS) and blocking flow computation (DFS).
  */
 class FlowNetwork {
-public:
+  public:
     /**
      * @brief Construct a flow network with n vertices.
      * @param n Number of vertices in the network.
@@ -76,7 +76,7 @@ public:
      */
     [[nodiscard]] const std::vector<FlowEdge>& adj(int32_t v) const { return adj_[v]; }
 
-private:
+  private:
     /**
      * @brief Build the level graph using BFS.
      * @param source Source vertex.
@@ -102,8 +102,8 @@ private:
 
     int32_t n_;
     std::vector<std::vector<FlowEdge>> adj_;
-    std::vector<int32_t> level_;  // BFS distance from source
-    std::vector<int32_t> iter_;   // Current edge pointer per vertex (current-arc optimization)
+    std::vector<int32_t> level_; // BFS distance from source
+    std::vector<int32_t> iter_;  // Current edge pointer per vertex (current-arc optimization)
 };
 
 /**
@@ -114,11 +114,8 @@ private:
  * @param sink Sink vertex.
  * @return Maximum flow value.
  */
-[[nodiscard]] int64_t compute_max_flow(
-    int32_t n,
-    const std::vector<std::tuple<int32_t, int32_t, int32_t>>& edges,
-    int32_t source,
-    int32_t sink);
+[[nodiscard]] int64_t
+compute_max_flow(int32_t n, const std::vector<std::tuple<int32_t, int32_t, int32_t>>& edges,
+                 int32_t source, int32_t sink);
 
 } // namespace algorithms::graphs::dinic
-

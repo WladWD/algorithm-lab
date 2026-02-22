@@ -100,4 +100,3 @@ FloydWarshallResult floyd_warshall(const std::vector<std::vector<int32_t>>& weig
 }
 
 } // namespace algorithms::graphs::floyd_warshall
-

@@ -99,11 +99,8 @@ int32_t FlowNetwork::get_flow(int32_t from, int32_t to) const {
     return -1; // Edge not found
 }
 
-int64_t compute_max_flow(
-    int32_t n,
-    const std::vector<std::tuple<int32_t, int32_t, int32_t>>& edges,
-    int32_t source,
-    int32_t sink) {
+int64_t compute_max_flow(int32_t n, const std::vector<std::tuple<int32_t, int32_t, int32_t>>& edges,
+                         int32_t source, int32_t sink) {
 
     FlowNetwork network(n);
     for (const auto& [from, to, capacity] : edges) {

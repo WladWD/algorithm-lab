@@ -1,6 +1,5 @@
-#include <algorithms/graphs/topological_sort/topological_sort.h>
-
 #include <algorithm>
+#include <algorithms/graphs/topological_sort/topological_sort.h>
 #include <cstddef>
 #include <queue>
 
@@ -13,11 +12,8 @@ enum class Color : uint8_t {
     Black = 2,
 };
 
-static void dfs_visit(const AdjList& g,
-                      int32_t v,
-                      std::vector<Color>& color,
-                      std::vector<int32_t>& out,
-                      bool& has_cycle) {
+static void dfs_visit(const AdjList& g, int32_t v, std::vector<Color>& color,
+                      std::vector<int32_t>& out, bool& has_cycle) {
     if (has_cycle) {
         return;
     }
@@ -142,4 +138,3 @@ std::vector<int32_t> topological_order_or_empty(const AdjList& g) {
 }
 
 } // namespace algorithms::graphs::topological_sort
-

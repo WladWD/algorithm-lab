@@ -58,4 +58,3 @@ std::vector<int32_t> topological_order_or_empty(const AdjList& g);
 std::vector<int32_t> topological_order_or_empty_dfs(const AdjList& g);
 
 } // namespace algorithms::graphs::topological_sort
-

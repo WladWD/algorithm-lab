@@ -17,7 +17,7 @@ namespace ds::trie {
  * number of stored strings.
  */
 class Trie {
-public:
+  public:
     static constexpr int ALPHABET_SIZE = 26;
 
     Trie();
@@ -91,11 +91,11 @@ public:
      */
     void clear();
 
-private:
+  private:
     struct Node {
         int children[ALPHABET_SIZE];
-        int prefix_count;   // Number of words passing through this node
-        bool is_end;         // True if a word ends at this node
+        int prefix_count; // Number of words passing through this node
+        bool is_end;      // True if a word ends at this node
 
         Node();
     };
@@ -129,9 +129,7 @@ private:
      * @param current Current prefix being built.
      * @param result Output vector of collected words.
      */
-    void collect(int node_idx, std::string& current,
-                 std::vector<std::string>& result) const;
+    void collect(int node_idx, std::string& current, std::vector<std::string>& result) const;
 };
 
 } // namespace ds::trie
-

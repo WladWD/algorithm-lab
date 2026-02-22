@@ -1,9 +1,7 @@
-#include <algorithms/graphs/dfs/dfs.h>
-
-#include <gtest/gtest.h>
-
 #include <algorithm>
+#include <algorithms/graphs/dfs/dfs.h>
 #include <cstdint>
+#include <gtest/gtest.h>
 #include <unordered_set>
 #include <vector>
 
@@ -214,4 +212,3 @@ TEST(DFS, RecursiveAndIterativeReachSameSetFromStart) {
 }
 
 } // namespace
-

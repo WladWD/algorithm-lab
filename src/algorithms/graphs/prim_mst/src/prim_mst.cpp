@@ -41,7 +41,7 @@ PrimMstResult prim_mst(int32_t n, const std::vector<Edge>& edges) {
     // Build adjacency list; ignore self-loops and invalid endpoints (mirrors Kruskal module rules).
     std::vector<std::vector<AdjEdge>> g(static_cast<size_t>(n));
     g.shrink_to_fit();
-    
+
     for (const auto& e : edges) {
         if (e.u == e.v) {
             continue;
@@ -100,4 +100,3 @@ PrimMstResult prim_mst(int32_t n, const std::vector<Edge>& edges) {
 }
 
 } // namespace algorithms::graphs::prim_mst
-

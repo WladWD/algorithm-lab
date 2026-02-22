@@ -1,8 +1,7 @@
 #include "algorithms/graphs/prim_mst/prim_mst.h"
 
-#include <gtest/gtest.h>
-
 #include <algorithm>
+#include <gtest/gtest.h>
 #include <numeric>
 #include <tuple>
 #include <vector>
@@ -91,7 +90,7 @@ TEST(PrimMst, ConnectedDemoGraph) {
     // 2--3 (3)
     // 1--3 (100)
     std::vector<Edge> edges = {
-        {0, 1, 1},  {1, 2, 2}, {0, 2, 10}, {2, 3, 3}, {1, 3, 100},
+        {0, 1, 1}, {1, 2, 2}, {0, 2, 10}, {2, 3, 3}, {1, 3, 100},
     };
 
     auto res = prim_mst(4, edges);
@@ -137,11 +136,9 @@ TEST(PrimMst, ParallelEdgesPickLighter) {
 
 TEST(PrimMst, SelfLoopsAndInvalidEndpointsIgnored) {
     std::vector<Edge> edges = {
-        {0, 0, -100}, // self-loop
-        {0, 1, 4},
-        {-1, 1, 1},  // invalid
-        {0, 2, 2},
-        {2, 99, 3},  // invalid
+        {0, 0, -100},             // self-loop
+        {0, 1, 4},    {-1, 1, 1}, // invalid
+        {0, 2, 2},    {2, 99, 3}, // invalid
     };
 
     auto res = prim_mst(3, edges);
@@ -163,4 +160,3 @@ TEST(PrimMst, NegativeWeightsAreHandled) {
     EXPECT_EQ(res.total_weight, -6);
     EXPECT_TRUE(is_forest(3, res.edges));
 }
-

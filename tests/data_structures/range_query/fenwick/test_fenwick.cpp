@@ -1,8 +1,6 @@
-#include <data_structures/range_query/fenwick/fenwick.h>
-
-#include <gtest/gtest.h>
-
 #include <cstdint>
+#include <data_structures/range_query/fenwick/fenwick.h>
+#include <gtest/gtest.h>
 #include <random>
 #include <vector>
 
@@ -110,4 +108,3 @@ TEST(FenwickTree, RandomAgainstNaive) {
 }
 
 } // namespace
-

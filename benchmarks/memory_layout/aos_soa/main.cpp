@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <benchmark/benchmark.h>
 #include <chrono>
 #include <cstdint>
 #include <cstdlib>
@@ -6,8 +7,6 @@
 #include <random>
 #include <string>
 #include <vector>
-
-#include <benchmark/benchmark.h>
 
 struct ParticleAoS {
     float x, y, z;
@@ -30,7 +29,7 @@ struct ParticlesSoA {
 };
 
 // initialize both layouts with the same pseudo-random data
-void init_data(std::vector<ParticleAoS> &aos, ParticlesSoA &soa, size_t n, uint64_t seed) {
+void init_data(std::vector<ParticleAoS>& aos, ParticlesSoA& soa, size_t n, uint64_t seed) {
     aos.resize(n);
     soa.resize(n);
     std::mt19937_64 rng(seed);
@@ -42,43 +41,53 @@ void init_data(std::vector<ParticleAoS> &aos, ParticlesSoA &soa, size_t n, uint6
         float vx = dist(rng) * 0.01f;
         float vy = dist(rng) * 0.01f;
         float vz = dist(rng) * 0.01f;
-        aos[i].x = x; aos[i].y = y; aos[i].z = z;
-        aos[i].vx = vx; aos[i].vy = vy; aos[i].vz = vz;
-        soa.x[i] = x; soa.y[i] = y; soa.z[i] = z;
-        soa.vx[i] = vx; soa.vy[i] = vy; soa.vz[i] = vz;
+        aos[i].x = x;
+        aos[i].y = y;
+        aos[i].z = z;
+        aos[i].vx = vx;
+        aos[i].vy = vy;
+        aos[i].vz = vz;
+        soa.x[i] = x;
+        soa.y[i] = y;
+        soa.z[i] = z;
+        soa.vx[i] = vx;
+        soa.vy[i] = vy;
+        soa.vz[i] = vz;
     }
 }
 
 // kernels
-inline float sum_x_aos(const std::vector<ParticleAoS> &aos) {
+inline float sum_x_aos(const std::vector<ParticleAoS>& aos) {
     float s = 0.0f;
     size_t n = aos.size();
-    for (size_t i = 0; i < n; ++i) s += aos[i].x;
+    for (size_t i = 0; i < n; ++i)
+        s += aos[i].x;
     return s;
 }
 
-inline float sum_x_soa(const ParticlesSoA &soa) {
+inline float sum_x_soa(const ParticlesSoA& soa) {
     float s = 0.0f;
     size_t n = soa.x.size();
-    for (size_t i = 0; i < n; ++i) s += soa.x[i];
+    for (size_t i = 0; i < n; ++i)
+        s += soa.x[i];
     return s;
 }
 
-inline void update_x_aos(std::vector<ParticleAoS> &aos, float dt) {
+inline void update_x_aos(std::vector<ParticleAoS>& aos, float dt) {
     size_t n = aos.size();
     for (size_t i = 0; i < n; ++i) {
         aos[i].x += aos[i].vx * dt;
     }
 }
 
-inline void update_x_soa(ParticlesSoA &soa, float dt) {
+inline void update_x_soa(ParticlesSoA& soa, float dt) {
     size_t n = soa.x.size();
     for (size_t i = 0; i < n; ++i) {
         soa.x[i] += soa.vx[i] * dt;
     }
 }
 
-inline void update_all_aos(std::vector<ParticleAoS> &aos, float dt) {
+inline void update_all_aos(std::vector<ParticleAoS>& aos, float dt) {
     size_t n = aos.size();
     for (size_t i = 0; i < n; ++i) {
         aos[i].x += aos[i].vx * dt;
@@ -87,7 +96,7 @@ inline void update_all_aos(std::vector<ParticleAoS> &aos, float dt) {
     }
 }
 
-inline void update_all_soa(ParticlesSoA &soa, float dt) {
+inline void update_all_soa(ParticlesSoA& soa, float dt) {
     size_t n = soa.x.size();
     for (size_t i = 0; i < n; ++i) {
         soa.x[i] += soa.vx[i] * dt;
@@ -194,4 +203,3 @@ BENCHMARK(BM_UpdateAll_AoS)->Arg(100000)->Arg(1000000)->Arg(10000000);
 BENCHMARK(BM_UpdateAll_SoA)->Arg(100000)->Arg(1000000)->Arg(10000000);
 
 BENCHMARK_MAIN();
-

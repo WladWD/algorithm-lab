@@ -16,4 +16,3 @@ std::vector<uint8_t> is_prime_up_to(std::size_t n);
 std::vector<uint32_t> primes_up_to(std::size_t n);
 
 } // namespace algebra::sieve
-

@@ -1,9 +1,7 @@
-#include <algorithms/graphs/kosaraju_scc/kosaraju_scc.h>
-
-#include <gtest/gtest.h>
-
 #include <algorithm>
+#include <algorithms/graphs/kosaraju_scc/kosaraju_scc.h>
 #include <cstdint>
+#include <gtest/gtest.h>
 #include <vector>
 
 namespace {
@@ -177,4 +175,3 @@ TEST(KosarajuScc, CondensationGraphIsDAGAndHasNoSelfLoops) {
 }
 
 } // namespace
-

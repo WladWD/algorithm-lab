@@ -70,4 +70,3 @@ TEST(BellmanFord, OutOfRangeSourceReturnsEmpty) {
     EXPECT_TRUE(res.parent.empty());
     EXPECT_FALSE(res.has_negative_cycle);
 }
-

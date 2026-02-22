@@ -1,8 +1,6 @@
-#include <data_structures/trie/trie.h>
-
-#include <gtest/gtest.h>
-
 #include <algorithm>
+#include <data_structures/trie/trie.h>
+#include <gtest/gtest.h>
 #include <string>
 #include <vector>
 
@@ -111,7 +109,7 @@ TEST(Trie, CountWithPrefix) {
 
     EXPECT_EQ(t.count_with_prefix("app"), 3);
     EXPECT_EQ(t.count_with_prefix("apple"), 1);
-    EXPECT_EQ(t.count_with_prefix("appl"), 2);  // apple, application
+    EXPECT_EQ(t.count_with_prefix("appl"), 2); // apple, application
     EXPECT_EQ(t.count_with_prefix("ban"), 1);
     EXPECT_EQ(t.count_with_prefix("xyz"), 0);
 }
@@ -188,7 +186,7 @@ TEST(Trie, EraseExistingWord) {
 
     EXPECT_TRUE(t.erase("apple"));
     EXPECT_FALSE(t.search("apple"));
-    EXPECT_TRUE(t.search("app"));  // prefix still exists
+    EXPECT_TRUE(t.search("app")); // prefix still exists
     EXPECT_EQ(t.size(), 1);
 }
 
@@ -223,7 +221,7 @@ TEST(Trie, ErasePrefixDoesNotAffectLongerWord) {
     EXPECT_TRUE(t.erase("app"));
     EXPECT_FALSE(t.search("app"));
     EXPECT_TRUE(t.search("apple"));
-    EXPECT_TRUE(t.starts_with("app"));  // path still exists for "apple"
+    EXPECT_TRUE(t.starts_with("app")); // path still exists for "apple"
     EXPECT_EQ(t.size(), 1);
 }
 
@@ -423,4 +421,3 @@ TEST(Trie, LongestPrefixOfAfterErase) {
 }
 
 } // namespace
-

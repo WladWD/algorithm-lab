@@ -98,4 +98,3 @@ BellmanFordResult bellman_ford(const Graph& g, int32_t s) {
 }
 
 } // namespace algorithms::graphs::bellman_ford
-

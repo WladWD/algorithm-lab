@@ -1,9 +1,7 @@
-#include <gtest/gtest.h>
-
-#include <algorithms/sorting/quicksort/quicksort.h>
-
 #include <algorithm>
+#include <algorithms/sorting/quicksort/quicksort.h>
 #include <cstdint>
+#include <gtest/gtest.h>
 #include <random>
 #include <vector>
 
@@ -69,4 +67,3 @@ TEST(QuickSort, RandomizedMatchesStdSort) {
         EXPECT_EQ(a, b);
     }
 }
-

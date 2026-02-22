@@ -12,8 +12,7 @@ TEST(Sieve, SmallN_PrimesList) {
 }
 
 TEST(Sieve, KnownPrimesUpTo30) {
-    EXPECT_EQ(primes_up_to(30),
-              (std::vector<uint32_t>{2, 3, 5, 7, 11, 13, 17, 19, 23, 29}));
+    EXPECT_EQ(primes_up_to(30), (std::vector<uint32_t>{2, 3, 5, 7, 11, 13, 17, 19, 23, 29}));
 }
 
 TEST(Sieve, IsPrimeTableBasics) {
@@ -40,7 +39,8 @@ TEST(Sieve, ConsistencyListVsTable) {
 
     std::size_t count = 0;
     for (std::size_t i = 2; i <= n; ++i) {
-        if (t[i]) ++count;
+        if (t[i])
+            ++count;
     }
     EXPECT_EQ(count, primes.size());
 
@@ -49,4 +49,3 @@ TEST(Sieve, ConsistencyListVsTable) {
         EXPECT_EQ(t[p], 1);
     }
 }
-
