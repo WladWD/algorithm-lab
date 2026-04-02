@@ -5,11 +5,27 @@
 - Real-world examples and test coverage (GoogleTest)
 - Performance measurement via **Google Benchmark**
 - Profiling and correctness validation
-- Experiments with **lock-free and concurrent data structures** for and low-latency systems
+- Experiments with **lock-free and concurrent data structures** for low-latency systems
 
 > **Goal:** Combine algorithmic clarity, modern C++ design, and measurable performance — bridging academic understanding with production-grade efficiency.
 
 ---
+
+## 📖 Table of Contents
+
+1. [Algebra, Number Theory & Combinatorics](#1-algebra-number-theory--combinatorics)
+2. [Graph Algorithms](#2-graph-algorithms)
+3. [Sorting and Searching](#3-sorting-and-searching)
+4. [Data Structures](#4-data-structures)
+5. [Dynamic Programming & Optimization](#5-dynamic-programming--optimization)
+6. [String Algorithms](#6-string-algorithms)
+7. [Geometry & Linear Algebra](#7-geometry--linear-algebra)
+8. [Bit Manipulation](#8-bit-manipulation)
+9. [Lock-Free and Concurrent Data Structures](#9-lock-free-and-concurrent-data-structures)
+10. [Custom Allocators](#10-custom-allocators)
+11. [Parallel and System-Level Algorithms](#11-parallel-and-system-level-algorithms)
+12. [Machine Learning & Numerical Methods](#12-machine-learning--numerical-methods)
+
 ---
 
 ## 📚 Core Algorithm Categories
@@ -21,47 +37,67 @@ Each category can be implemented with:
 - ✅ **Benchmark** (`Google Benchmark`)
 - ✅ **Proof or analysis** (`proof.md`)
 
+> **Legend:** Items with links (✅) are implemented; plain text items are planned.
+
 ---
 
-### 1. Algebra & Number Theory
+### 1. Algebra, Number Theory & Combinatorics
 
-This section collects fundamental algebraic and number-theory algorithms commonly used across competitive programming, cryptography, and algorithmic libraries. Each entry includes a short description.
+Fundamental algebraic, number-theory, and combinatorial algorithms commonly used across competitive programming, cryptography, and algorithmic libraries.
 
-| Algorithm                                      | Description |
-|------------------------------------------------|---|
-| [Euclidean algorithm (GCD)](src/algebra/gcd/README.md)   | Iterative/recursive gcd(a, b). |
-| [Extended Euclid](src/algebra/gcdext/README.md)          | Find x, y such that ax + by = gcd(a,b). Used for modular inverses and Diophantine equations. |
-| [Modular inverse](src/algebra/mod_inv/README.md)        | Compute a^{-1} mod m (via extgcd or powmod when m is prime). |
-| [Fast modular exponentiation (powmod)](src/algebra/powmod/README.md)  | Binary exponentiation modulo m. |
-| [Chinese Remainder Theorem (CRT)](src/algebra/crt/README.md) | Solve x ≡ a_i (mod m_i) for pairwise-coprime moduli. |
-| [Garner's algorithm](src/algebra/garner/README.md)      | CRT variant useful for mixed/non-coprime moduli conversion and reconstruction. |
-| [Sieve of Eratosthenes](src/algebra/sieve/README.md)    | Generate primes up to N efficiently. |
-| Miller–Rabin primality                         | Probabilistic primality test (deterministic bases for 64-bit). |
-| Pollard's Rho                                  | Practical integer factorization for 64-bit numbers. |
-| Discrete logarithm (BSGS)                      | Baby-step giant-step for solving a^x ≡ b (mod p). |
-| Number-Theoretic Transform (NTT)               | FFT analog in finite fields for fast convolution. |
+#### Number Theory
+
+| Algorithm | Description |
+|---|---|
+| ✅ [Euclidean algorithm (GCD)](src/algebra/gcd/README.md) | Iterative/recursive gcd(a, b). |
+| ✅ [Extended Euclid](src/algebra/gcdext/README.md) | Find x, y such that ax + by = gcd(a,b). Used for modular inverses and Diophantine equations. |
+| ✅ [Modular inverse](src/algebra/mod_inv/README.md) | Compute a⁻¹ mod m (via extgcd or powmod when m is prime). |
+| ✅ [Fast modular exponentiation (powmod)](src/algebra/powmod/README.md) | Binary exponentiation modulo m. |
+| ✅ [Chinese Remainder Theorem (CRT)](src/algebra/crt/README.md) | Solve x ≡ aᵢ (mod mᵢ) for pairwise-coprime moduli. |
+| ✅ [Garner's algorithm](src/algebra/garner/README.md) | CRT variant useful for mixed/non-coprime moduli conversion and reconstruction. |
+| ✅ [Sieve of Eratosthenes](src/algebra/sieve/README.md) | Generate primes up to N efficiently. |
+| Prime Factorization | Trial division, Wheel factorization. |
+| Miller–Rabin primality | Probabilistic primality test (deterministic bases for 64-bit). |
+| Pollard's Rho | Practical integer factorization for 64-bit numbers. |
+| Euler's totient (φ) | Count integers coprime to n; multiplicative function. |
+| Möbius function / inversion | Used for inclusion–exclusion over divisors. |
+| Discrete logarithm (BSGS) | Baby-step giant-step for solving aˣ ≡ b (mod p). |
+| Number-Theoretic Transform (NTT) | FFT analog in finite fields for fast convolution. |
+
+#### Combinatorics
+
+| Algorithm | Description |
+|---|---|
+| ✅ [Principle of Inclusion–Exclusion (PIE)](src/math/combinatorics/pie/README.md) | Count via alternating inclusion and exclusion of overlapping sets. |
+| nCr (mod prime) | Binomial coefficients modulo a prime (Lucas / precomputed factorials). |
+| Pascal's Triangle | Tabulated binomial coefficients. |
+| Permutations / Combinations generator | Enumerate or count arrangements. |
+| Catalan numbers | Count balanced parentheses, BST shapes, etc. |
+| Stirling numbers | Partitions of sets / cycles of permutations. |
 
 ---
 
 ### 2. Graph Algorithms
 
-| Subcategory | Algorithms                                                                                                                                                                                                               |
-|--------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Shortest Path** | [Dijkstra](src/algorithms/graphs/dijkstra), [Bellman-Ford](src/algorithms/graphs/bellman_ford), [Floyd–Warshall](src/algorithms/graphs/floyd_warshall), A*, Johnson’s Algorithm                                                                                                                        |
-| **Minimum Spanning Tree** | [Kruskal](src/algorithms/graphs/kruskal_mst), [Prim](src/algorithms/graphs/prim_mst/README.md)                                                                                                                                                                                                            |
-| **Traversal** | [BFS](src/algorithms/graphs/bfs/README.md), [DFS (iterative & recursive)](src/algorithms/graphs/dfs/README.md), [Topological Sort](src/algorithms/graphs/topological_sort/README.md)                                                                                                                                                                       |
-| **Connectivity & Cuts** | [Union-Find (DSU)](src/data_structures/dsu/README.md), Tarjan’s Bridge & Articulation Points, [Kosaraju / SCC](src/algorithms/graphs/kosaraju_scc)                                                                                                                                                  |
-| **Flow Algorithms** | [Edmonds–Karp](src/algorithms/graphs/edmonds_karp), [Dinic](src/algorithms/graphs/dinic), Push–Relabel                                                                                                                                                                                        |
-| **Bipartite & Matching** | [Bipartite Check (BFS/DFS coloring)](src/algorithms/graphs/bipartite_check), Maximum Matching (Kuhn, Hopcroft–Karp), Minimum Vertex Cover / König's theorem, Bipartite Coloring, Weighted Bipartite Matching (Hungarian) |
-| **Misc** | Topological Order Validation, DAG Longest Path                                                                                                                                                                           |
+| Subcategory | Algorithms |
+|---|---|
+| **Shortest Path** | ✅ [Dijkstra](src/algorithms/graphs/dijkstra), ✅ [Bellman-Ford](src/algorithms/graphs/bellman_ford), ✅ [Floyd–Warshall](src/algorithms/graphs/floyd_warshall), A*, Johnson's Algorithm |
+| **Minimum Spanning Tree** | ✅ [Kruskal](src/algorithms/graphs/kruskal_mst), ✅ [Prim](src/algorithms/graphs/prim_mst/README.md) |
+| **Traversal & Ordering** | ✅ [BFS](src/algorithms/graphs/bfs/README.md), ✅ [DFS (iterative & recursive)](src/algorithms/graphs/dfs/README.md), ✅ [Topological Sort](src/algorithms/graphs/topological_sort/README.md) |
+| **Connectivity & Cuts** | ✅ [Union-Find (DSU)](src/data_structures/dsu/README.md), Tarjan's Bridge & Articulation Points, ✅ [Kosaraju / SCC](src/algorithms/graphs/kosaraju_scc), 2-SAT |
+| **Flow Algorithms** | ✅ [Edmonds–Karp](src/algorithms/graphs/edmonds_karp), ✅ [Dinic](src/algorithms/graphs/dinic), Push–Relabel, Min-Cost Max-Flow |
+| **Bipartite & Matching** | ✅ [Bipartite Check (BFS/DFS coloring)](src/algorithms/graphs/bipartite_check), Maximum Matching (Kuhn, Hopcroft–Karp), Minimum Vertex Cover / König's theorem, Weighted Bipartite Matching (Hungarian) |
+| **Tree Algorithms** | LCA (binary lifting / HLD), Centroid Decomposition, Euler Tour, Heavy-Light Decomposition |
+| **Euler & Hamilton** | Euler Path / Circuit, Hamiltonian Path (backtracking / DP) |
+| **Miscellaneous** | DAG Longest Path |
 
 ---
 
 ### 3. Sorting and Searching
 
 | Type | Algorithms |
-|------|-------------|
-| **Comparison-Based** | [QuickSort](src/algorithms/sorting/quicksort), MergeSort, HeapSort, ShellSort |
+|---|---|
+| **Comparison-Based** | ✅ [QuickSort](src/algorithms/sorting/quicksort), MergeSort, HeapSort, ShellSort, TimSort, IntroSort |
 | **Non-Comparison-Based** | Counting Sort, Radix Sort, Bucket Sort |
 | **Searching** | Binary Search, Interpolation Search, Ternary Search, Exponential Search |
 | **Selection** | QuickSelect, Median of Medians |
@@ -71,97 +107,113 @@ This section collects fundamental algebraic and number-theory algorithms commonl
 ### 4. Data Structures
 
 | Category | Implementations |
-|-----------|----------------|
+|---|---|
 | **Fundamentals** | Dynamic Array, Linked List, Stack, Queue, Deque |
 | **Associative** | Hash Table (open addressing + chaining), Ordered Map (balanced BST) |
-| **Trees** | Binary Search Tree, AVL Tree, Red-Black Tree, Segment Tree, [Fenwick tree (BIT)](src/data_structures/range_query/fenwick), [Trie](src/data_structures/trie) |
+| **Trees** | Binary Search Tree, AVL Tree, Red-Black Tree, Segment Tree (+ lazy propagation), ✅ [Fenwick tree (BIT)](src/data_structures/range_query/fenwick), ✅ [Trie](src/data_structures/trie), Treap / Implicit Treap |
 | **Heaps / Priority Queues** | Binary Heap, Fibonacci Heap, Pairing Heap |
-| **Union-Find / DSU** | Path compression + union by rank |
+| **Union-Find / DSU** | ✅ [Path compression + union by rank](src/data_structures/dsu/README.md) |
 | **Spatial Structures** | KD-Tree, Quadtree, R-Tree (optional, for advanced geometry) |
-| **Range Query Techniques** | [Sqrt (block) decomposition](src/data_structures/range_query/sqrt_decomposition), [Mo's algorithm (offline queries)](src/data_structures/range_query/mo), [RMQ (sparse table)](src/data_structures/range_query/sparse_table) |
+| **Range Query Techniques** | ✅ [Sqrt (block) decomposition](src/data_structures/range_query/sqrt_decomposition), ✅ [Mo's algorithm (offline queries)](src/data_structures/range_query/mo), ✅ [RMQ (sparse table)](src/data_structures/range_query/sparse_table) |
+| **Advanced** | Persistent Segment Tree, Link-Cut Tree, Wavelet Tree |
 
 ---
 
 ### 5. Dynamic Programming & Optimization
 
 | Type | Examples |
-|------|-----------|
+|---|---|
 | **Classic** | Fibonacci (memoized / tabulated), 0/1 Knapsack, Longest Common Subsequence, Edit Distance |
 | **Pathfinding** | DP on grids, DP on DAGs |
 | **Optimization** | Convex Hull Trick, Divide & Conquer DP, Bitmask DP |
-| **Advanced** | Digit DP, Tree DP, SOS DP (subset convolution) |
+| **Advanced** | Digit DP, Tree DP, SOS DP (subset convolution), Profile DP |
 
 ---
 
-### 6. Mathematical Algorithms
-
-| Topic | Examples                                                                                                                                                  |
-|--------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Number Theory** | GCD / Extended Euclid, Modular Exponentiation, Sieve of Eratosthenes, Prime Factorization                                                                 |
-| **Combinatorics** | nCr (mod prime), Pascal’s Triangle, Permutations / Combinations generator, [Principle of Inclusion–Exclusion (PIE)](src/math/combinatorics/pie/README.md) |
-| **Geometry** | Convex Hull (Graham, Andrew), Line Intersection, Orientation, Closest Pair                                                                                |
-| **Linear Algebra** | Matrix Multiplication (Strassen), Gaussian Elimination                                                                                                    |
-| **Probability / Statistics** | Random sampling, reservoir sampling, Monte Carlo π estimation                                                                                             |
-
----
-
-### 7. String Algorithms
+### 6. String Algorithms
 
 | Category | Algorithms |
-|-----------|-------------|
-| **Pattern Matching** | KMP, Rabin–Karp, Z-Algorithm, Prefix Function |
-| **Suffix Structures** | Suffix Array, Suffix Tree (Ukkonen), LCP Array |
+|---|---|
+| **Pattern Matching** | KMP, Rabin–Karp, Z-Algorithm, Prefix Function, Aho–Corasick |
+| **Suffix Structures** | Suffix Array, Suffix Tree (Ukkonen), LCP Array, Suffix Automaton |
 | **String Hashing** | Polynomial Hash, Rolling Hash |
+| **Palindromes** | Manacher's algorithm, Palindromic Tree (Eertree) |
 | **Applications** | Substring Search, Longest Palindromic Substring, Anagram Grouping |
 
 ---
 
-### 8. Lock-Free and Concurrent Data Structures 
+### 7. Geometry & Linear Algebra
 
-| Structure | Description / Use                                                                                              |
-|------------|----------------------------------------------------------------------------------------------------------------|
-| **Lock-Free Stack** | [Based on atomic CAS; Treiber’s stack](src/data_structures/lock_free/stack)                                    |
-| **Lock-Free Queue** | [Michael & Scott queue (single-producer/single-consumer or MPMC)](src/data_structures/lock_free/queue)         |
-| **Ring Buffer (Circular Queue)** | [Fixed-capacity, cache-friendly, used in trading systems](src/data_structures/lock_free/ring_buffer/README.md) |
-| **Lock-Free Hash Map** | [Open addressing / chained lock-free maps](src/data_structures/lock_free/hash_map/README.md)                   |
-| **Hazard Pointers / Epoch Reclamation** | [Safe memory reclamation without global locks](src/data_structures/lock_free/hazard_pointers/README.md)        |
-| **Atomic Variables** | [Atomic operations / memory ordering](src/data_structures/lock_free/atomic/README.md)                                                                            |
-| **Barrier / Latch Implementations** | [Thread coordination primitives](src/data_structures/lock_free/barrier/README.md)                                                                                 |
-| **Spinlocks / Backoff Strategies** | [For fallback mechanisms under contention](src/data_structures/lock_free/spinlock/README.md)                                                                       |
+| Topic | Examples |
+|---|---|
+| **Computational Geometry** | Convex Hull (Graham, Andrew), Line Intersection, Orientation, Closest Pair, Half-Plane Intersection |
+| **Linear Algebra** | Matrix Multiplication (Strassen), Gaussian Elimination, Matrix Exponentiation |
+| **Probability / Statistics** | Random sampling, Reservoir sampling, Monte Carlo π estimation |
 
 ---
 
-### 9. Custom Allocators
+### 8. Bit Manipulation
 
-| Allocator | Description / Suggested path                                                                                                |
-|---|-----------------------------------------------------------------------------------------------------------------------------|
-| System allocator | Default `malloc`/`new`. Baseline for correctness and simple tests.                                                          |
-| Simple mutex-backed pool | Shared pool protected by a mutex.                                            |
-| Per-thread freelist / pool | Per-thread caches/freelists for fixed-size objects.                                   |
-| Arena / region allocator | Allocate from a contiguous region and free in bulk.                                  |
+| Topic | Examples |
+|---|---|
+| **Basics** | Popcount tricks, Power-of-2 checks, Lowest set bit |
+| **Enumeration** | Subset enumeration (Gosper's hack), Gray code |
+| **Applications** | Bitmask DP helpers, XOR tricks, Bitwise sieve |
+
+---
+
+### 9. Lock-Free and Concurrent Data Structures
+
+| Structure | Description / Use |
+|---|---|
+| **Lock-Free Stack** | ✅ [Based on atomic CAS; Treiber's stack](src/data_structures/lock_free/stack) |
+| **Lock-Free Queue** | ✅ [Michael & Scott queue (single-producer/single-consumer or MPMC)](src/data_structures/lock_free/queue) |
+| **Ring Buffer (Circular Queue)** | ✅ [Fixed-capacity, cache-friendly, used in trading systems](src/data_structures/lock_free/ring_buffer/README.md) |
+| **Lock-Free Hash Map** | ✅ [Open addressing / chained lock-free maps](src/data_structures/lock_free/hash_map/README.md) |
+| **Hazard Pointers / Epoch Reclamation** | ✅ [Safe memory reclamation without global locks](src/data_structures/lock_free/hazard_pointers/README.md) |
+| **Atomic Variables** | ✅ [Atomic operations / memory ordering](src/data_structures/lock_free/atomic/README.md) |
+| **Barrier / Latch Implementations** | ✅ [Thread coordination primitives](src/data_structures/lock_free/barrier/README.md) |
+| **Spinlocks / Backoff Strategies** | ✅ [For fallback mechanisms under contention](src/data_structures/lock_free/spinlock/README.md) |
+| **Read-Copy-Update (RCU)** | Scalable read-mostly synchronization pattern. |
+| **Seqlock** | Lock-free readers with writer sequencing; used for timestamps/counters. |
+
+---
+
+### 10. Custom Allocators
+
+| Allocator | Description |
+|---|---|
+| System allocator | Default `malloc`/`new`. Baseline for correctness and simple tests. |
+| Simple mutex-backed pool | Shared pool protected by a mutex. |
+| Per-thread freelist / pool | Per-thread caches/freelists for fixed-size objects. |
+| Arena / region allocator | Allocate from a contiguous region and free in bulk. |
 | Slab / fixed-size allocator | Preallocated slabs for identical-size objects. |
 
 ---
 
-### 10. Parallel and System-Level Algorithms
+### 11. Parallel and System-Level Algorithms
 
 | Category | Examples |
-|-----------|-----------|
+|---|---|
 | **Parallel Sorting** | Parallel MergeSort, Bitonic Sort (SIMD / OpenMP) |
-| **Concurrent Data Processing** | Producer-Consumer pipeline |
-| **Memory Layout / Cache Optimization** | [SoA vs AoS](benchmarks/memory_layout/aos_soa), [cache line alignment, prefetching](benchmarks/memory_layout/cache/README.md) |
+| **Concurrent Data Processing** | Producer-Consumer pipeline, Thread pool |
+| **Memory Layout / Cache Optimization** | ✅ [SoA vs AoS](benchmarks/memory_layout/aos_soa), ✅ [cache line alignment, prefetching](benchmarks/memory_layout/cache/README.md) |
 | **Scheduling** | Work-stealing queues, load balancing heuristics |
+| **SIMD / Vectorization** | Manual intrinsics, auto-vectorization patterns |
 
 ---
 
-### 11. Machine Learning Basics
+### 12. Machine Learning & Numerical Methods
+
 | Topic | Example Algorithms |
-|--------|-------------------|
+|---|---|
 | **Supervised** | Linear Regression, Logistic Regression, KNN |
 | **Optimization** | Gradient Descent (batch / stochastic / momentum), Adam |
 | **Unsupervised** | K-Means, PCA |
 | **Probabilistic** | Naive Bayes, Hidden Markov Models |
+| **Numerical** | Newton's method, Numerical integration (Simpson, trapezoidal) |
 
+---
 
 ## ⚙️ Build, Debug & Profiling (shortcuts)
 
