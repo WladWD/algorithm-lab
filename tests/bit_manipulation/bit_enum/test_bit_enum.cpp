@@ -139,4 +139,3 @@ TEST(BitEnumTest, ConstexprUsable) {
     static_assert(gray_decode(2u) == 3u);
     static_assert(next_same_popcount(uint32_t{0b0011}) == uint32_t{0b0101});
 }
-

@@ -23,8 +23,8 @@ TEST(BitTricksTest, PopcountMultipleBits) {
 }
 
 TEST(BitTricksTest, PopcountArbitrary) {
-    EXPECT_EQ(popcount(uint32_t{12345}), 6);  // 11000000111001
-    EXPECT_EQ(popcount(uint32_t{7}), 3);       // 111
+    EXPECT_EQ(popcount(uint32_t{12345}), 6); // 11000000111001
+    EXPECT_EQ(popcount(uint32_t{7}), 3);     // 111
 }
 
 // ---------- is_power_of_two ----------
@@ -60,8 +60,7 @@ TEST(BitTricksTest, LowestSetBitBasic) {
 }
 
 TEST(BitTricksTest, LowestSetBit64) {
-    EXPECT_EQ(lowest_set_bit(uint64_t{0x8000000000000000}),
-              uint64_t{0x8000000000000000});
+    EXPECT_EQ(lowest_set_bit(uint64_t{0x8000000000000000}), uint64_t{0x8000000000000000});
     EXPECT_EQ(lowest_set_bit(uint64_t{6}), uint64_t{2}); // 110 -> 010
 }
 
@@ -79,10 +78,8 @@ TEST(BitTricksTest, HighestSetBitBasic) {
 }
 
 TEST(BitTricksTest, HighestSetBit64) {
-    EXPECT_EQ(highest_set_bit(uint64_t{0x8000000000000000}),
-              uint64_t{0x8000000000000000});
-    EXPECT_EQ(highest_set_bit(uint64_t{0xFFFFFFFFFFFFFFFF}),
-              uint64_t{0x8000000000000000});
+    EXPECT_EQ(highest_set_bit(uint64_t{0x8000000000000000}), uint64_t{0x8000000000000000});
+    EXPECT_EQ(highest_set_bit(uint64_t{0xFFFFFFFFFFFFFFFF}), uint64_t{0x8000000000000000});
 }
 
 // ---------- clear_lowest_set_bit ----------
@@ -119,4 +116,3 @@ TEST(BitTricksTest, ConstexprUsable) {
     static_assert(highest_set_bit(uint32_t{12}) == 8);
     static_assert(clear_lowest_set_bit(uint32_t{12}) == 8);
 }
-

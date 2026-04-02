@@ -3,7 +3,8 @@
 namespace bit_manipulation::bit_enum {
 
 std::vector<uint64_t> gray_code_sequence(unsigned num_bits) {
-    if (num_bits == 0) return {0};
+    if (num_bits == 0)
+        return {0};
     const uint64_t count = uint64_t{1} << num_bits;
     std::vector<uint64_t> seq;
     seq.reserve(count);
@@ -14,4 +15,3 @@ std::vector<uint64_t> gray_code_sequence(unsigned num_bits) {
 }
 
 } // namespace bit_manipulation::bit_enum
-

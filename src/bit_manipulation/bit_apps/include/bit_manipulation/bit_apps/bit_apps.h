@@ -9,9 +9,9 @@ namespace bit_manipulation::bit_apps {
 
 /// XOR-swap two values in place without a temporary variable.
 /// Note: a and b must refer to distinct objects (aliasing causes zeroing).
-template <std::unsigned_integral T>
-constexpr void xor_swap(T& a, T& b) noexcept {
-    if (&a == &b) return;  // self-swap guard
+template <std::unsigned_integral T> constexpr void xor_swap(T& a, T& b) noexcept {
+    if (&a == &b)
+        return; // self-swap guard
     a ^= b;
     b ^= a;
     a ^= b;
@@ -41,4 +41,3 @@ inline bool is_prime_in_sieve(const std::vector<uint64_t>& sieve, uint64_t k) no
 uint64_t count_primes(uint64_t n);
 
 } // namespace bit_manipulation::bit_apps
-
