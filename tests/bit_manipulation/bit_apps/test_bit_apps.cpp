@@ -30,7 +30,7 @@ TEST(BitAppsTest, XorSwapSameValue) {
 
 TEST(BitAppsTest, XorSwapSelfAlias) {
     uint32_t a = 42;
-    xor_swap(a, a);  // self-swap guard should protect
+    xor_swap(a, a); // self-swap guard should protect
     EXPECT_EQ(a, 42u);
 }
 
@@ -97,7 +97,8 @@ TEST(BitAppsTest, SieveUpTo100) {
     // Known: 25 primes up to 100
     uint64_t count = 0;
     for (uint64_t i = 0; i <= 100; ++i) {
-        if (is_prime_in_sieve(sieve, i)) ++count;
+        if (is_prime_in_sieve(sieve, i))
+            ++count;
     }
     EXPECT_EQ(count, 25u);
 }
@@ -107,7 +108,8 @@ TEST(BitAppsTest, SieveLarger) {
     auto sieve = bitwise_sieve(1000);
     uint64_t count = 0;
     for (uint64_t i = 0; i <= 1000; ++i) {
-        if (is_prime_in_sieve(sieve, i)) ++count;
+        if (is_prime_in_sieve(sieve, i))
+            ++count;
     }
     EXPECT_EQ(count, 168u);
 }
@@ -133,4 +135,3 @@ TEST(BitAppsTest, CountPrimes1000) {
 TEST(BitAppsTest, CountPrimes10000) {
     EXPECT_EQ(count_primes(10000), 1229u);
 }
-

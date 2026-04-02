@@ -20,8 +20,10 @@ std::vector<uint64_t> bitwise_sieve(uint64_t n) {
     std::vector<uint64_t> sieve(num_words, ~uint64_t{0});
 
     // 0 and 1 are not prime.
-    if (n >= 0) sieve[0] &= ~uint64_t{1};          // clear bit 0
-    if (n >= 1) sieve[0] &= ~(uint64_t{1} << 1);   // clear bit 1
+    if (n >= 0)
+        sieve[0] &= ~uint64_t{1}; // clear bit 0
+    if (n >= 1)
+        sieve[0] &= ~(uint64_t{1} << 1); // clear bit 1
 
     const uint64_t limit = static_cast<uint64_t>(std::sqrt(static_cast<double>(n)));
     for (uint64_t i = 2; i <= limit; ++i) {
@@ -43,7 +45,8 @@ std::vector<uint64_t> bitwise_sieve(uint64_t n) {
 }
 
 uint64_t count_primes(uint64_t n) {
-    if (n < 2) return 0;
+    if (n < 2)
+        return 0;
     auto sieve = bitwise_sieve(n);
     uint64_t count = 0;
     for (auto word : sieve) {
@@ -53,4 +56,3 @@ uint64_t count_primes(uint64_t n) {
 }
 
 } // namespace bit_manipulation::bit_apps
-

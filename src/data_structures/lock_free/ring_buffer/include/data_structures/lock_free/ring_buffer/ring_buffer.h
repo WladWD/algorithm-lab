@@ -13,6 +13,15 @@
 
 namespace data_structures::lock_free {
 
+// Portable cache-line size constant.
+// std::hardware_destructive_interference_size is not available on all compilers
+// (notably Apple Clang). Fall back to a widely-used 64-byte default.
+#ifdef __cpp_lib_hardware_interference_size
+inline constexpr std::size_t cache_line_size = std::hardware_destructive_interference_size;
+#else
+inline constexpr std::size_t cache_line_size = 64;
+#endif
+
 // Utility: round up to next power of two
 inline size_t next_pow2(size_t v) {
     if (v <= 1)
@@ -119,8 +128,8 @@ template <typename T> class SpscRingBuffer {
         alignas(alignof(T)) std::array<std::byte, sizeof(T)> data;
     };
     std::vector<AlignedSlot> buffer_;
-    alignas(std::hardware_destructive_interference_size) std::atomic<size_t> head_;
-    alignas(std::hardware_destructive_interference_size) std::atomic<size_t> tail_;
+    alignas(cache_line_size) std::atomic<size_t> head_;
+    alignas(cache_line_size) std::atomic<size_t> tail_;
 };
 
 // ---------------------- MPSC ring buffer (sketch / sequence-based) ----------------------
@@ -215,8 +224,8 @@ template <typename T> class MpscRingBuffer {
     const size_t capacity_;
     const uint64_t mask_;
     std::vector<Slot> slots_;
-    alignas(std::hardware_destructive_interference_size) std::atomic<uint64_t> prod_idx_;
-    alignas(std::hardware_destructive_interference_size) std::atomic<uint64_t> cons_idx_;
+    alignas(cache_line_size) std::atomic<uint64_t> prod_idx_;
+    alignas(cache_line_size) std::atomic<uint64_t> cons_idx_;
 };
 
 // ---------------------- MPMC ring buffer (Vyukov-style) ----------------------
@@ -337,8 +346,8 @@ template <typename T> class MpmcRingBuffer {
     const size_t capacity_;
     const uint64_t mask_;
     std::vector<Slot> slots_;
-    alignas(std::hardware_destructive_interference_size) std::atomic<uint64_t> head_;
-    alignas(std::hardware_destructive_interference_size) std::atomic<uint64_t> tail_;
+    alignas(cache_line_size) std::atomic<uint64_t> head_;
+    alignas(cache_line_size) std::atomic<uint64_t> tail_;
 };
 
 } // namespace data_structures::lock_free
