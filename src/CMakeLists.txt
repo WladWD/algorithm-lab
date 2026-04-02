@@ -26,3 +26,5 @@ add_subdirectory(data_structures/dsu)
 add_subdirectory(data_structures/trie)
 
 add_subdirectory(algebra)
+
+add_subdirectory(bit_manipulation)

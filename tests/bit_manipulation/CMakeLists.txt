@@ -1,0 +1,12 @@
+add_executable(test_bit_tricks bit_tricks/test_bit_tricks.cpp)
+target_link_libraries(test_bit_tricks PRIVATE algo_bit_manipulation_bit_tricks GTest::gtest_main)
+add_test(NAME bit_manipulation.bit_tricks COMMAND test_bit_tricks)
+
+add_executable(test_bit_enum bit_enum/test_bit_enum.cpp)
+target_link_libraries(test_bit_enum PRIVATE algo_bit_manipulation_bit_enum GTest::gtest_main)
+add_test(NAME bit_manipulation.bit_enum COMMAND test_bit_enum)
+
+add_executable(test_bit_apps bit_apps/test_bit_apps.cpp)
+target_link_libraries(test_bit_apps PRIVATE algo_bit_manipulation_bit_apps GTest::gtest_main)
+add_test(NAME bit_manipulation.bit_apps COMMAND test_bit_apps)
+

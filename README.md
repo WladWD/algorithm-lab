@@ -156,9 +156,9 @@ Fundamental algebraic, number-theory, and combinatorial algorithms commonly used
 
 | Topic | Examples |
 |---|---|
-| **Basics** | Popcount tricks, Power-of-2 checks, Lowest set bit |
-| **Enumeration** | Subset enumeration (Gosper's hack), Gray code |
-| **Applications** | Bitmask DP helpers, XOR tricks, Bitwise sieve |
+| **Basics** | ✅ [Popcount, Power-of-2 checks, Lowest/Highest set bit](src/bit_manipulation/bit_tricks/README.md) |
+| **Enumeration** | ✅ [Subset enumeration (Gosper's hack), Submask iteration, Gray code](src/bit_manipulation/bit_enum/README.md) |
+| **Applications** | ✅ [XOR tricks, Bitwise sieve](src/bit_manipulation/bit_apps/README.md) |
 
 ---
 
