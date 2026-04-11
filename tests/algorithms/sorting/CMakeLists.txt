@@ -47,6 +47,13 @@ target_link_libraries(test_sorting_interpolation_search PRIVATE
 )
 add_test(NAME sorting.interpolation_search COMMAND test_sorting_interpolation_search)
 
+add_executable(test_sorting_ternary_search ternary_search/test_ternary_search.cpp)
+target_link_libraries(test_sorting_ternary_search PRIVATE
+        algo_sorting_ternary_search
+        GTest::gtest_main
+)
+add_test(NAME sorting.ternary_search COMMAND test_sorting_ternary_search)
+
 add_executable(test_sorting_quickselect quickselect/test_quickselect.cpp)
 target_link_libraries(test_sorting_quickselect PRIVATE
         algo_sorting_quickselect
