@@ -40,6 +40,13 @@ target_link_libraries(test_sorting_binary_search PRIVATE
 )
 add_test(NAME sorting.binary_search COMMAND test_sorting_binary_search)
 
+add_executable(test_sorting_interpolation_search interpolation_search/test_interpolation_search.cpp)
+target_link_libraries(test_sorting_interpolation_search PRIVATE
+        algo_sorting_interpolation_search
+        GTest::gtest_main
+)
+add_test(NAME sorting.interpolation_search COMMAND test_sorting_interpolation_search)
+
 add_executable(test_sorting_quickselect quickselect/test_quickselect.cpp)
 target_link_libraries(test_sorting_quickselect PRIVATE
         algo_sorting_quickselect

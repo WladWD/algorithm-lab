@@ -16,6 +16,7 @@ add_subdirectory(algorithms/sorting/heapsort)
 add_subdirectory(algorithms/sorting/counting_sort)
 add_subdirectory(algorithms/sorting/radix_sort)
 add_subdirectory(algorithms/sorting/binary_search)
+add_subdirectory(algorithms/sorting/interpolation_search)
 add_subdirectory(algorithms/sorting/quickselect)
 
 add_subdirectory(data_structures/lock_free/stack)
