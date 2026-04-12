@@ -61,3 +61,44 @@ target_link_libraries(test_sorting_quickselect PRIVATE
 )
 add_test(NAME sorting.quickselect COMMAND test_sorting_quickselect)
 
+add_executable(test_sorting_shellsort shellsort/test_shellsort.cpp)
+target_link_libraries(test_sorting_shellsort PRIVATE
+        algo_sorting_shellsort
+        GTest::gtest_main
+)
+add_test(NAME sorting.shellsort COMMAND test_sorting_shellsort)
+
+add_executable(test_sorting_timsort timsort/test_timsort.cpp)
+target_link_libraries(test_sorting_timsort PRIVATE
+        algo_sorting_timsort
+        GTest::gtest_main
+)
+add_test(NAME sorting.timsort COMMAND test_sorting_timsort)
+
+add_executable(test_sorting_introsort introsort/test_introsort.cpp)
+target_link_libraries(test_sorting_introsort PRIVATE
+        algo_sorting_introsort
+        GTest::gtest_main
+)
+add_test(NAME sorting.introsort COMMAND test_sorting_introsort)
+
+add_executable(test_sorting_bucket_sort bucket_sort/test_bucket_sort.cpp)
+target_link_libraries(test_sorting_bucket_sort PRIVATE
+        algo_sorting_bucket_sort
+        GTest::gtest_main
+)
+add_test(NAME sorting.bucket_sort COMMAND test_sorting_bucket_sort)
+
+add_executable(test_sorting_exponential_search exponential_search/test_exponential_search.cpp)
+target_link_libraries(test_sorting_exponential_search PRIVATE
+        algo_sorting_exponential_search
+        GTest::gtest_main
+)
+add_test(NAME sorting.exponential_search COMMAND test_sorting_exponential_search)
+
+add_executable(test_sorting_median_of_medians median_of_medians/test_median_of_medians.cpp)
+target_link_libraries(test_sorting_median_of_medians PRIVATE
+        algo_sorting_median_of_medians
+        GTest::gtest_main
+)
+add_test(NAME sorting.median_of_medians COMMAND test_sorting_median_of_medians)
