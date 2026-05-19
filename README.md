@@ -134,7 +134,7 @@ Fundamental algebraic, number-theory, and combinatorial algorithms commonly used
 
 | Category | Algorithms |
 |---|---|
-| **Pattern Matching** | KMP, Rabin–Karp, Z-Algorithm, Prefix Function, Aho–Corasick |
+| **Pattern Matching** | ✅ [KMP](src/algorithms/strings/kmp), ✅ [Rabin–Karp](src/algorithms/strings/rabin_karp), ✅ [Z-Algorithm](src/algorithms/strings/z_function), ✅ [Aho–Corasick](src/algorithms/strings/aho_corasick) |
 | **Suffix Structures** | Suffix Array, Suffix Tree (Ukkonen), LCP Array, Suffix Automaton |
 | **String Hashing** | ✅ [Polynomial Hash](src/algorithms/strings/polynomial_hash), ✅ [Rolling Hash](src/algorithms/strings/rolling_hash) |
 | **Palindromes** | Manacher's algorithm, Palindromic Tree (Eertree) |
