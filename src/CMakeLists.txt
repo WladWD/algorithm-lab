@@ -39,6 +39,9 @@ add_subdirectory(data_structures/range_query/fenwick)
 
 add_subdirectory(data_structures/dsu)
 add_subdirectory(data_structures/trie)
+add_subdirectory(data_structures/associative/hash_table_oa)
+add_subdirectory(data_structures/associative/hash_table_chaining)
+add_subdirectory(data_structures/associative/ordered_map)
 
 add_subdirectory(algebra)
 

@@ -109,7 +109,7 @@ Fundamental algebraic, number-theory, and combinatorial algorithms commonly used
 | Category | Implementations |
 |---|---|
 | **Fundamentals** | Dynamic Array, Linked List, Stack, Queue, Deque |
-| **Associative** | Hash Table (open addressing + chaining), Ordered Map (balanced BST) |
+| **Associative** | ✅ [Hash Table (open addressing)](src/data_structures/associative/hash_table_oa), ✅ [Hash Table (chaining)](src/data_structures/associative/hash_table_chaining), ✅ [Ordered Map (AVL)](src/data_structures/associative/ordered_map) |
 | **Trees** | Binary Search Tree, AVL Tree, Red-Black Tree, Segment Tree (+ lazy propagation), ✅ [Fenwick tree (BIT)](src/data_structures/range_query/fenwick), ✅ [Trie](src/data_structures/trie), Treap / Implicit Treap |
 | **Heaps / Priority Queues** | Binary Heap, Fibonacci Heap, Pairing Heap |
 | **Union-Find / DSU** | ✅ [Path compression + union by rank](src/data_structures/dsu/README.md) |

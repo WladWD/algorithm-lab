@@ -12,6 +12,7 @@ if (ALGO_ENABLE_DATA_STRUCTURES_TESTS)
     add_subdirectory(data_structures/range_query)
     add_subdirectory(data_structures/dsu)
     add_subdirectory(data_structures/trie)
+    add_subdirectory(data_structures/associative)
 endif()
 
 if (ALGO_ENABLE_ALGEBRA_TESTS)
