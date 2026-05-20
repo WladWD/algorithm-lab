@@ -40,5 +40,26 @@ target_link_libraries(test_strings_rabin_karp PRIVATE
 )
 add_test(NAME strings.rabin_karp COMMAND test_strings_rabin_karp)
 
+add_executable(test_strings_suffix_array suffix_array/test_suffix_array.cpp)
+target_link_libraries(test_strings_suffix_array PRIVATE
+        algo_strings_suffix_array
+        GTest::gtest_main
+)
+add_test(NAME strings.suffix_array COMMAND test_strings_suffix_array)
+
+add_executable(test_strings_suffix_automaton suffix_automaton/test_suffix_automaton.cpp)
+target_link_libraries(test_strings_suffix_automaton PRIVATE
+        algo_strings_suffix_automaton
+        GTest::gtest_main
+)
+add_test(NAME strings.suffix_automaton COMMAND test_strings_suffix_automaton)
+
+add_executable(test_strings_suffix_tree suffix_tree/test_suffix_tree.cpp)
+target_link_libraries(test_strings_suffix_tree PRIVATE
+        algo_strings_suffix_tree
+        GTest::gtest_main
+)
+add_test(NAME strings.suffix_tree COMMAND test_strings_suffix_tree)
+
 
 
